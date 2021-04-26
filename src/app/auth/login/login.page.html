@@ -1,48 +1,37 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Login</ion-title>
+    <ion-title>Entrar</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-img src="assets/icon/favicon.png"></ion-img>
+  <ion-title class="welcome">Bienvenido!!</ion-title>
   <form (ngSubmit)="login()" #loginForm="ngForm">
     <ion-list>
       <ion-item>
         <ion-label position="floating">Email</ion-label>
-        <ion-input type="email" name="email" required [(ngModel)]="email"></ion-input>
+        <ion-input type="email" name="email" required [(ngModel)]="email"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Password</ion-label>
-        <ion-input
-          type="password"
-          name="password"
-          required
-          [(ngModel)]="password"
-        ></ion-input>
+        <ion-input type="password" name="password" required [(ngModel)]="password"></ion-input>
       </ion-item>
     </ion-list>
-    <ion-row>
+    <ion-row class="botones">
       <ion-col>
-        <ion-button
-          type="submit"
-          color="primary"
-          expand="block"
-          [disabled]="loginForm.invalid"
-        >
+        <ion-button type="submit" color="primary" expand="block" [disabled]="loginForm.invalid">
           <ion-icon name="log-in" slot="start"></ion-icon>
           Entrar
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button
-          color="tertiary"
-          expand="block"
-          [routerDirection]="'root'"
-        >
+        <ion-button color="tertiary" expand="block" [routerDirection]="'root'">
           <ion-icon name="paper" slot="start"></ion-icon>
-          Register
+          Registrarse
         </ion-button>
       </ion-col>
     </ion-row>
   </form>
+
 </ion-content>

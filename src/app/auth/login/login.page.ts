@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,13 +9,15 @@ import { Component, OnInit } from '@angular/core';
 export class LoginPage implements OnInit {
   email!:string;
   password!:string
-  constructor() { }
+  constructor(private authServie:AuthService) { }
 
   ngOnInit() {
   }
 
   login() {
-
+    this.authServie.login(this.email, this.password).subscribe(x=>{
+      console.log('hola Mundo')
+    });
   }
 
 }
