@@ -1,3 +1,4 @@
+import { Auth } from './../../models/models';
 import { Injectable } from '@angular/core';
 import { from, Observable, of, ReplaySubject } from 'rxjs';
 import { switchMap, catchError, map } from 'rxjs/operators';
@@ -22,8 +23,8 @@ export class AuthService {
     this.loginChange$.next(logged);
   }
 
-  login(email: string, password: string): Observable<void> {
-    return this.http.post<TokenResponse>('auth/login', { email, password }).pipe(
+  login(auth:Auth): Observable<void> {
+    return this.http.post<TokenResponse>('auth/login', auth).pipe(
       switchMap(async r => {
         try {
           await Storage.set({ key: 'token', value: r.token });
@@ -37,8 +38,8 @@ export class AuthService {
 
   }
 
-  register(user: User): Observable<void> {
-    return this.http.post('auth/register', user).pipe(
+  register(arbitro: User): Observable<void> {
+    return this.http.post('auth/register', arbitro).pipe(
       map(() => null)
     );
   }

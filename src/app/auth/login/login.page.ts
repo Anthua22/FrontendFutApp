@@ -1,7 +1,8 @@
+import { Auth } from './../../models/models';
 import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ToastController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -9,19 +10,21 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  email!: string;
-  password!: string
-  constructor(private authServie: AuthService, private toast: ToastController) { }
+  auth:Auth = {
+    email:'',
+    password:''
+  };
+  constructor(private authServie: AuthService, private toast:ToastController,  private nav: NavController) { }
 
   ngOnInit() {
   }
 
   login() {
-    this.authServie.login(this.email, this.password).subscribe(
+    this.authServie.login(this.auth).subscribe(
       () => {
-        console.log('hola Mundo')
+        this.nav.navigateRoot(['/partidos']);
       },
-      async (error: HttpErrorResponse) => {
+      async (error:HttpErrorResponse)=>{
         (await this.toast.create({
           duration: 3000,
           position: "bottom",

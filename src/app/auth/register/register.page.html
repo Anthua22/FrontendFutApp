@@ -47,12 +47,12 @@
         </ion-button>
       </ion-item>
     </ion-list>
-    <ion-img [src]="user.avatar" *ngIf="user.avatar"></ion-img>
+    <ion-img [src]="user.foto" *ngIf="user.foto"></ion-img>
     <ion-grid>
       <div class="botones">
         <ion-row>
           <ion-col>
-            <ion-button type="submit" color="primary" expand="block" [disabled]="registerForm.invalid || !user.avatar">
+            <ion-button type="submit" color="primary" expand="block" [disabled]="registerForm.invalid || !user.foto">
               <ion-icon name="create-sharp"></ion-icon>
               Registrarse
             </ion-button>

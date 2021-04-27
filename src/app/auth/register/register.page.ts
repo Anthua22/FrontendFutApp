@@ -14,7 +14,11 @@ const { Camera } = Plugins;
 export class RegisterPage implements OnInit {
   user: User = {
     email: '',
-    password: ''
+    password: '',
+    rol: 'USER',
+    nombre_completo:'',
+    foto:'',
+    categoria: 'Sin Categoria',
   }
   nombre = '';
   apellidos = '';
@@ -59,7 +63,7 @@ export class RegisterPage implements OnInit {
       resultType: CameraResultType.DataUrl, // Base64 (url encoded)
     });
 
-    this.user.avatar = photo.dataUrl;
+    this.user.foto = photo.dataUrl;
   }
 
   async elegirFotoGaleria() {
@@ -71,7 +75,7 @@ export class RegisterPage implements OnInit {
       resultType: CameraResultType.DataUrl, // Base64 (url encoded)
     });
 
-    this.user.avatar = photo.dataUrl;
+    this.user.foto = photo.dataUrl;
   }
 
 }
