@@ -5,6 +5,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <ion-title class="welcome">Registrate gratis</ion-title>
   <form #registerForm="ngForm" (ngSubmit)="register()">
     <ion-list>
       <ion-item>
@@ -14,8 +15,8 @@
       </ion-item>
       <ion-item>
         <ion-label position="floating">Apellidos</ion-label>
-        <ion-input type="text" name="apellidos" required [(ngModel)]="apellidos" #emailModel="ngModel"></ion-input>
-        <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="emailModel.dirty && emailModel.valid"></ion-icon>
+        <ion-input type="text" name="apellidos" required [(ngModel)]="apellidos" #apellidosModel="ngModel"></ion-input>
+        <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="apellidosModel.dirty && apellidosModel.valid"></ion-icon>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Email</ion-label>
@@ -48,21 +49,24 @@
     </ion-list>
     <ion-img [src]="user.avatar" *ngIf="user.avatar"></ion-img>
     <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-button type="submit" color="primary" expand="block" [disabled]="registerForm.invalid || !user.avatar">
-            <ion-icon name="create-sharp"></ion-icon>
-            Registrarse
-          </ion-button>
-        </ion-col>
-        <ion-col>
-          <ion-button color="danger" expand="block" fill="outline" [routerLink]="['/auth/login']" [routerDirection]="'root'">
-            <ion-icon name="close"></ion-icon>
+      <div class="botones">
+        <ion-row>
+          <ion-col>
+            <ion-button type="submit" color="primary" expand="block" [disabled]="registerForm.invalid || !user.avatar">
+              <ion-icon name="create-sharp"></ion-icon>
+              Registrarse
+            </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button color="danger" expand="block" fill="outline" [routerLink]="['/auth/login']" [routerDirection]="'root'">
+              <ion-icon name="close"></ion-icon>
 
-            Cancelar
-          </ion-button>
-        </ion-col>
-      </ion-row>
+              Cancelar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </div>
+
     </ion-grid>
   </form>
 </ion-content>

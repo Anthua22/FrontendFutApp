@@ -1,7 +1,10 @@
+import { ErrorResponse } from './../../models/responses';
 import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/models';
 import { Plugins, CameraResultType, CameraSource } from "@capacitor/core";
+import { NavController, ToastController } from '@ionic/angular';
+import { HttpErrorResponse } from '@angular/common/http';
 const { Camera } = Plugins;
 @Component({
   selector: 'app-register',
@@ -11,22 +14,38 @@ const { Camera } = Plugins;
 export class RegisterPage implements OnInit {
   user: User = {
     email: '',
-    password:''
+    password: ''
   }
   nombre = '';
   apellidos = '';
   password2 = '';
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private toast: ToastController, private nav: NavController) { }
 
   ngOnInit() {
   }
 
   register() {
     this.user.nombre_completo = `${this.apellidos}-${this.nombre}`;
-    this.authService.register(this.user).subscribe(()=>{
-      console.log('registrado');
-    })
+    this.authService.register(this.user).subscribe(
+      async () => {
+        this.nav.navigateRoot(["/auth/login"]);
+        (await this.toast.create({
+          duration: 3000,
+          position: "bottom",
+          message: "Usuario registrado correctamente",
+          color: 'success'
+        })).present();
+      },
+      async (err: HttpErrorResponse) => {
+        (await this.toast.create({
+          duration: 3000,
+          position: "bottom",
+          message: err.error.error,
+          color: 'danger'
+        })).present();
+      }
+    );
 
   }
 
@@ -43,7 +62,7 @@ export class RegisterPage implements OnInit {
     this.user.avatar = photo.dataUrl;
   }
 
-  async elegirFotoGaleria(){
+  async elegirFotoGaleria() {
     const photo = await Camera.getPhoto({
       source: CameraSource.Photos,
       height: 640,
