@@ -38,11 +38,11 @@
         <ion-label position="inset">Avatar</ion-label>
         <ion-button color="secondary" (click)="tomarFoto()">
           <ion-icon name="camera" slot="start"></ion-icon>
-          Camera
+          Cámara
         </ion-button>
         <ion-button color="tertiary" (click)="elegirFotoGaleria()">
           <ion-icon name="images" slot="start"></ion-icon>
-          Gallery
+          Galería
         </ion-button>
       </ion-item>
     </ion-list>
@@ -51,13 +51,14 @@
       <ion-row>
         <ion-col>
           <ion-button type="submit" color="primary" expand="block" [disabled]="registerForm.invalid || !user.avatar">
-            <ion-icon name="paper" slot="start"></ion-icon>
+            <ion-icon name="create-sharp"></ion-icon>
             Registrarse
           </ion-button>
         </ion-col>
         <ion-col>
           <ion-button color="danger" expand="block" fill="outline" [routerLink]="['/auth/login']" [routerDirection]="'root'">
-            <ion-icon name="undo" slot="start"></ion-icon>
+            <ion-icon name="close"></ion-icon>
+
             Cancelar
           </ion-button>
         </ion-col>

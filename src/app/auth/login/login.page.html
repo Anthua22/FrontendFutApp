@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <ion-img src="assets/icon/favicon.png"></ion-img>
   <ion-title class="welcome">Bienvenido!!</ion-title>
   <form (ngSubmit)="login()" #loginForm="ngForm">
@@ -26,8 +26,8 @@
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button color="tertiary" expand="block" [routerDirection]="'root'">
-          <ion-icon name="paper" slot="start"></ion-icon>
+        <ion-button color="tertiary" expand="block" [routerDirection]="'root'" [routerLink]="['/auth/register']">
+          <ion-icon name="create-sharp"></ion-icon>
           Registrarse
         </ion-button>
       </ion-col>

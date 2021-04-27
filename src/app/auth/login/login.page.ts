@@ -15,7 +15,7 @@ export class LoginPage implements OnInit {
   }
 
   login() {
-    this.authServie.login(this.email, this.password).subscribe(x=>{
+    this.authServie.login(this.email, this.password).subscribe(()=>{
       console.log('hola Mundo')
     });
   }

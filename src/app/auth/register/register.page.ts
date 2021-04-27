@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/models';
 import { Plugins, CameraResultType, CameraSource } from "@capacitor/core";
@@ -16,12 +17,16 @@ export class RegisterPage implements OnInit {
   apellidos = '';
   password2 = '';
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
   }
 
   register() {
+    this.user.nombre_completo = `${this.apellidos}-${this.nombre}`;
+    this.authService.register(this.user).subscribe(()=>{
+      console.log('registrado');
+    })
 
   }
 
