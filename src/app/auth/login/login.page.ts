@@ -1,6 +1,6 @@
 import { Auth } from './../../models/models';
 import { AuthService } from './../services/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NavController, ToastController } from '@ionic/angular';
 
@@ -10,11 +10,16 @@ import { NavController, ToastController } from '@ionic/angular';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  auth:Auth = {
-    email:'',
-    password:''
+  auth: Auth = {
+    email: '',
+    password: ''
   };
-  constructor(private authServie: AuthService, private toast:ToastController,  private nav: NavController) { }
+
+  @ViewChild('passwordEyeRegister', { read: ElementRef }) passwordEye: ElementRef;
+  // Seleccionamos el elemento con el nombre que le pusimos con el #
+  passwordTypeInput = 'password';
+
+  constructor(private authServie: AuthService, private toast: ToastController, private nav: NavController) { }
 
   ngOnInit() {
   }
@@ -24,7 +29,7 @@ export class LoginPage implements OnInit {
       () => {
         this.nav.navigateRoot(['/partidos']);
       },
-      async (error:HttpErrorResponse)=>{
+      async (error: HttpErrorResponse) => {
         (await this.toast.create({
           duration: 3000,
           position: "bottom",
@@ -35,4 +40,19 @@ export class LoginPage implements OnInit {
     );
   }
 
+  togglePasswordMode() {
+    //cambiar tipo input
+    this.passwordTypeInput = this.passwordTypeInput === 'text' ? 'password' : 'text';
+    //obtener el input
+    const nativeEl = this.passwordEye.nativeElement.querySelector('input');
+    //obtener el indice de la posición del texto actual en el input
+    const inputSelection = nativeEl.selectionStart;
+    //ejecuto el focus al input
+    nativeEl.focus();
+    //espero un milisegundo y actualizo la posición del indice del texto
+    setTimeout(() => {
+      nativeEl.setSelectionRange(inputSelection, inputSelection);
+    }, 1);
+
+  }
 }

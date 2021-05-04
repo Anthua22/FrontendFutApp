@@ -10,13 +10,26 @@
   <form (ngSubmit)="login()" #loginForm="ngForm">
     <ion-list>
       <ion-item>
-        <ion-label position="floating">Email</ion-label>
-        <ion-input type="email" name="email" required [(ngModel)]="auth.email"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"></ion-input>
+        <ion-icon name="mail" slot="start"></ion-icon>
+        <ion-input type="email" name="email" required placeholder="Email" [(ngModel)]="auth.email"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" #emailModel="ngModel"></ion-input>
       </ion-item>
+      <ion-text style="color: brown; font-size: 12px;"
+        *ngIf="emailModel.errors && emailModel.errors.required && emailModel.touched">Email es requerido</ion-text>
+      <ion-text style="color: brown; font-size: 12px;"
+        *ngIf="emailModel.errors && emailModel.errors.pattern && emailModel.touched">Email incorrecto</ion-text>
       <ion-item>
-        <ion-label position="floating">Password</ion-label>
-        <ion-input type="password" name="password" required [(ngModel)]="auth.password"></ion-input>
+        <ion-input #passwordEyeRegister="ngModel" name="password" required placeholder="Contraseña"
+          [type]="passwordTypeInput" [(ngModel)]="auth.password" clearOnEdit="false">
+        </ion-input>
+        <ion-icon [name]="(passwordTypeInput === 'text')?'eye-off':'eye'" (click)="togglePasswordMode()" slot="end">
+        </ion-icon>
+        <ion-icon name="key" slot="start"></ion-icon>
       </ion-item>
+      <ion-text style="color: brown; font-size: 12px;"
+        *ngIf="passwordEyeRegister.errors && passwordEyeRegister.errors.required && passwordEyeRegister.touched">
+        Contraseña es requerida</ion-text>
+
     </ion-list>
     <ion-row class="botones">
       <ion-col>

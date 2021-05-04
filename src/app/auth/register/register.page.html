@@ -9,34 +9,81 @@
   <form #registerForm="ngForm" (ngSubmit)="register()">
     <ion-list>
       <ion-item>
-        <ion-label position="floating">Nombre</ion-label>
-        <ion-input name="name" required [(ngModel)]="nombre" #nameModel="ngModel"></ion-input>
-        <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="nameModel.dirty && nameModel.valid"></ion-icon>
+        <ion-input name="name" required [(ngModel)]="nombre" placeholder="Nombre" #nameModel="ngModel"></ion-input>
+        <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="nameModel.dirty && nameModel.valid">
+        </ion-icon>
+        <ion-icon name="close-circle-outline" slot="end" color="danger" *ngIf="nameModel.invalid && nameModel.touched">
+        </ion-icon>
+        <ion-icon name="person" slot="start"></ion-icon>
       </ion-item>
+      <ion-text *ngIf="nameModel.errors && nameModel.errors.required && nameModel.touched">El nombre es requerido
+      </ion-text>
       <ion-item>
-        <ion-label position="floating">Apellidos</ion-label>
-        <ion-input type="text" name="apellidos" required [(ngModel)]="apellidos" #apellidosModel="ngModel"></ion-input>
-        <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="apellidosModel.dirty && apellidosModel.valid"></ion-icon>
+        <ion-input type="text" name="apellidos" placeholder="Apellidos" required [(ngModel)]="apellidos"
+          #apellidosModel="ngModel"></ion-input>
+        <ion-icon name="checkmark-circle" slot="end" color="success"
+          *ngIf="apellidosModel.dirty && apellidosModel.valid"></ion-icon>
+        <ion-icon name="close-circle-outline" color="danger" *ngIf="apellidosModel.invalid && apellidosModel.touched">
+        </ion-icon>
+        <ion-icon name="person" slot="start"></ion-icon>
       </ion-item>
+      <ion-text *ngIf="apellidosModel.errors && apellidosModel.errors.required && apellidosModel.touched">El apellido es
+        requerido</ion-text>
       <ion-item>
-        <ion-label position="floating">Email</ion-label>
-        <ion-input type="email" name="email" required [(ngModel)]="user.email" #emailModel="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"></ion-input>
-        <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="emailModel.dirty && emailModel.valid"></ion-icon>
+        <ion-input type="email" name="email" required [(ngModel)]="user.email" #emailModel="ngModel"
+          placeholder="example@example.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"></ion-input>
+        <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="emailModel.dirty && emailModel.valid">
+        </ion-icon>
+        <ion-icon name="close-circle-outline" color="danger" *ngIf="emailModel.invalid && emailModel.touched">
+        </ion-icon>
+        <ion-icon name="mail" slot="start"></ion-icon>
       </ion-item>
+      <ion-text *ngIf="emailModel.errors && emailModel.errors.required && emailModel.touched">El email es requerido
+      </ion-text>
+      <ion-text *ngIf="emailModel.errors && emailModel.errors.pattern && emailModel.touched">El email es incorrecto
+      </ion-text>
       <div ngModelGroup="passGroup" #passGroupModel="ngModelGroup" appMatch="password,password2">
         <ion-item>
-          <ion-label position="floating">Contraseña</ion-label>
-          <ion-input type="password" name="password" minlength="4" required [(ngModel)]="user.password" #passModel="ngModel"></ion-input>
-          <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="passModel.dirty && passModel.valid"></ion-icon>
+          <ion-icon name="lock-closed" slot="start"></ion-icon>
+          <ion-input type="password" name="password" minlength="8" placeholder="Contraseña" required
+            [(ngModel)]="user.password" #passModel="ngModel"></ion-input>
+          <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="passModel.dirty && passModel.valid">
+          </ion-icon>
+          <ion-icon name="close-circle-outline" slot="end" color="danger"
+            *ngIf="passModel.invalid && passModel.touched"></ion-icon>
         </ion-item>
+        <ion-text *ngIf="passModel.errors && passModel.errors.required && passModel.touched">La contraseña es requerida
+        </ion-text>
+        <ion-text *ngIf="passModel.errors && passModel.errors.minlength && passModel.touched">Faltan
+          {{
+          passModel.errors.minlength.requiredLength -
+          passModel.errors.minlength.actualLength
+          }}
+          caracteres</ion-text>
+
         <ion-item>
-          <ion-label position="floating">Repita la contraseña</ion-label>
-          <ion-input type="password" name="password2" required [(ngModel)]="password2" #passModel2="ngModel"></ion-input>
-          <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="passModel2.dirty && passGroupModel.valid"></ion-icon>
+          <ion-icon name="lock-closed" slot="start"></ion-icon>
+          <ion-input type="password" name="password2" required [(ngModel)]="password2" #passModel2="ngModel"
+            placeholder="Vuelva a repetir la contraseña"></ion-input>
+          <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="passModel2.dirty && passGroupModel.valid">
+          </ion-icon>
+          <ion-icon name="close-circle-outline" slot="end" color="danger"
+            *ngIf="passModel2.invalid && passModel2.touched || passGroupModel.invalid && passModel2.touched"></ion-icon>
         </ion-item>
+        <div class="row" *ngIf="passModel2.errors && passModel2.errors.required && passModel2.touched">
+          <ion-text>Confirmacíon de
+            contraseña es requerida
+          </ion-text>
+        </div>
+        <div class="row" *ngIf="passGroupModel.invalid && passModel2.touched">
+          <ion-text >No coinciden las contraseñas
+          </ion-text>
+        </div>
+
+
       </div>
       <ion-item>
-        <ion-label position="inset">Avatar</ion-label>
+        <ion-icon name="camera" slot="start"></ion-icon>
         <ion-button color="secondary" (click)="tomarFoto()">
           <ion-icon name="camera" slot="start"></ion-icon>
           Cámara
@@ -58,7 +105,8 @@
             </ion-button>
           </ion-col>
           <ion-col>
-            <ion-button color="danger" expand="block" fill="outline" [routerLink]="['/auth/login']" [routerDirection]="'root'">
+            <ion-button color="danger" expand="block" fill="outline" [routerLink]="['/auth/login']"
+              [routerDirection]="'root'">
               <ion-icon name="close"></ion-icon>
 
               Cancelar
