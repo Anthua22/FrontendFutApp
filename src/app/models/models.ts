@@ -1,22 +1,22 @@
 export interface Auth {
-  _id?:string,
+  _id?: string,
   email?: string;
   password?: string;
 }
 
-export const categoria = {
-  PRIMERA: "Primera",
-  SEGUNDA: "Segunda",
-  SEGUNDAB: "Segunda B",
-  TERCERA: "Tercera",
-  REGIONAL: "Regional",
-  FB: "Futbol Base",
-  SC: "Sin Categori"
+export enum Categoria {
+  PRIMERA = "Primera",
+  SEGUNDA = "Segunda",
+  SEGUNDAB = "Segunda B",
+  TERCERA = "Tercera",
+  REGIONAL = "Regional",
+  FB = "Futbol Base",
+  SC = "Sin Categoria"
 }
 
-export const rol = {
-  ADMIN: "ADMIN",
-  USER: "USER"
+export enum Rol {
+  ADMIN,
+  USER
 }
 export interface User extends Auth {
   telefono?: string;
@@ -31,16 +31,16 @@ export interface MiembroEquipo extends User {
 }
 
 export interface Equipo {
-  _id?:string,
+  _id?: string,
   nombre: string,
   escudo: string,
   miembros?: MiembroEquipo[],
   email: string,
-  categoria: string,
+  categoria: Categoria,
   direccion_campo: string
 }
 export interface Partido {
-  _id?:string,
+  _id?: string,
   equipo_local: Equipo,
   equipo_visitante: Equipo,
   arbitro_principal: User,

@@ -18,43 +18,7 @@
     </ion-refresher-content>
   </ion-refresher>
   <ion-list>
-    <ion-card *ngFor="let partido of partidos">
-      <ng-container *ngIf="partido.arbitro_principal && partido.equipo_local && partido.equipo_visitante">
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <ion-thumbnail slot="start">
-                <img [src]="'E:/Estudios/DAW/FutApp/Backend/uploads/images/equipos/1619132743081_Barcelona FC.jpeg'">
-              </ion-thumbnail>
-            </ion-col>
-            <ion-col>
-              <ion-thumbnail slot="start">
-                <img [src]="partido.equipo_visitante.escudo">
-              </ion-thumbnail>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-        <ion-card-header>
-          <ion-grid>
-            <ion-row>
-              <ion-col>
-                <ion-card-subtitle>{{partido.equipo_local.nombre}}</ion-card-subtitle>
-              </ion-col>
-              <ion-col>
-                <ion-card-subtitle>VS</ion-card-subtitle>
-              </ion-col>
-              <ion-col>
-                <ion-card-subtitle>{{partido.equipo_visitante.nombre}}</ion-card-subtitle>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+    <app-partido-card [partido]="partido" *ngFor="let partido of partidos"></app-partido-card>
 
-        </ion-card-header>
-        <ion-card-content>
-          <ion-label>{{partido.fecha_encuentro}}</ion-label>
-        </ion-card-content>
-      </ng-container>
-
-    </ion-card>
   </ion-list>
 </ion-content>

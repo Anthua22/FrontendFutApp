@@ -1,0 +1,121 @@
+<ion-card>
+  <ng-container *ngIf="partido.arbitro_principal && partido.equipo_local && partido.equipo_visitante">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <img [src]="partido.equipo_local.escudo">
+        </ion-col>
+        <ion-col>
+          <img src="assets/images/vs.png" class="vs" />
+        </ion-col>
+        <ion-col>
+          <img [src]="partido.equipo_visitante.escudo">
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-card-header>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-card-title>{{partido.equipo_local.nombre}}</ion-card-title>
+          </ion-col>
+          <ion-col>
+            <ion-card-title>{{partido.equipo_visitante.nombre}}</ion-card-title>
+          </ion-col>
+        </ion-row>
+
+      </ion-grid>
+
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-text>Fecha del encuentro:</ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-text><b>{{fecha}}</b></ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text>Categoria:</ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-text><b>{{partido.categoria}}</b></ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text>Jornada:</ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-text><b>{{partido.jornada}}</b></ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ngb-accordion #acc="ngbAccordion">
+        <ion-icon name="airplane"></ion-icon>
+        <ngb-panel title="Árbitros">
+          <ng-template ngbPanelContent>
+            <ion-grid>
+              <ion-row>
+                <ion-col style="margin-top: 20px;">Árbitro Principal:</ion-col>
+                <ion-col>
+                  <ion-row>
+                    <ion-col>
+                      <ion-thumbnail>
+                        <img [src]="partido.arbitro_principal.foto" />
+                      </ion-thumbnail>
+                    </ion-col>
+                    <ion-col>
+                      <ion-card-subtitle><b>{{partido.arbitro_principal.nombre_completo.split('-')[0]+' '+
+                        partido.arbitro_principal.nombre_completo.split('-')[1]}}</b></ion-card-subtitle>
+                    </ion-col>
+                  </ion-row>
+
+                </ion-col>
+              </ion-row>
+              <ion-row *ngIf="partido.arbitro_secundario">
+                <ion-col style="margin-top: 20px;">Árbitro Secundario:</ion-col>
+                <ion-col>
+                  <ion-row>
+                    <ion-col>
+                      <ion-thumbnail>
+                        <img [src]="partido.arbitro_secundario.foto" />
+                      </ion-thumbnail>
+                    </ion-col>
+                    <ion-col>
+                      <ion-card-subtitle><b>{{partido.arbitro_secundario.nombre_completo.split('-')[0]+' '+
+                        partido.arbitro_secundario.nombre_completo.split('-')[1]}}</b></ion-card-subtitle>
+                    </ion-col>
+                  </ion-row>
+
+                </ion-col>
+              </ion-row>
+              <ion-row *ngIf="partido.cronometrador">
+                <ion-col style="margin-top: 20px;">Cronometrador:</ion-col>
+                <ion-col>
+                  <ion-row>
+                    <ion-col>
+                      <ion-thumbnail>
+                        <img [src]="partido.cronometrador.foto" />
+                      </ion-thumbnail>
+                    </ion-col>
+                    <ion-col>
+                      <ion-card-subtitle><b>{{partido.cronometrador.nombre_completo.split('-')[0]+' '+
+                        partido.cronometrador.nombre_completo.split('-')[1]}}</b></ion-card-subtitle>
+                    </ion-col>
+                  </ion-row>
+
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+
+    </ion-card-content>
+  </ng-container>
+
+</ion-card>
