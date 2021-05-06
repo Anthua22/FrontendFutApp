@@ -12,7 +12,7 @@ import { ToastController } from '@ionic/angular';
 export class PartidosListPage implements OnInit {
 
   partidos!: Partido[];
-  pathFotosEquipos = "E:/Estudios/DAW/FutApp/Backend/uploadsimages/equipos/"
+  data=false;
   constructor(private partidosService: PartidosService, private toast: ToastController) { }
 
   ngOnInit() {
@@ -26,10 +26,14 @@ export class PartidosListPage implements OnInit {
           color: 'danger'
         })).present();
       });
+
+      setTimeout(()=>{
+        this.data=true;
+      },2000)
   }
 
   doRefresh(event: any) {
-
+    this.partidosService.getPartidos().subscribe(x => { this.partidos = x; event.target.complete(); });
   }
 
 }

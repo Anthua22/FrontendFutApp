@@ -1,5 +1,6 @@
+import { TokenGuard } from './guards/token.guard';
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes, CanActivate } from '@angular/router';
 
 const routes: Routes = [
   {
@@ -17,7 +18,8 @@ const routes: Routes = [
   },
   {
     path: 'partidos',
-    loadChildren: () => import('./partidos/partidos.module').then( m => m.PartidosPageModule)
+    loadChildren: () => import('./partidos/partidos.module').then( m => m.PartidosPageModule),
+    canActivate:[TokenGuard]
   },
 ];
 

@@ -27,7 +27,9 @@ export class AppComponent {
     }
   ];
 
-  constructor(private authService:AuthService,private nav: NavController) {}
+  constructor(private authService:AuthService,private nav: NavController) {
+    this.authService.loginChange$.subscribe(logueado=>this.menuDisabled = !logueado);
+  }
 
   async logout() {
     await this.authService.logout();

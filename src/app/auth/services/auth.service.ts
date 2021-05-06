@@ -43,10 +43,19 @@ export class AuthService {
       map(() => null)
     );
   }
-
   isLogged(): Observable<boolean> {
-    return this.logged ? of(true) : of(false);
+    if (this.logged) { return of(true); }
+    return from(Storage.get({ key: 'token' })).pipe(
+      switchMap(token => {
+        console.log(token)
+        if (!token.value) { throw new Error(); }
+        this.loginChange$.next(true);
+        return of(true)
+      }),
+      catchError(e => of(false))
+    );
   }
+
 
   async logout(): Promise<void> {
     await Storage.remove({ key: 'fs-token' });

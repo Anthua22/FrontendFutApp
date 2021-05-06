@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PartidoSkeletonComponent implements OnInit {
 
+  partidosPlantilla = [1,3,2,4];
+
   constructor() { }
 
   ngOnInit() {}

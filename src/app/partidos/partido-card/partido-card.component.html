@@ -39,6 +39,22 @@
         </ion-row>
         <ion-row>
           <ion-col>
+            <ion-text>Lugar del encuentro:</ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-text><b>{{partido.lugar_encuentro}}</b></ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text>Hora:</ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-text><b>{{hora}}</b></ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
             <ion-text>Categoria:</ion-text>
           </ion-col>
           <ion-col>
@@ -53,6 +69,14 @@
             <ion-text><b>{{partido.jornada}}</b></ion-text>
           </ion-col>
         </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text>Estado:</ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-text><b [innerText]="partido.fecha_modificacion ? 'Disputado': 'Sin Disputar'"></b></ion-text>
+          </ion-col>
+        </ion-row>
       </ion-grid>
       <ngb-accordion #acc="ngbAccordion">
         <ion-icon name="airplane"></ion-icon>
@@ -60,7 +84,7 @@
           <ng-template ngbPanelContent>
             <ion-grid>
               <ion-row>
-                <ion-col style="margin-top: 20px;">Árbitro Principal:</ion-col>
+                <ion-col style="margin-top: 40px;">Árbitro Principal:</ion-col>
                 <ion-col>
                   <ion-row>
                     <ion-col>
@@ -73,7 +97,6 @@
                         partido.arbitro_principal.nombre_completo.split('-')[1]}}</b></ion-card-subtitle>
                     </ion-col>
                   </ion-row>
-
                 </ion-col>
               </ion-row>
               <ion-row *ngIf="partido.arbitro_secundario">

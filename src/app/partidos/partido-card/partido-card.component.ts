@@ -11,14 +11,14 @@ export class PartidoCardComponent implements OnInit {
 
   @Input() partido!:Partido;
   fecha='';
-
+  hora='';
   constructor() {
     moment.locale('es');
   }
 
   ngOnInit() {
-    this.fecha = moment(this.partido.fecha_encuentro).format('LLL');
-
+    this.fecha = moment(this.partido.fecha_encuentro).format('ll');
+    this.hora = moment(this.partido.fecha_encuentro).format('hh:mm A');
   }
 
 }

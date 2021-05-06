@@ -24,9 +24,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
       multi: true
     },
     {
-      provide:HTTP_INTERCEPTORS,
-      useClass:AuthTokenInterceptor,
-      multi:true
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthTokenInterceptor,
+      multi: true
     }
   ],
   bootstrap: [AppComponent],

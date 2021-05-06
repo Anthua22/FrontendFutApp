@@ -7,18 +7,38 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="secondary" [routerLink]="['/products/add']" [routerDirection]="'root'">
-      <ion-icon name="add"></ion-icon>
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button color="tertiary">
+      <ion-icon md="caret-back" ios="chevron-back-circle-outline"></ion-icon>
     </ion-fab-button>
+    <ion-fab-list side="start">
+      <ion-fab-button color="light">
+        <ion-icon name="logo-facebook"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light">
+        <ion-icon name="logo-twitter"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light">
+        <ion-icon name="logo-vimeo"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
   </ion-fab>
+
+
+  <ion-searchbar animated debounce="500" placeholder="Nombre del equipo"></ion-searchbar>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Desliza para refrescar"
       refreshingSpinner="circles" refreshingText="Cargando...">
     </ion-refresher-content>
   </ion-refresher>
-  <ion-list>
-    <app-partido-card [partido]="partido" *ngFor="let partido of partidos"></app-partido-card>
+  <ion-list *ngIf="data">
+    <ion-item *ngFor="let partido of partidos">
+      <app-partido-card [partido]="partido"></app-partido-card>
+    </ion-item>
+
 
   </ion-list>
+  <ng-container>
+    <app-partido-skeleton *ngIf="!data"></app-partido-skeleton>
+  </ng-container>
 </ion-content>
