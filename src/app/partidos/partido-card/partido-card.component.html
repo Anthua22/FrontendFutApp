@@ -1,4 +1,4 @@
-<ion-card>
+<ion-card (click)="goDetail()">
   <ng-container *ngIf="partido.arbitro_principal && partido.equipo_local && partido.equipo_visitante">
     <ion-grid>
       <ion-row>
@@ -84,7 +84,7 @@
           <ng-template ngbPanelContent>
             <ion-grid>
               <ion-row >
-                <ion-col class="ion-align-self-center"><ion-text >Árbitro Principal:</ion-text></ion-col>
+                <ion-col class="ion-align-self-center"    ><ion-text >Árbitro Principal:</ion-text></ion-col>
                 <ion-col>
                   <ion-row>
                     <ion-col>

@@ -7,7 +7,13 @@ const routes: Routes = [
   {
     path: '',
     component:PartidosListPage
+  },
+
+  {
+    path: ':id',
+    loadChildren: ()=>import('./detalle-partido/detalle-partido.module').then(m=>m.DetallePartidoPageModule)
   }
+
 ];
 
 @NgModule({
