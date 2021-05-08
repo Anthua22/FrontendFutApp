@@ -1,3 +1,4 @@
+import { PipesModule } from './../pipes/pipes.module';
 import { SkeletonModule } from './../skeleton/skeleton.module';
 import { PartidoCardComponent } from './partido-card/partido-card.component';
 import { PartidosListPage } from './partidos-list/partidos-list.page';
@@ -17,8 +18,9 @@ import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     NgbAccordionModule,
     IonicModule,
+    SkeletonModule,
     PartidosPageRoutingModule,
-    SkeletonModule
+    PipesModule
   ],
   declarations: [PartidosListPage, PartidoCardComponent],
   exports:[PartidoCardComponent]

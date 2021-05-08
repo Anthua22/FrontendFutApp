@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { DetallePartidoPageRoutingModule } from './detalle-partido-routing.module';
 
 import { DetallePartidoPage } from './detalle-partido.page';
+import { InfoPartidoComponent } from './info-partido/info-partido.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { DetallePartidoPage } from './detalle-partido.page';
     SkeletonModule,
     DetallePartidoPageRoutingModule
   ],
-  declarations: [DetallePartidoPage]
+  declarations: [DetallePartidoPage, InfoPartidoComponent]
 })
 export class DetallePartidoPageModule {}

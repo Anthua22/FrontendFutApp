@@ -23,10 +23,7 @@ export class DetallePartidoPage implements OnInit {
 
     this.partido$.subscribe(
       partido =>{ this.partido = partido;
-         setTimeout(()=>{
-           this.data = true;
-         }, 1000)
-        console.log(this.partido)}
+        this.data=true;}
     );
   }
 

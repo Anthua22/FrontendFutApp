@@ -1,5 +1,5 @@
-<ion-card (click)="goDetail()">
-  <ng-container *ngIf="partido.arbitro_principal && partido.equipo_local && partido.equipo_visitante">
+<ion-card>
+  <ng-container>
     <ion-grid>
       <ion-row>
         <ion-col>
@@ -17,10 +17,10 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <ion-card-title>{{partido.equipo_local.nombre}}</ion-card-title>
+            <ion-card-title style="text-align: center;">{{partido.equipo_local.nombre}}</ion-card-title>
           </ion-col>
           <ion-col>
-            <ion-card-title>{{partido.equipo_visitante.nombre}}</ion-card-title>
+            <ion-card-title  style="text-align: center;">{{partido.equipo_visitante.nombre}}</ion-card-title>
           </ion-col>
         </ion-row>
 
@@ -34,7 +34,7 @@
             <ion-text>Fecha del encuentro:</ion-text>
           </ion-col>
           <ion-col>
-            <ion-text><b>{{fecha}}</b></ion-text>
+            <ion-text><b [innerText]="partido.fecha_encuentro | fecha"></b></ion-text>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -50,7 +50,7 @@
             <ion-text>Hora:</ion-text>
           </ion-col>
           <ion-col>
-            <ion-text><b>{{hora}}</b></ion-text>
+            <ion-text><b [innerText]="partido.fecha_encuentro | hora"></b></ion-text>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -69,7 +69,7 @@
             <ion-text><b>{{partido.jornada}}</b></ion-text>
           </ion-col>
         </ion-row>
-        <ion-row>
+        <ion-row style="margin-bottom: 5px;">
           <ion-col>
             <ion-text>Estado:</ion-text>
           </ion-col>
@@ -77,66 +77,77 @@
             <ion-text><b [innerText]="partido.fecha_modificacion ? 'Disputado': 'Sin Disputar'"></b></ion-text>
           </ion-col>
         </ion-row>
+        <ion-row>
+          <ion-col size="10">
+            <ngb-accordion #acc="ngbAccordion">
+              <ngb-panel title="Árbitros">
+                <ng-template ngbPanelContent>
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col class="ion-align-self-center">
+                        <ion-text>Árbitro Principal:</ion-text>
+                      </ion-col>
+                      <ion-col>
+                        <ion-row>
+                          <ion-col>
+                            <ion-thumbnail>
+                              <img [src]="partido.arbitro_principal.foto" />
+                            </ion-thumbnail>
+                          </ion-col>
+                          <ion-col>
+                            <ion-card-subtitle><b>{{partido.arbitro_principal.nombre_completo.split('-')[0]+' '+
+                                partido.arbitro_principal.nombre_completo.split('-')[1]}}</b></ion-card-subtitle>
+                          </ion-col>
+                        </ion-row>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row *ngIf="partido.arbitro_secundario">
+                      <ion-col class="ion-align-self-center">Árbitro Secundario:</ion-col>
+                      <ion-col>
+                        <ion-row>
+                          <ion-col>
+                            <ion-thumbnail>
+                              <img [src]="partido.arbitro_secundario.foto" />
+                            </ion-thumbnail>
+                          </ion-col>
+                          <ion-col>
+                            <ion-card-subtitle><b>{{partido.arbitro_secundario.nombre_completo.split('-')[0]+' '+
+                                partido.arbitro_secundario.nombre_completo.split('-')[1]}}</b></ion-card-subtitle>
+                          </ion-col>
+                        </ion-row>
+
+                      </ion-col>
+                    </ion-row>
+                    <ion-row *ngIf="partido.cronometrador">
+                      <ion-col class="ion-align-self-center">Asistente:</ion-col>
+                      <ion-col>
+                        <ion-row>
+                          <ion-col>
+                            <ion-thumbnail>
+                              <img [src]="partido.cronometrador.foto" />
+                            </ion-thumbnail>
+                          </ion-col>
+                          <ion-col>
+                            <ion-card-subtitle><b>{{partido.cronometrador.nombre_completo.split('-')[0]+' '+
+                                partido.cronometrador.nombre_completo.split('-')[1]}}</b></ion-card-subtitle>
+                          </ion-col>
+                        </ion-row>
+
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+          </ion-col>
+          <ion-col size="2" class="ion-align-self-center">
+            <ion-button fill="clear" color="dark" (click)="showOptions()()">
+              <ion-icon size="large" name="menu"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
       </ion-grid>
-      <ngb-accordion #acc="ngbAccordion">
-        <ion-icon name="airplane"></ion-icon>
-        <ngb-panel title="Árbitros">
-          <ng-template ngbPanelContent>
-            <ion-grid>
-              <ion-row >
-                <ion-col class="ion-align-self-center"    ><ion-text >Árbitro Principal:</ion-text></ion-col>
-                <ion-col>
-                  <ion-row>
-                    <ion-col>
-                      <ion-thumbnail>
-                        <img [src]="partido.arbitro_principal.foto" />
-                      </ion-thumbnail>
-                    </ion-col>
-                    <ion-col>
-                      <ion-card-subtitle><b>{{partido.arbitro_principal.nombre_completo.split('-')[0]+' '+
-                        partido.arbitro_principal.nombre_completo.split('-')[1]}}</b></ion-card-subtitle>
-                    </ion-col>
-                  </ion-row>
-                </ion-col>
-              </ion-row>
-              <ion-row *ngIf="partido.arbitro_secundario">
-                <ion-col style="margin-top: 20px;">Árbitro Secundario:</ion-col>
-                <ion-col>
-                  <ion-row>
-                    <ion-col>
-                      <ion-thumbnail>
-                        <img [src]="partido.arbitro_secundario.foto" />
-                      </ion-thumbnail>
-                    </ion-col>
-                    <ion-col>
-                      <ion-card-subtitle><b>{{partido.arbitro_secundario.nombre_completo.split('-')[0]+' '+
-                        partido.arbitro_secundario.nombre_completo.split('-')[1]}}</b></ion-card-subtitle>
-                    </ion-col>
-                  </ion-row>
 
-                </ion-col>
-              </ion-row>
-              <ion-row *ngIf="partido.cronometrador">
-                <ion-col style="margin-top: 20px;">Cronometrador:</ion-col>
-                <ion-col>
-                  <ion-row>
-                    <ion-col>
-                      <ion-thumbnail>
-                        <img [src]="partido.cronometrador.foto" />
-                      </ion-thumbnail>
-                    </ion-col>
-                    <ion-col>
-                      <ion-card-subtitle><b>{{partido.cronometrador.nombre_completo.split('-')[0]+' '+
-                        partido.cronometrador.nombre_completo.split('-')[1]}}</b></ion-card-subtitle>
-                    </ion-col>
-                  </ion-row>
-
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ng-template>
-        </ngb-panel>
-      </ngb-accordion>
 
     </ion-card-content>
   </ng-container>

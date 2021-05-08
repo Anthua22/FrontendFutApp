@@ -1,8 +1,31 @@
-<ion-conten>
+<ion-header>
+  <ion-toolbar></ion-toolbar>
+</ion-header>
+
+<ion-content>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="tertiary" [routerLink]="['/products/add']" [routerDirection]="'root'">
+    <ion-fab-button color="tertiary">
       <ion-icon name="save-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+  <ion-title class="welcome">Detalle del Partido</ion-title>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <img [src]="partido.equipo_local.escudo" />
+      </ion-col>
+      <ion-col>
+        <img [src]="partido.equipo_visitante.escudo" />
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-text>Fecha Partido:</ion-text>
+        <ion-text><b>{{partido.fecha_encuentro}}</b></ion-text>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+  </ion-grid>
 
-</ion-conten>
+
+</ion-content>

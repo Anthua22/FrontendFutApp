@@ -29,7 +29,7 @@ export class PartidosListPage implements OnInit {
 
       setTimeout(()=>{
         this.data=true;
-      },2000)
+      },500)
   }
 
   doRefresh(event: any) {

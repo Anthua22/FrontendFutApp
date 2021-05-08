@@ -1,8 +1,9 @@
-import { InfoPartidoComponent } from './info-partido/info-partido.component';
+
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { DetallePartidoPage } from './detalle-partido.page';
+import { InfoPartidoComponent } from './info-partido/info-partido.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class DetallePartidoPageRoutingModule {}
