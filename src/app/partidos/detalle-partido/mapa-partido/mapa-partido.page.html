@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <mgl-map [style]="'mapbox://styles/mapbox/streets-v11'" [zoom]="[14]" [center]="[partido.ln, partido.lt]">
+    <mgl-marker #marker [lngLat]="[partido.ln, partido.lt]"></mgl-marker>
+    <mgl-popup [marker]="marker">Aqui se disputará el partido </mgl-popup>
+  </mgl-map>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="startNavigation()">
+      <ion-icon name="navigate"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

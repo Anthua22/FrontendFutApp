@@ -8,6 +8,7 @@ import { LoginPage } from './login/login.page';
 import { RegisterPage } from './register/register.page';
 import { ValidatorsModule } from '../validators/validators.module';
 import { IonicModule } from '@ionic/angular';
+import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { IonicModule } from '@ionic/angular';
     ValidatorsModule,
     FormsModule,
     IonicModule,
+    NgxMapboxGLModule,
     AuthPageRoutingModule
   ],
   declarations: [LoginPage, RegisterPage]

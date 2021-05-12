@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { MapaPartidoComponent } from './mapa-partido.component';
+import { MapaPartidoPage } from './mapa-partido.page';
 
-describe('MapaPartidoComponent', () => {
-  let component: MapaPartidoComponent;
-  let fixture: ComponentFixture<MapaPartidoComponent>;
+describe('MapaPartidoPage', () => {
+  let component: MapaPartidoPage;
+  let fixture: ComponentFixture<MapaPartidoPage>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ MapaPartidoComponent ],
+      declarations: [ MapaPartidoPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MapaPartidoComponent);
+    fixture = TestBed.createComponent(MapaPartidoPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

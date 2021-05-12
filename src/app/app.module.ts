@@ -13,11 +13,20 @@ import { MatchDirective } from './validators/match.directive';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FechaPipe } from './pipes/fecha.pipe';
 import { HoraPipe } from './pipes/hora.pipe';
+import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, NgbModule],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    NgxMapboxGLModule.withConfig({
+      accessToken: 'pk.eyJ1IjoiYW50aG9ueXViaSIsImEiOiJja2dtODlnMjAwYWQ2MnRqbzNlY29ib282In0.wi12UKThrEvuKZ5nWCxq8g'
+      }),
+    HttpClientModule,
+    NgbModule],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {

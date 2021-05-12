@@ -10,6 +10,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { PartidosPageRoutingModule } from './partidos-routing.module';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
     IonicModule,
     SkeletonModule,
     PartidosPageRoutingModule,
-    PipesModule
+    PipesModule,
+    NgxMapboxGLModule
   ],
   declarations: [PartidosListPage, PartidoCardComponent],
   exports:[PartidoCardComponent]
