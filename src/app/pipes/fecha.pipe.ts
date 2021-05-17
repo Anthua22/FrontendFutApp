@@ -5,9 +5,12 @@ import * as moment from 'moment';
   name: 'fecha'
 })
 export class FechaPipe implements PipeTransform {
+  constructor(){
 
+  }
   transform(value: Date): string {
     return moment(value).format('ll');
+
   }
 
 }

@@ -9,10 +9,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { MatchDirective } from './validators/match.directive';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FechaPipe } from './pipes/fecha.pipe';
-import { HoraPipe } from './pipes/hora.pipe';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 
 @NgModule({

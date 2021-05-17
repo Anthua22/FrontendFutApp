@@ -22,8 +22,8 @@ export interface User extends Auth {
   telefono?: string;
   nombre_completo: string;
   foto: string;
-  rol: string,
-  categoria: string
+  rol?: string,
+  categoria?: string
 }
 
 export interface MiembroEquipo extends User {

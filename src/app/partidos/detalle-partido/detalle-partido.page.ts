@@ -11,23 +11,25 @@ import { shareReplay } from 'rxjs/operators';
   styleUrls: ['./detalle-partido.page.scss'],
 })
 export class DetallePartidoPage implements OnInit {
-  partido:Partido;
-  partido$:Observable<Partido>;
-  data= false;
+  partido: Partido;
+  partido$: Observable<Partido>;
+  data = false;
 
-  constructor(private partidoService:PartidosService, private route:ActivatedRoute) {
+  constructor(private partidoService: PartidosService, private route: ActivatedRoute) {
     this.partido$ = this.partidoService.getPartido(this.route.snapshot.params.id).pipe(shareReplay(1));
   }
 
   ngOnInit() {
 
     this.partido$.subscribe(
-      partido =>{ this.partido = partido;
-        this.data=true;}
+      partido => {
+        this.partido = partido;
+        this.data = true;
+      }
     );
   }
 
-  getPartido():Observable<Partido> {
+  getPartido(): Observable<Partido> {
     return this.partido$;
   }
 

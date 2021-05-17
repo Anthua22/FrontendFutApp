@@ -1,4 +1,4 @@
-import { SkeletonModule } from './../../skeleton/skeleton.module';
+import { EquiposPageModule } from './../../equipos/equipos.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -6,9 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { DetallePartidoPageRoutingModule } from './detalle-partido-routing.module';
-
+import { SkeletonModule } from 'src/app/skeleton/skeleton.module';
 import { DetallePartidoPage } from './detalle-partido.page';
-import { InfoPartidoComponent } from './info-partido/info-partido.component';
 
 @NgModule({
   imports: [
@@ -18,6 +17,6 @@ import { InfoPartidoComponent } from './info-partido/info-partido.component';
     SkeletonModule,
     DetallePartidoPageRoutingModule
   ],
-  declarations: [DetallePartidoPage, InfoPartidoComponent]
+  declarations: [DetallePartidoPage]
 })
 export class DetallePartidoPageModule {}

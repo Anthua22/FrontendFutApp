@@ -1,17 +1,14 @@
-import { Categoria } from './../../../models/models';
 import { Component, Inject, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { Partido } from 'src/app/models/models';
+import { Partido, Categoria } from 'src/app/models/models';
 import { DetallePartidoPage } from '../detalle-partido.page';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-info-partido',
-  templateUrl: './info-partido.component.html',
-  styleUrls: ['./info-partido.component.scss'],
+  templateUrl: './info-partido.page.html',
+  styleUrls: ['./info-partido.page.scss'],
 })
-export class InfoPartidoComponent implements OnInit {
-
+export class InfoPartidoPage implements OnInit {
   partido: Partido = {
     arbitro_principal: {
       nombre_completo: '',
@@ -52,4 +49,5 @@ export class InfoPartidoComponent implements OnInit {
 
 
   }
+
 }

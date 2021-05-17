@@ -17,7 +17,7 @@ export class MapaPartidoPage implements OnInit, AfterViewInit {
   }
   @ViewChild(MapComponent) mapComp: MapComponent;
   ngAfterViewInit(): void {
-    this.mapComp.load.subscribe(
+    this.mapComp.mapLoad.subscribe(
       () => {
         this.mapComp.mapInstance.resize(); // Necessary for full height
       }

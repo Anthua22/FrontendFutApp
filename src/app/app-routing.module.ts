@@ -21,6 +21,11 @@ const routes: Routes = [
     loadChildren: () => import('./partidos/partidos.module').then( m => m.PartidosPageModule),
     canActivate:[TokenGuard]
   },
+  {
+    path: 'equipos',
+    loadChildren: () => import('./equipos/equipos.module').then( m => m.EquiposPageModule)
+  },
+
 ];
 
 @NgModule({

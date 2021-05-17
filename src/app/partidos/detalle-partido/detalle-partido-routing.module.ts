@@ -1,28 +1,30 @@
-import { MapaPartidoPage } from './mapa-partido/mapa-partido.page';
-
-
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { DetallePartidoPage } from './detalle-partido.page';
-import { InfoPartidoComponent } from './info-partido/info-partido.component';
+
 
 const routes: Routes = [
   {
     path: '',
     component: DetallePartidoPage,
-    children:[
+    children: [
       {
-        path:'info',
-        component: InfoPartidoComponent
+        path: 'info',
+        loadChildren: () => import('./info-partido/info-partido.module').then(m => m.InfoPartidoPageModule)
       },
       {
-        path:'map',
-        loadChildren: () => import('./mapa-partido/mapa-partido.module').then( m => m.MapaPartidoPageModule)
+        path: 'map',
+        loadChildren: () => import('./mapa-partido/mapa-partido.module').then(m => m.MapaPartidoPageModule)
+      },
+      {
+        path: 'jugadores',
+        loadChildren: () => import('./miembros-equipo/miembros-equipo.module').then(m => m.MiembrosEquipoPageModule)
       },
       { path: '', pathMatch: 'full', redirectTo: 'info' }
     ],
   },
+
 
 ];
 
@@ -30,4 +32,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DetallePartidoPageRoutingModule {}
+export class DetallePartidoPageRoutingModule { }
