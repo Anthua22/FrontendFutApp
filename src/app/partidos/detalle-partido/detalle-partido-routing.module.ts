@@ -21,6 +21,10 @@ const routes: Routes = [
         path: 'jugadores',
         loadChildren: () => import('./miembros-equipo/miembros-equipo.module').then(m => m.MiembrosEquipoPageModule)
       },
+      {
+        path: 'staff',
+        loadChildren: () => import('./miembros-equipo/miembros-equipo.module').then(m => m.MiembrosEquipoPageModule)
+      },
       { path: '', pathMatch: 'full', redirectTo: 'info' }
     ],
   },

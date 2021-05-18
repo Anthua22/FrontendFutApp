@@ -1,3 +1,4 @@
+import { PipesModule } from './../pipes/pipes.module';
 import { MiembroEquipoCardComponent } from './miembro-equipo-card/miembro-equipo-card.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -14,6 +15,7 @@ import { EquiposPage } from './equipos.page';
     CommonModule,
     FormsModule,
     IonicModule,
+    PipesModule,
     EquiposPageRoutingModule
   ],
   declarations: [EquiposPage, MiembroEquipoCardComponent],

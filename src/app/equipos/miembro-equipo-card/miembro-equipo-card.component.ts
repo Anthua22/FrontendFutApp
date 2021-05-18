@@ -1,6 +1,6 @@
 import { MiembroEquipo } from 'src/app/models/models';
 import { Partido } from './../../models/models';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-miembro-equipo-card',
@@ -8,9 +8,14 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./miembro-equipo-card.component.scss'],
 })
 export class MiembroEquipoCardComponent implements OnInit {
-  @Input() miembro!:MiembroEquipo;
+  @Input() miembro!: MiembroEquipo;
+  @ViewChild('item') card;
+
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
+  habilitar() {
+    console.log(this.card)
+  }
 }

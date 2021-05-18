@@ -9,6 +9,7 @@ import { MiembrosEquipoPageRoutingModule } from './miembros-equipo-routing.modul
 
 import { MiembrosEquipoPage } from './miembros-equipo.page';
 
+
 @NgModule({
   imports: [
     CommonModule,

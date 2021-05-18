@@ -4,7 +4,12 @@
 </ion-header>
 
 <ion-content>
-  <ion-segment (ionChange)="segmentChanged($event)" value="locales">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="tertiary">
+      <ion-icon name="save-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-segment [(ngModel)]="type">
     <ion-segment-button value="locales">
       <ion-label>Locales</ion-label>
     </ion-segment-button>
@@ -14,21 +19,46 @@
   </ion-segment>
 
   <ion-list>
+    <ion-item *ngIf="vistaJugadores">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-label>
+              Tit:
+            </ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-label>
+              Sup:
+            </ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-label>
+              Port:
+            </ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-label>
+              Cap:
+            </ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <div [ngSwitch]="type">
+      <div *ngSwitchCase="'locales'">
+        <div *ngFor="let local of locales">
+          <app-miembro-equipo-card [miembro]="local">
+          </app-miembro-equipo-card>
+        </div>
+      </div>
+      <div *ngSwitchCase="'visitantes'">
+        <div *ngFor="let visitante of visitantes">
+          <app-miembro-equipo-card [miembro]="visitantes">
+          </app-miembro-equipo-card>
+        </div>
+      </div>
 
-    <div *ngIf="mostrandoLocales; then locales else visitantes"></div>
+    </div>
   </ion-list>
 </ion-content>
-<ng-template #locales>
-  <div *ngFor="let local of partido.equipo_local.miembros">
-    <app-miembro-equipo-card [miembro]="local">
-    </app-miembro-equipo-card>
-  </div>
-
-</ng-template>
-
-<ng-template #visitantes>
-  <div *ngFor="let visitante of partido.equipo_visitante.miembros">
-    <app-miembro-equipo-card [miembro]="visitantes">
-    </app-miembro-equipo-card>
-  </div>
-</ng-template>

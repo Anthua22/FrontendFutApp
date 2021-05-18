@@ -95,8 +95,7 @@
                             </ion-thumbnail>
                           </ion-col>
                           <ion-col>
-                            <ion-card-subtitle><b>{{partido.arbitro_principal.nombre_completo.split('-')[0]+' '+
-                                partido.arbitro_principal.nombre_completo.split('-')[1]}}</b></ion-card-subtitle>
+                            <ion-card-subtitle><b>{{partido.arbitro_principal.nombre_completo | apellidoNombre}}</b></ion-card-subtitle>
                           </ion-col>
                         </ion-row>
                       </ion-col>
@@ -111,8 +110,7 @@
                             </ion-thumbnail>
                           </ion-col>
                           <ion-col>
-                            <ion-card-subtitle><b>{{partido.arbitro_secundario.nombre_completo.split('-')[0]+' '+
-                                partido.arbitro_secundario.nombre_completo.split('-')[1]}}</b></ion-card-subtitle>
+                            <ion-card-subtitle><b>{{partido.arbitro_secundario.nombre_completo | apellidoNombre}}</b></ion-card-subtitle>
                           </ion-col>
                         </ion-row>
 
@@ -128,8 +126,7 @@
                             </ion-thumbnail>
                           </ion-col>
                           <ion-col>
-                            <ion-card-subtitle><b>{{partido.cronometrador.nombre_completo.split('-')[0]+' '+
-                                partido.cronometrador.nombre_completo.split('-')[1]}}</b></ion-card-subtitle>
+                            <ion-card-subtitle><b>{{partido.cronometrador.nombre_completo | apellidoNombre}}</b></ion-card-subtitle>
                           </ion-col>
                         </ion-row>
 
@@ -141,7 +138,7 @@
             </ngb-accordion>
           </ion-col>
           <ion-col size="2" class="ion-align-self-center">
-            <ion-button fill="clear" color="dark" (click)="showOptions()()">
+            <ion-button fill="clear" color="dark" (click)="showOptions()">
               <ion-icon size="large" name="menu"></ion-icon>
             </ion-button>
           </ion-col>
