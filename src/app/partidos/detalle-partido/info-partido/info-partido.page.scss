@@ -1,0 +1,22 @@
+.contenido {
+  margin-top: 20px;
+  padding: 8px;
+}
+
+.resultado {
+  margin-top: 20px;
+  ion-row {
+    ion-col:first-child {
+      margin-top: 7px;
+    }
+  }
+}
+
+.centrado {
+  text-align: center;
+}
+
+ion-input {
+  font-size: 20px;
+  text-align: center;
+}

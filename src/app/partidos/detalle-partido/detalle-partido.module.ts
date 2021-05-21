@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { DetallePartidoPageRoutingModule } from './detalle-partido-routing.module';
 import { SkeletonModule } from 'src/app/skeleton/skeleton.module';
 import { DetallePartidoPage } from './detalle-partido.page';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { DetallePartidoPage } from './detalle-partido.page';
     FormsModule,
     IonicModule,
     SkeletonModule,
+    PipesModule,
     DetallePartidoPageRoutingModule
   ],
   declarations: [DetallePartidoPage]

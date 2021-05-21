@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { Partido, Categoria } from 'src/app/models/models';
+import { Partido, Categoria, MiembroEquipo } from 'src/app/models/models';
 import { DetallePartidoPage } from '../detalle-partido.page';
 
 @Component({
@@ -36,14 +36,38 @@ export class InfoPartidoPage implements OnInit {
     lugar_encuentro: ''
 
   };
+  delegadoLocal: MiembroEquipo = {
+    nombre_completo: '',
+    sancionado: false,
+    foto: ''
+  };
+  delegadoVisitante: MiembroEquipo = {
+    nombre_completo: '',
+    sancionado: false,
+    foto: ''
+  };
+  golesLocales = '0';
+  golesVisitantes = '0';
+  terminado = false;
 
   constructor(@Inject(DetallePartidoPage) private parentComponent: DetallePartidoPage, private nav: NavController) { }
 
   ngOnInit() {
     this.parentComponent.partido$.subscribe(
       partido => {
-        this.partido = partido
-        console.log(this.partido);
+        this.partido = partido;
+        this.partido.equipo_local.miembros.forEach(x => {
+          if (x.rol === 'DELEGADO') {
+            this.delegadoLocal = x;
+          }
+        });
+        this.partido.equipo_visitante.miembros.forEach(x => {
+          if (x.rol === 'DELEGADO') {
+            this.delegadoVisitante = x;
+          }
+        });
+        this.terminado = partido.fecha_modificacion ? true : false;
+
       }
     );
 

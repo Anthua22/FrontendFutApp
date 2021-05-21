@@ -4,11 +4,10 @@
 
 <ion-content>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="tertiary">
+    <ion-fab-button color="tertiary" [disabled]="!terminado">
       <ion-icon name="save-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  <ion-title class="welcome">Detalle del Partido</ion-title>
   <ion-grid>
     <ion-row>
       <ion-col>
@@ -18,14 +17,99 @@
         <img [src]="partido.equipo_visitante.escudo" />
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-text>Fecha Partido:</ion-text>
-        <ion-text><b>{{partido.fecha_encuentro}}</b></ion-text>
-      </ion-col>
-      <ion-col></ion-col>
-    </ion-row>
+
   </ion-grid>
+  <div class="contenido">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-text>Fecha del Partido:</ion-text>
+        </ion-col>
+        <ion-col>
+          <ion-text><b>{{partido.fecha_encuentro | fecha}}</b></ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-text>Hora del Partido:</ion-text>
+        </ion-col>
+        <ion-col>
+          <ion-text><b>{{partido.fecha_encuentro | hora}}</b></ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-text>Lugar del Encuentro:</ion-text>
+        </ion-col>
+        <ion-col>
+          <ion-text><b>{{partido.lugar_encuentro }}</b></ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-text>Delegado Local:</ion-text>
+        </ion-col>
+        <ion-col>
+          <ion-text><b>{{delegadoLocal.nombre_completo | apellidoNombre}}</b></ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-text>Delegado Visitante:</ion-text>
+        </ion-col>
+        <ion-col>
+          <ion-text><b>{{delegadoVisitante.nombre_completo | apellidoNombre}}</b></ion-text>
+        </ion-col>
+      </ion-row>
+      <div class="resultado">
+        <ion-row>
+          <ion-col>
+            Ha acabado el partido?
+          </ion-col>
+          <ion-col>
+            <ion-toggle color="primary" [(ngModel)]="terminado"></ion-toggle>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-grid>
+
+  </div>
+
+  <ion-card *ngIf="terminado">
+    <ion-card-header>
+      <ion-card-title>Goles</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-row class="ion-justify-content-center">
+              {{partido.equipo_local.nombre}}
+            </ion-row>
+            <ion-row>
+              <ion-range min="0" max="50" pin color="primary" [(ngModel)]="golesLocales">
+              </ion-range>
+            </ion-row>
+            <ion-row class="ion-justify-content-center">
+              <ion-input type="text" name="locales" [(ngModel)]="golesLocales"></ion-input>
+            </ion-row>
+          </ion-col>
+          <ion-col>
+            <ion-row class="ion-justify-content-center">
+              {{partido.equipo_visitante.nombre}}
+            </ion-row>
+            <ion-row>
+              <ion-range min="0" max="50" pin color="primary" [(ngModel)]="golesVisitantes">
+              </ion-range>
+            </ion-row>
+            <ion-row class="ion-justify-content-center">
+              <ion-input type="text" name="vistantes" [(ngModel)]="golesVisitantes"></ion-input>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
 
 
 </ion-content>

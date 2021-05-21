@@ -1,6 +1,5 @@
 import { Categoria, Partido } from 'src/app/models/models';
 import { Component, Input, OnInit } from '@angular/core';
-import * as moment from 'moment';
 import { ActionSheetController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -40,7 +39,6 @@ export class PartidoCardComponent implements OnInit {
   };
 
   constructor(private nav: NavController, private actionSheetCtrl: ActionSheetController, private router: Router) {
-    moment.locale('es');
   }
 
   ngOnInit() {
@@ -51,7 +49,6 @@ export class PartidoCardComponent implements OnInit {
   }
 
   async showOptions() {
-    //  if(prod.mine){
     const actSheet = await this.actionSheetCtrl.create({
       header: this.partido.lugar_encuentro,
       buttons: [{

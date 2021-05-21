@@ -6,9 +6,10 @@ import { FormsModule } from '@angular/forms';
 import { AuthPageRoutingModule } from './auth-routing.module';
 import { LoginPage } from './login/login.page';
 import { RegisterPage } from './register/register.page';
-import { ValidatorsModule } from '../validators/validators.module';
+
 import { IonicModule } from '@ionic/angular';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
+import { ValidatorsModule } from '../validators/validators.module';
 
 
 @NgModule({

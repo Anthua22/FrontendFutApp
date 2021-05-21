@@ -1,3 +1,4 @@
+import { LogoutGuard } from './guards/logout.guard';
 import { TokenGuard } from './guards/token.guard';
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes, CanActivate } from '@angular/router';
@@ -10,7 +11,8 @@ const routes: Routes = [
   },
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then( m => m.AuthPageModule)
+    loadChildren: () => import('./auth/auth.module').then( m => m.AuthPageModule),
+    canActivate:[LogoutGuard]
   },
   {
     path: 'users',

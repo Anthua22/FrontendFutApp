@@ -32,11 +32,7 @@
     </ion-refresher-content>
   </ion-refresher>
   <ion-list *ngIf="data">
-    <ion-item *ngFor="let partido of partidos">
-      <app-partido-card [partido]="partido"></app-partido-card>
-    </ion-item>
-
-
+    <app-partido-card [partido]="partido" *ngFor="let partido of partidos"></app-partido-card>
   </ion-list>
   <ng-container>
     <app-partido-skeleton *ngIf="!data"></app-partido-skeleton>

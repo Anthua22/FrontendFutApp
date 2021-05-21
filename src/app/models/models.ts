@@ -51,6 +51,7 @@ export interface Partido {
   lt?: number,
   ln?: number,
   jornada: number,
+  resultado?:string,
   lugar_encuentro: string,
   acta?: string,
   fecha_modificacion?: Date

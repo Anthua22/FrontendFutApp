@@ -6,7 +6,7 @@ import * as moment from 'moment';
 })
 export class FechaPipe implements PipeTransform {
   constructor(){
-
+    moment.locale('es');
   }
   transform(value: Date): string {
     return moment(value).format('ll');
