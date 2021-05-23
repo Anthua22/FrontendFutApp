@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Info Miembro</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-avatar>
+            <img [src]="miembro.foto" />
+          </ion-avatar>
+        </ion-col>
+        <ion-col>
+          <ion-title>{{miembro.nombre_completo | apellidoNombre}}</ion-title>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  <form #miembroForm="ngForm" (ngSubmit)="changeInfo()">
+    <ion-grid>
+      <ion-row>
+        <ion-col>Dorsal</ion-col>
+        <ion-col>
+          <ion-row>
+            <ion-range name="dorsal-range" min="1" max="150"></ion-range>
+          </ion-row>
+          <ion-row>
+            <ion-input name="dorsal" type="text" [(ngModel)]="miembro.dorsal"></ion-input>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>Titular</ion-col>
+        <ion-col>
+          <ion-toggle name="titular" [(ngModel)]="miembro.titular"></ion-toggle>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>Suplente</ion-col>
+        <ion-col><ion-toggle name="suplente" [(ngModel)]="!miembro.titular"></ion-toggle></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>Portero</ion-col>
+        <ion-col><ion-toggle name="portero" [(ngModel)]="miembro.portero"></ion-toggle> </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>Capitán</ion-col>
+        <ion-col> <ion-toggle name="capitan" [(ngModel)]="miembro.capitan"></ion-toggle></ion-col>
+      </ion-row>
+
+      <ion-row style="margin-top: 20px;">
+        <ion-col>
+          <ion-button
+            type="submit"
+            color="primary"
+            expand="block"
+          >
+          <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+            Guardar
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button
+            color="danger"
+            expand="block"
+            (click)="cancel()"
+          >
+            <ion-icon name="trash" slot="start"></ion-icon>
+            Cancelar
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+
+</ion-content>

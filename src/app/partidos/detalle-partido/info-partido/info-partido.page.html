@@ -87,7 +87,7 @@
               {{partido.equipo_local.nombre}}
             </ion-row>
             <ion-row>
-              <ion-range min="0" max="50" pin color="primary" [(ngModel)]="golesLocales">
+              <ion-range min="0" max="25" pin color="primary" [(ngModel)]="golesLocales">
               </ion-range>
             </ion-row>
             <ion-row class="ion-justify-content-center">
@@ -99,7 +99,7 @@
               {{partido.equipo_visitante.nombre}}
             </ion-row>
             <ion-row>
-              <ion-range min="0" max="50" pin color="primary" [(ngModel)]="golesVisitantes">
+              <ion-range min="0" max="25" pin color="primary" [(ngModel)]="golesVisitantes">
               </ion-range>
             </ion-row>
             <ion-row class="ion-justify-content-center">
@@ -110,6 +110,4 @@
       </ion-grid>
     </ion-card-content>
   </ion-card>
-
-
 </ion-content>

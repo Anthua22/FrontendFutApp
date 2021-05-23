@@ -21,9 +21,9 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-  PipesModule,
+    PipesModule,
     RouterModule.forChild(routes)
   ],
   declarations: [InfoPartidoPage]
 })
-export class InfoPartidoPageModule {}
+export class InfoPartidoPageModule { }

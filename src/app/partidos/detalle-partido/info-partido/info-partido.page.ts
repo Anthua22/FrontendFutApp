@@ -67,11 +67,8 @@ export class InfoPartidoPage implements OnInit {
           }
         });
         this.terminado = partido.fecha_modificacion ? true : false;
-
       }
     );
-
-
   }
 
 }

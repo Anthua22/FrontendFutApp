@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Partido, MiembroEquipo } from 'src/app/models/models';
-import { PartidosService } from '../../services/partidos.service';
 import { DetallePartidoPage } from '../detalle-partido.page';
 
 @Component({

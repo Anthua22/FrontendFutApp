@@ -1,9 +1,3 @@
-export interface Auth {
-  _id?: string,
-  email?: string;
-  password?: string;
-}
-
 export enum Categoria {
   PRIMERA = "Primera",
   SEGUNDA = "Segunda",
@@ -18,6 +12,19 @@ export enum Rol {
   ADMIN,
   USER
 }
+
+export enum Tarjeta {
+  ROJA,
+  AMARILLA
+}
+
+export interface Auth {
+  _id?: string,
+  email?: string;
+  password?: string;
+}
+
+
 export interface User extends Auth {
   telefono?: string;
   nombre_completo: string;
@@ -27,7 +34,22 @@ export interface User extends Auth {
 }
 
 export interface MiembroEquipo extends User {
-  sancionado: boolean
+  sancionado: boolean,
+  titular?: boolean,
+  dorsal?: number,
+  capitan?: boolean,
+  portero?:boolean,
+  goles?: Gol[],
+  sancion_partido?:Sancion[]
+}
+
+export interface Gol {
+  minuto: string
+}
+
+export interface Sancion {
+  tarjeta: Tarjeta,
+  minuto: string
 }
 
 export interface Equipo {
@@ -51,7 +73,7 @@ export interface Partido {
   lt?: number,
   ln?: number,
   jornada: number,
-  resultado?:string,
+  resultado?: string,
   lugar_encuentro: string,
   acta?: string,
   fecha_modificacion?: Date

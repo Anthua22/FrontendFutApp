@@ -21,7 +21,7 @@ const routes: Routes = [
   {
     path: 'partidos',
     loadChildren: () => import('./partidos/partidos.module').then( m => m.PartidosPageModule),
-    canActivate:[TokenGuard]
+
   },
   {
     path: 'equipos',
