@@ -37,6 +37,7 @@ export interface MiembroEquipo extends User {
   sancionado: boolean,
   titular?: boolean,
   dorsal?: number,
+  suplente?:boolean,
   capitan?: boolean,
   portero?:boolean,
   goles?: Gol[],

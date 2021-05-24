@@ -12,6 +12,7 @@ export class AccionesMiembroPage implements OnInit {
   constructor(public modalCtrl: ModalController, public toast: ToastController) { }
 
   ngOnInit() {
+    this.miembro.dorsal = 0;
   }
 
   cancel() {
@@ -21,4 +22,16 @@ export class AccionesMiembroPage implements OnInit {
   changeInfo() {
 
   }
+
+  changeTitular() {
+    this.miembro.titular = !this.miembro.suplente;
+    this.miembro.suplente = !this.miembro.titular;
+  }
+
+  changeSup() {
+    this.miembro.titular = false;
+    this.miembro.suplente = true;
+  }
+
+
 }

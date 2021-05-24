@@ -1,3 +1,4 @@
+import { ValidatorsModule } from './../../../../validators/validators.module';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -12,7 +13,8 @@ import { AccionesMiembroPage } from './acciones-miembro.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    PipesModule
+    PipesModule,
+    ValidatorsModule
   ],
   declarations: [AccionesMiembroPage],
   exports:[AccionesMiembroPage]
