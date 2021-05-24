@@ -9,6 +9,7 @@ import { ModalController, ToastController } from '@ionic/angular';
 })
 export class AccionesMiembroPage implements OnInit {
   @Input() miembro: MiembroEquipo;
+
   constructor(public modalCtrl: ModalController) { }
 
   ngOnInit() {
