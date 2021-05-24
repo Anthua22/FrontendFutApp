@@ -1,5 +1,5 @@
 import { MiembroEquipo } from 'src/app/models/models';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { AccionesMiembroPage } from 'src/app/partidos/detalle-partido/miembros-equipo/acciones-miembro/acciones-miembro.page';
 
@@ -15,6 +15,8 @@ export class MiembroEquipoCardComponent implements OnInit {
     sancionado: false
   };
   @ViewChild('item') card;
+
+  @Output() miembroChange = new EventEmitter<MiembroEquipo>();
 
   constructor(public modalCtrl: ModalController, public toast: ToastController,) { }
 
@@ -35,11 +37,7 @@ export class MiembroEquipoCardComponent implements OnInit {
     const result = await modal.onDidDismiss();
 
     if (result.data == true) {
-      (await this.toast.create({
-        position: 'bottom',
-        duration: 3000,
-        message: 'Password Changed Successfully'
-      })).present();
+      this.miembroChange.emit(this.miembro);
     }
   }
 }

@@ -58,7 +58,7 @@
     <div [ngSwitch]="type">
       <div *ngSwitchCase="'locales'">
         <div *ngFor="let local of locales">
-          <app-miembro-equipo-card [miembro]="local">
+          <app-miembro-equipo-card [miembro]="local" (miembroChange)="obtenerDatosMiembro($event)">
           </app-miembro-equipo-card>
         </div>
       </div>

@@ -34,5 +34,9 @@ export class MiembrosEquipoPage implements OnInit {
 
   }
 
+  obtenerDatosMiembro(miembro: MiembroEquipo) {
+    console.log(miembro)
+  }
+
 
 }

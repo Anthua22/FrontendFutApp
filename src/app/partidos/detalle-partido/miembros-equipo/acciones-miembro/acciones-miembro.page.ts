@@ -9,7 +9,7 @@ import { ModalController, ToastController } from '@ionic/angular';
 })
 export class AccionesMiembroPage implements OnInit {
   @Input() miembro: MiembroEquipo;
-  constructor(public modalCtrl: ModalController, public toast: ToastController) { }
+  constructor(public modalCtrl: ModalController) { }
 
   ngOnInit() {
     this.miembro.dorsal = 0;
@@ -20,7 +20,7 @@ export class AccionesMiembroPage implements OnInit {
   }
 
   changeInfo() {
-
+    this.modalCtrl.dismiss(true);
   }
 
   changeTitular() {
