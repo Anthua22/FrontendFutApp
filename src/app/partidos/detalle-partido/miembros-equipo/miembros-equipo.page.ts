@@ -56,6 +56,7 @@ export class MiembrosEquipoPage implements OnInit {
   }
 
   obtenerDatosMiembro(miembro: MiembroEquipo) {
+    console.log(miembro)
     if (miembro.titular === true) {
       if (this.checkJugadorEquipo(miembro, this.partido.equipo_local)) {
         if (this.checkNumTit(this.numeroTitLocales + 1)) {
@@ -69,6 +70,9 @@ export class MiembrosEquipoPage implements OnInit {
     } else if (miembro.suplente === true) {
       if (this.checkJugadorEquipo(miembro, this.partido.equipo_local)) {
         this.numeroSuplLocales++;
+      } else {
+        console.log('hola')
+        this.numeroSuplVisitantes++;
       }
     }
   }

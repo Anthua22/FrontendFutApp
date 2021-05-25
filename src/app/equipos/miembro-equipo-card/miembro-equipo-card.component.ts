@@ -30,10 +30,8 @@ export class MiembroEquipoCardComponent implements OnInit {
     public toast: ToastController
   ) {}
 
-  ngOnInit() {}
-
-  habilitar() {
-    console.log(this.card);
+  ngOnInit() {
+    console.log(this.miembro)
   }
 
   async openChangeInfo() {
@@ -44,6 +42,7 @@ export class MiembroEquipoCardComponent implements OnInit {
 
     await modal.present();
     const result = await modal.onDidDismiss();
+    console.log(result)
 
     if (result.data == true) {
       if (this.miembro.titular === true || this.miembro.suplente === true) {

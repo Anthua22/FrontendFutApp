@@ -9,6 +9,8 @@ import { ModalController, ToastController } from '@ionic/angular';
 })
 export class AccionesMiembroPage implements OnInit {
   @Input() miembro: MiembroEquipo;
+  titular = false;
+  suplente = false;
 
   constructor(public modalCtrl: ModalController) { }
 
@@ -21,6 +23,8 @@ export class AccionesMiembroPage implements OnInit {
   }
 
   changeInfo() {
+    this.miembro.suplente = this.suplente;
+    this.miembro.titular = this.titular;
     this.modalCtrl.dismiss(true);
   }
 

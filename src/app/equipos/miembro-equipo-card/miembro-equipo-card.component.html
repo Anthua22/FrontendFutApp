@@ -1,35 +1,40 @@
 <ion-item-sliding id="item100">
-  <ion-item disabled #item>
+  <ion-item
+    [disabled]="miembro.suplente || miembro.titular ? false : true"
+    #item
+  >
     <ion-thumbnail slot="start">
-      <img [src]="miembro.foto">
+      <img [src]="miembro.foto" />
     </ion-thumbnail>
     <ion-label>
-      <h2><b>{{miembro.nombre_completo | apellidoNombre}}</b></h2>
+      <h2>
+        <b>{{ miembro.nombre_completo | apellidoNombre }}</b>
+      </h2>
       <h3
-        *ngIf="miembro.rol === 'ENTRENADOR' || miembro.rol === 'DELEGADO' || miembro.rol === 'ENCARGADO_MATERIAL' || miembro.rol ==='PREPARADOR_FISICO' ">
-        {{miembro.rol}}</h3>
+        *ngIf="
+          miembro.rol === 'ENTRENADOR' ||
+          miembro.rol === 'DELEGADO' ||
+          miembro.rol === 'ENCARGADO_MATERIAL' ||
+          miembro.rol === 'PREPARADOR_FISICO'
+        "
+      >
+        {{ miembro.rol }}
+      </h3>
     </ion-label>
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-label>
-            DORSAL
-          </ion-label>
+          <ion-label> DORSAL </ion-label>
         </ion-col>
         <ion-col>
-          <ion-label>
-            TA
-          </ion-label>
+          <ion-label> TA </ion-label>
         </ion-col>
         <ion-col>
-          <ion-label>
-            TR
-          </ion-label>
+          <ion-label> TR </ion-label>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-item>
-
 
   <ion-item-options side="end">
     <ion-item-option color="secondary" (click)="openChangeInfo()">
