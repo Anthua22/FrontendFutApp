@@ -21,23 +21,27 @@ export class MiembroEquipoCardComponent implements OnInit {
     foto: '',
     sancionado: false,
   };
+  deshabilitado = true;
+
+  @Input() totalTit: number;
+  @Input() totalCap: number;
   @ViewChild('item') card;
 
-  @Output() miembroChange = new EventEmitter<MiembroEquipo>();
+  @Output() miembroChange = new EventEmitter<void>();
 
   constructor(
     public modalCtrl: ModalController,
     public toast: ToastController
-  ) {}
+  ) { }
 
   ngOnInit() {
-    console.log(this.miembro)
+    // console.log(this.miembro)
   }
 
   async openChangeInfo() {
     const modal = await this.modalCtrl.create({
       component: AccionesMiembroPage,
-      componentProps: { miembro: this.miembro },
+      componentProps: { miembro: this.miembro, totalTitu: this.totalTit, totalCap: this.totalCap },
     });
 
     await modal.present();
@@ -45,10 +49,10 @@ export class MiembroEquipoCardComponent implements OnInit {
     console.log(result)
 
     if (result.data == true) {
-      if (this.miembro.titular === true || this.miembro.suplente === true) {
-        this.card.disabled = false;
+      if ((this.miembro.titular === true || this.miembro.suplente === true) && this.totalTit + 1 <= 5) {
+        this.deshabilitado = false;
       }
-      this.miembroChange.emit(this.miembro);
+      this.miembroChange.emit();
     }
   }
 }

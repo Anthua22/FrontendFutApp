@@ -25,10 +25,12 @@
         <ion-col class="ion-align-self-center">Dorsal</ion-col>
         <ion-col>
           <ion-row>
-            <ion-range name="dorsal-range" min="1" pin max="150" [(ngModel)]="miembro.dorsal"></ion-range>
+            <ion-range name="dorsal-range" min="1" pin max="150" [(ngModel)]="miembro.dorsal"
+              [disabled]="titular && titular === true|| suplente  && suplente === true? false: true"></ion-range>
           </ion-row>
           <ion-row>
-            <ion-input name="dorsal" type="text" [(ngModel)]="miembro.dorsal"></ion-input>
+            <ion-input name="dorsal" type="text" [(ngModel)]="miembro.dorsal"
+              [disabled]="titular && titular === true|| suplente  && suplente === true? false: true"></ion-input>
           </ion-row>
         </ion-col>
       </ion-row>
@@ -39,15 +41,15 @@
             <ion-row>
               <ion-col class="ion-align-self-center">Titular</ion-col>
               <ion-col>
-                <ion-toggle name="titular" (ionChange)="changeTitular()" #titularModel="ngModel"
-                  [(ngModel)]="titular"></ion-toggle>
+                <ion-toggle name="titular" #titularModel="ngModel" [(ngModel)]="titular">
+                </ion-toggle>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col class="ion-align-self-center">Suplente</ion-col>
               <ion-col>
-                <ion-toggle name="suplente" (ionChange)="changeSup()" #suplenteModel="ngModel"
-                  [(ngModel)]="suplente"></ion-toggle>
+                <ion-toggle name="suplente" #suplenteModel="ngModel" [(ngModel)]="suplente">
+                </ion-toggle>
               </ion-col>
             </ion-row>
           </div>
@@ -56,13 +58,15 @@
           <ion-row>
             <ion-col class="ion-align-self-center">Portero</ion-col>
             <ion-col>
-              <ion-toggle name="portero" [(ngModel)]="miembro.portero"></ion-toggle>
+              <ion-toggle name="portero" [(ngModel)]="miembro.portero"
+                [disabled]=" titular === true || suplente === true? false: true"></ion-toggle>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col class="ion-align-self-center">Capitán</ion-col>
             <ion-col>
-              <ion-toggle name="capitan" [(ngModel)]="miembro.capitan"></ion-toggle>
+              <ion-toggle name="capitan" [(ngModel)]="capitan"
+                [disabled]="titular && titular === true|| suplente  && suplente === true? false: true"></ion-toggle>
             </ion-col>
           </ion-row>
         </ion-col>

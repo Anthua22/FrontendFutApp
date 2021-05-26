@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 
 import { Partido, MiembroEquipo, Equipo } from 'src/app/models/models';
 import { DetallePartidoPage } from '../detalle-partido.page';
@@ -19,11 +20,15 @@ export class MiembrosEquipoPage implements OnInit {
   numeroSuplLocales = 0;
   numeroTitVisitantes = 0;
   numeroSuplVisitantes = 0;
+  numeroPortLocales = 0;
+  numeroPortVisitantes = 0;
+  numeroCapitanLocales = 0;
+  numeroCapitanVisitantes = 0;
 
   constructor(
     @Inject(DetallePartidoPage) private parentComponent: DetallePartidoPage,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.parentComponent.partido$.subscribe((x) => {
@@ -55,30 +60,47 @@ export class MiembrosEquipoPage implements OnInit {
     });
   }
 
-  obtenerDatosMiembro(miembro: MiembroEquipo) {
-    console.log(miembro)
-    if (miembro.titular === true) {
-      if (this.checkJugadorEquipo(miembro, this.partido.equipo_local)) {
-        if (this.checkNumTit(this.numeroTitLocales + 1)) {
-          this.numeroTitLocales++;
-        }
-      } else {
-        if (this.checkNumTit(this.numeroTitVisitantes + 1)) {
-          this.numeroTitVisitantes++;
-        }
-      }
-    } else if (miembro.suplente === true) {
-      if (this.checkJugadorEquipo(miembro, this.partido.equipo_local)) {
-        this.numeroSuplLocales++;
-      } else {
-        console.log('hola')
-        this.numeroSuplVisitantes++;
-      }
-    }
+  obtenerDatosMiembro(confirmacion: any) {
+    this.countDatos();
+
   }
 
-  private checkNumTit(numero: number): boolean {
-    return numero <= 5;
+  private countDatos() {
+    this.numeroSuplLocales = 0;
+    this.numeroTitLocales = 0;
+    this.numeroSuplVisitantes = 0;
+    this.numeroTitVisitantes = 0;
+    this.numeroCapitanLocales = 0;
+    this.numeroCapitanVisitantes = 0;
+    this.numeroPortLocales = 0;
+    this.numeroPortVisitantes = 0;
+    this.partido.equipo_local.miembros.forEach((x) => {
+      if (x.titular === true) {
+        this.numeroTitLocales++;
+      } else if (x.suplente === true) {
+        this.numeroSuplLocales++;
+      }
+      if (x.capitan === true) {
+        this.numeroCapitanLocales++;
+      }
+      if (x.portero === true) {
+        this.numeroPortLocales++;
+      }
+    });
+
+    this.partido.equipo_visitante.miembros.forEach(x => {
+      if (x.titular === true) {
+        this.numeroTitVisitantes++;
+      } else if (x.suplente === true) {
+        this.numeroSuplVisitantes++;
+      }
+      if (x.capitan === true) {
+        this.numeroCapitanVisitantes++;
+      }
+      if (x.portero === true) {
+        this.numeroPortVisitantes++;
+      }
+    });
   }
 
   private checkJugadorEquipo(
