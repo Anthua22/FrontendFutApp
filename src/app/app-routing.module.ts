@@ -6,7 +6,7 @@ import { PreloadAllModules, RouterModule, Routes, CanActivate } from '@angular/r
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'auth/login',
+    redirectTo: 'partidos',
     pathMatch: 'full'
   },
   {

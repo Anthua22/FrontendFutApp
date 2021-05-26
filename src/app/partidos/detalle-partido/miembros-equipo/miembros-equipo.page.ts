@@ -103,13 +103,7 @@ export class MiembrosEquipoPage implements OnInit {
     });
   }
 
-  private checkJugadorEquipo(
-    miembro: MiembroEquipo,
-    equipo: Equipo
-  ): MiembroEquipo {
-    return equipo.miembros.find(
-      (x) =>
-        x.nombre_completo === miembro.nombre_completo && x._id === miembro._id
-    );
+  obtenerSancionesMiembro() {
+
   }
 }

@@ -14,8 +14,9 @@ export enum Rol {
 }
 
 export enum Tarjeta {
-  ROJA,
-  AMARILLA
+  ROJA = "ROJA",
+  AMARILLA = "AMARILLA",
+  SGAMARILLA = "SEGUNDA AMARILLA"
 }
 
 export interface Auth {
@@ -45,12 +46,13 @@ export interface MiembroEquipo extends User {
 }
 
 export interface Gol {
-  minuto: string
+  minuto: number
 }
 
 export interface Sancion {
   tarjeta: Tarjeta,
-  minuto: string
+  minuto: number,
+  motivo:string;
 }
 
 export interface Equipo {

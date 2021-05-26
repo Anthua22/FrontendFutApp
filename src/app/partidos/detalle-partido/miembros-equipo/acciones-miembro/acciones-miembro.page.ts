@@ -33,6 +33,10 @@ export class AccionesMiembroPage implements OnInit {
     this.modalCtrl.dismiss(false);
   }
 
+  tieneDorsal(): boolean {
+    return isNaN(this.miembro.dorsal);
+  }
+
   async changeInfo() {
     if (this.totalTitu + 1 <= 5) {
       this.miembro.suplente = this.suplente;

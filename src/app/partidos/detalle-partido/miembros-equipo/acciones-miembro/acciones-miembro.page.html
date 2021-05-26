@@ -34,7 +34,6 @@
           </ion-row>
         </ion-col>
       </ion-row>
-
       <ion-row>
         <ion-col>
           <div ngModelGroup="titsupGroup" #titsupGroupModel="ngModelGroup" appTitsup="titular,suplente">
@@ -73,14 +72,17 @@
       </ion-row>
       <ion-row *ngIf="titsupGroupModel.invalid">
         <ion-col>
-          <ion-label class="error">El jugador puede no ser titular y suplente a la vez*</ion-label>
+          <ion-label class="error">El jugador no puede ser titular y suplente a la vez*</ion-label>
         </ion-col>
       </ion-row>
-
-
+      <ion-row *ngIf="(titularModel.value === true || suplenteModel.value==true) && tieneDorsal()">
+        <ion-col>
+          <ion-label class="error">El jugador debe tener un dorsal asignado*</ion-label>
+        </ion-col>
+      </ion-row>
       <ion-row style="margin-top: 40px;">
         <ion-col>
-          <ion-button type="submit" color="primary" expand="block" [disabled]="miembroForm.invalid">
+          <ion-button type="submit" color="primary" expand="block" [disabled]="miembroForm.invalid || tieneDorsal()">
             <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
             Guardar
           </ion-button>
