@@ -74,7 +74,7 @@
       </div>
       <div *ngSwitchCase="'visitantes'">
         <div *ngFor="let visitante of visitantes">
-          <app-miembro-equipo-card [miembro]="visitante" (miembroChange)="obtenerDatosMiembro($event)" (miembroSanciones)="obtenerSancionesMiembro($event)"
+          <app-miembro-equipo-card [miembro]="visitante" (miembroChange)="obtenerDatosMiembro($event)"
             [totalCap]="numeroCapitanVisitantes" [totalTit]="numeroTitVisitantes">
           </app-miembro-equipo-card>
         </div>

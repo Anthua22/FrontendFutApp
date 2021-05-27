@@ -50,7 +50,7 @@ export class InfoPartidoPage implements OnInit {
   golesVisitantes = '0';
   terminado = false;
 
-  constructor(@Inject(DetallePartidoPage) private parentComponent: DetallePartidoPage, private nav: NavController) { }
+  constructor(@Inject(DetallePartidoPage) private parentComponent: DetallePartidoPage) { }
 
   ngOnInit() {
     this.parentComponent.partido$.subscribe(

@@ -63,7 +63,11 @@ export interface Equipo {
   miembros?: MiembroEquipo[],
   email: string,
   categoria: Categoria,
-  direccion_campo: string
+  direccion_campo: string,
+  numeroFaltasPrimeraParte?:number,
+  numeroFaltasSegundaParte?:number,
+  tiempoMuertoPrimeraParte?:boolean,
+  tiempoMuertoSegundaParte?:boolean
 }
 export interface Partido {
   _id?: string,

@@ -34,7 +34,6 @@ export class MiembroEquipoCardComponent implements OnInit {
   @Input() totalCap: number;
 
   @Output() miembroChange = new EventEmitter<void>();
-  @Output() miembroSanciones = new EventEmitter<void>();
 
   constructor(
     public modalCtrl: ModalController,
@@ -82,7 +81,6 @@ export class MiembroEquipoCardComponent implements OnInit {
     const result = await modal.onDidDismiss();
     if (result.data == true) {
       this.checkTarjetas();
-      this.miembroSanciones.emit();
     }
   }
 

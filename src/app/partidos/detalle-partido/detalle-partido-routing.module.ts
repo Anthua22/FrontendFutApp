@@ -25,9 +25,14 @@ const routes: Routes = [
         path: 'staff',
         loadChildren: () => import('./miembros-equipo/miembros-equipo.module').then(m => m.MiembrosEquipoPageModule)
       },
+      {
+        path: 'faltas-tm',
+        loadChildren: () => import('./faltas-tm/faltas-tm.module').then(m => m.FaltasTMPageModule)
+      },
       { path: '', pathMatch: 'full', redirectTo: 'info' }
     ],
   },
+
 
 
 ];

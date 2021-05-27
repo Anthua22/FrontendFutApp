@@ -103,7 +103,5 @@ export class MiembrosEquipoPage implements OnInit {
     });
   }
 
-  obtenerSancionesMiembro() {
 
-  }
 }
