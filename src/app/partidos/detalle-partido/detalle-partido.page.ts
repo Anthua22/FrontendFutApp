@@ -20,7 +20,6 @@ export class DetallePartidoPage implements OnInit {
   }
 
   ngOnInit() {
-
     this.partido$.subscribe(
       partido => {
         this.partido = partido;
@@ -31,6 +30,10 @@ export class DetallePartidoPage implements OnInit {
 
   getPartido(): Observable<Partido> {
     return this.partido$;
+  }
+
+  generarPDF() {
+
   }
 
 }
