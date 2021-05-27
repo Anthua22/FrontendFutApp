@@ -16,16 +16,18 @@ const routes: Routes = [
   },
   {
     path: 'users',
-    loadChildren: () => import('./users/users.module').then( m => m.UsersPageModule)
+    loadChildren: () => import('./users/users.module').then( m => m.UsersPageModule),
+    canActivate:[TokenGuard]
   },
   {
     path: 'partidos',
     loadChildren: () => import('./partidos/partidos.module').then( m => m.PartidosPageModule),
-
+    canActivate:[TokenGuard]
   },
   {
     path: 'equipos',
-    loadChildren: () => import('./equipos/equipos.module').then( m => m.EquiposPageModule)
+    loadChildren: () => import('./equipos/equipos.module').then( m => m.EquiposPageModule),
+    canActivate:[TokenGuard]
   },
   { path: '**', redirectTo: 'partidos' },
 

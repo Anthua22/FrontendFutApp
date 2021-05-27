@@ -18,7 +18,7 @@ export class TokenGuard implements CanActivate {
       if (ok === true) {
         return true;
       } else {
-        return this.router.createUrlTree(['/partidos']);
+        return this.router.createUrlTree(['/auth/login']);
       }
     }));
   }
