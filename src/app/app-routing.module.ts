@@ -27,6 +27,7 @@ const routes: Routes = [
     path: 'equipos',
     loadChildren: () => import('./equipos/equipos.module').then( m => m.EquiposPageModule)
   },
+  { path: '**', redirectTo: 'partidos' },
 
 ];
 

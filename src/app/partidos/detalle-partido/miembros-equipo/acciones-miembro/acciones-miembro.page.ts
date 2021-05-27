@@ -15,6 +15,7 @@ export class AccionesMiembroPage implements OnInit {
   titular = false;
   suplente = false;
   capitan = false;
+  cargos = ['ENTRENADOR', 'DELEGADO', 'ENCARGADO_MATERIAL', 'PREPARADOR_FISICO']
 
   constructor(public modalCtrl: ModalController, private toastCtrl: ToastController) { }
 
@@ -33,8 +34,13 @@ export class AccionesMiembroPage implements OnInit {
     this.modalCtrl.dismiss(false);
   }
 
-  tieneDorsal(): boolean {
-    return isNaN(this.miembro.dorsal);
+  campoObligatorio(): boolean {
+    if (this.miembro.rol === 'JUGADOR') {
+      return isNaN(this.miembro.dorsal);
+    }else{
+      return this.miembro.rol!=='' && this.miembro.rol !== undefined;
+    }
+
   }
 
   async changeInfo() {

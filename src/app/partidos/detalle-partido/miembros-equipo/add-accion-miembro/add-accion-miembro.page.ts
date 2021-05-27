@@ -1,7 +1,7 @@
 import { Sancion, Tarjeta } from './../../../../models/models';
 import { Gol, MiembroEquipo } from 'src/app/models/models';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ModalController, ToastController } from '@ionic/angular';
+import { Component, Input, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-add-accion-miembro',
@@ -34,7 +34,6 @@ export class AddAccionMiembroPage implements OnInit {
   constructor(public modalCtrl: ModalController) { }
 
   ngOnInit() {
-    console.log(this.miembro.sancion_partido)
     if (this.miembro.sancion_partido) {
       this.miembro.sancion_partido.forEach(x => {
         if (x.tarjeta === Tarjeta.AMARILLA) {
@@ -62,9 +61,15 @@ export class AddAccionMiembroPage implements OnInit {
     let contador = 0;
     this.hayGoles = this.goles > 0;
     if (this.miembro.goles) {
+      this.removeGolesExtras();
       this.miembro.goles.forEach(x => {
         this.golesArray.push(x);
-      })
+      });
+      contador = this.miembro.goles.length;
+      while (contador < this.goles) {
+        this.golesArray.push({ minuto: 0 });
+        contador++;
+      }
     } else {
       while (contador < this.goles) {
         this.golesArray.push({ minuto: 0 });
@@ -74,6 +79,16 @@ export class AddAccionMiembroPage implements OnInit {
 
   }
 
+  removeGolesExtras() {
+    let contador = 0;
+    if (this.goles < this.miembro.goles.length) {
+      contador = this.miembro.goles.length - this.goles;
+      for (let i = 0; i < contador; i++) {
+        this.miembro.goles.pop();
+      }
+
+    }
+  }
 
   save() {
     this.miembro.sancion_partido = [];

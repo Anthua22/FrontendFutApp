@@ -1,3 +1,4 @@
+import { TokenGuard } from './../guards/token.guard';
 
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -12,7 +13,9 @@ const routes: Routes = [
 
   {
     path: ':id',
-    loadChildren: ()=>import('./detalle-partido/detalle-partido.module').then(m=>m.DetallePartidoPageModule)
+    loadChildren: ()=>import('./detalle-partido/detalle-partido.module').then(m=>m.DetallePartidoPageModule),
+    canActivate:[TokenGuard]
+
   }
 
 ];

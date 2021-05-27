@@ -7,43 +7,46 @@
 <ion-content class="contenido">
   <form (ngSubmit)="save()">
     <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-title>Goles</ion-title>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-range min="0" max="15" pin name="numgoles" [(ngModel)]="goles" (ionChange)="addRowGoles()"></ion-range>
-        </ion-col>
-      </ion-row>
-      <ion-card *ngIf="hayGoles">
-        <ion-card-content>
-          <ion-grid>
-            <ion-row class="ion-align-items-center">
-              <ion-col>
-                <ion-text>
-                  Nº
-                </ion-text>
-              </ion-col>
-              <ion-col>
-                <ion-icon name="time-outline"></ion-icon>
-              </ion-col>
-            </ion-row>
-            <ion-row class="ion-align-items-center" *ngFor="let gol of golesArray; let i=index ">
-              <ion-col>
-                <ion-text>
-                  {{i+1}}
-                </ion-text>
-              </ion-col>
-              <ion-col>
-                <ion-input type="number" name="{{'gol'+i}}" [(ngModel)]="gol.minuto" [value]="gol.minuto"></ion-input>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+      <div *ngIf="miembro.rol ==='JUGADOR'">
+        <ion-row>
+          <ion-col>
+            <ion-title>Goles</ion-title>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-range min="0" max="15" pin name="numgoles" [(ngModel)]="goles" (ionChange)="addRowGoles()"></ion-range>
+          </ion-col>
+        </ion-row>
+        <ion-card *ngIf="hayGoles">
+          <ion-card-content>
+            <ion-grid>
+              <ion-row class="ion-align-items-center">
+                <ion-col>
+                  <ion-text>
+                    Nº
+                  </ion-text>
+                </ion-col>
+                <ion-col>
+                  <ion-icon name="time-outline"></ion-icon>
+                </ion-col>
+              </ion-row>
+              <ion-row class="ion-align-items-center" *ngFor="let gol of golesArray; let i=index ">
+                <ion-col>
+                  <ion-text>
+                    {{i+1}}
+                  </ion-text>
+                </ion-col>
+                <ion-col>
+                  <ion-input type="number" name="{{'gol'+i}}" [(ngModel)]="gol.minuto" [value]="gol.minuto"></ion-input>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
 
-        </ion-card-content>
-      </ion-card>
+          </ion-card-content>
+        </ion-card>
+
+      </div>
 
       <ion-row>
         <ion-col>

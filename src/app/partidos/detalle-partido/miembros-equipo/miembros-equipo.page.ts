@@ -60,7 +60,7 @@ export class MiembrosEquipoPage implements OnInit {
     });
   }
 
-  obtenerDatosMiembro(confirmacion: any) {
+  obtenerDatosMiembro() {
     this.countDatos();
 
   }

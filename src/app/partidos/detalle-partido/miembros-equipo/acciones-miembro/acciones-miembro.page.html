@@ -21,68 +21,87 @@
   </ion-item>
   <form #miembroForm="ngForm" (ngSubmit)="changeInfo()">
     <ion-grid>
-      <ion-row>
-        <ion-col class="ion-align-self-center">Dorsal</ion-col>
-        <ion-col>
-          <ion-row>
-            <ion-range name="dorsal-range" min="1" pin max="150" [(ngModel)]="miembro.dorsal"
-              [disabled]="titular && titular === true|| suplente  && suplente === true? false: true"></ion-range>
-          </ion-row>
-          <ion-row>
-            <ion-input name="dorsal" type="text" [(ngModel)]="miembro.dorsal"
-              [disabled]="titular && titular === true|| suplente  && suplente === true? false: true"></ion-input>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <div ngModelGroup="titsupGroup" #titsupGroupModel="ngModelGroup" appTitsup="titular,suplente">
+      <div *ngIf="miembro.rol === 'JUGADOR'">
+        <ion-row>
+          <ion-col class="ion-align-self-center">Dorsal</ion-col>
+          <ion-col>
             <ion-row>
-              <ion-col class="ion-align-self-center">Titular</ion-col>
+              <ion-range name="dorsal-range" min="1" pin max="150" [(ngModel)]="miembro.dorsal"
+                [disabled]="titular && titular === true|| suplente  && suplente === true? false: true"></ion-range>
+            </ion-row>
+            <ion-row>
+              <ion-input name="dorsal" type="text" [(ngModel)]="miembro.dorsal"
+                [disabled]="titular && titular === true|| suplente  && suplente === true? false: true"></ion-input>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div ngModelGroup="titsupGroup" #titsupGroupModel="ngModelGroup" appTitsup="titular,suplente">
+              <ion-row>
+                <ion-col class="ion-align-self-center">Titular</ion-col>
+                <ion-col>
+                  <ion-toggle name="titular" #titularModel="ngModel" [(ngModel)]="titular">
+                  </ion-toggle>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="ion-align-self-center">Suplente</ion-col>
+                <ion-col>
+                  <ion-toggle name="suplente" #suplenteModel="ngModel" [(ngModel)]="suplente">
+                  </ion-toggle>
+                </ion-col>
+              </ion-row>
+            </div>
+          </ion-col>
+          <ion-col>
+            <ion-row>
+              <ion-col class="ion-align-self-center">Portero</ion-col>
               <ion-col>
-                <ion-toggle name="titular" #titularModel="ngModel" [(ngModel)]="titular">
-                </ion-toggle>
+                <ion-toggle name="portero" [(ngModel)]="miembro.portero"
+                  [disabled]=" titular === true || suplente === true? false: true"></ion-toggle>
               </ion-col>
             </ion-row>
             <ion-row>
-              <ion-col class="ion-align-self-center">Suplente</ion-col>
+              <ion-col class="ion-align-self-center">Capitán</ion-col>
               <ion-col>
-                <ion-toggle name="suplente" #suplenteModel="ngModel" [(ngModel)]="suplente">
-                </ion-toggle>
+                <ion-toggle name="capitan" [(ngModel)]="capitan"
+                  [disabled]="titular && titular === true|| suplente  && suplente === true? false: true"></ion-toggle>
               </ion-col>
             </ion-row>
-          </div>
-        </ion-col>
-        <ion-col>
-          <ion-row>
-            <ion-col class="ion-align-self-center">Portero</ion-col>
-            <ion-col>
-              <ion-toggle name="portero" [(ngModel)]="miembro.portero"
-                [disabled]=" titular === true || suplente === true? false: true"></ion-toggle>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col class="ion-align-self-center">Capitán</ion-col>
-            <ion-col>
-              <ion-toggle name="capitan" [(ngModel)]="capitan"
-                [disabled]="titular && titular === true|| suplente  && suplente === true? false: true"></ion-toggle>
-            </ion-col>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-      <ion-row *ngIf="titsupGroupModel.invalid">
-        <ion-col>
-          <ion-label class="error">El jugador no puede ser titular y suplente a la vez*</ion-label>
-        </ion-col>
-      </ion-row>
-      <ion-row *ngIf="(titularModel.value === true || suplenteModel.value==true) && tieneDorsal()">
-        <ion-col>
-          <ion-label class="error">El jugador debe tener un dorsal asignado*</ion-label>
-        </ion-col>
-      </ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="titsupGroupModel.invalid">
+          <ion-col>
+            <ion-label class="error">El jugador no puede ser titular y suplente a la vez*</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="(titularModel.value === true || suplenteModel.value==true) && campoObligatorio()">
+          <ion-col>
+            <ion-label class="error">El jugador debe tener un dorsal asignado*</ion-label>
+          </ion-col>
+        </ion-row>
+      </div>
+      <div *ngIf="miembro.rol !== 'JUGADOR'">
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label>Cargo</ion-label>
+              <ion-select name="cargo" required [(ngModel)]="miembro.rol" interface="popover">
+                <ion-select-option *ngFor="let cargo of cargos" [value]="cargo">
+                  {{cargo|obtenerNombrecargo}}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+
+
+          </ion-col>
+        </ion-row>
+      </div>
       <ion-row style="margin-top: 40px;">
         <ion-col>
-          <ion-button type="submit" color="primary" expand="block" [disabled]="miembroForm.invalid || tieneDorsal()">
+          <ion-button type="submit" color="primary" expand="block"
+            [disabled]="miembroForm.invalid || campoObligatorio()">
             <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
             Guardar
           </ion-button>
