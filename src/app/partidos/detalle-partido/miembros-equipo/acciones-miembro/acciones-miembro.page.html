@@ -86,6 +86,15 @@
         <ion-row>
           <ion-col>
             <ion-item>
+              <ion-label>Asiste</ion-label>
+              <ion-toggle name="asiste" [(ngModel)]="staffAsiste"></ion-toggle>
+            </ion-item>
+          </ion-col>
+
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
               <ion-label>Cargo</ion-label>
               <ion-select name="cargo" required [(ngModel)]="miembro.rol" interface="popover">
                 <ion-select-option *ngFor="let cargo of cargos" [value]="cargo">
@@ -101,7 +110,7 @@
       <ion-row style="margin-top: 40px;">
         <ion-col>
           <ion-button type="submit" color="primary" expand="block"
-            [disabled]="miembroForm.invalid || campoObligatorio()">
+            [disabled]="miembroForm.invalid || campoObligatorio() || miembro.asiste === false">
             <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
             Guardar
           </ion-button>

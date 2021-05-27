@@ -38,11 +38,12 @@ export interface MiembroEquipo extends User {
   sancionado: boolean,
   titular?: boolean,
   dorsal?: number,
-  suplente?:boolean,
+  suplente?: boolean,
   capitan?: boolean,
-  portero?:boolean,
+  portero?: boolean,
   goles?: Gol[],
-  sancion_partido?:Sancion[]
+  sancion_partido?: Sancion[],
+  asiste?: boolean
 }
 
 export interface Gol {
@@ -52,7 +53,7 @@ export interface Gol {
 export interface Sancion {
   tarjeta: Tarjeta,
   minuto: number,
-  motivo:string;
+  motivo: string;
 }
 
 export interface Equipo {

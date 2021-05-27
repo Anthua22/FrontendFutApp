@@ -1,3 +1,4 @@
+import { PipesModule } from 'src/app/pipes/pipes.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +13,7 @@ import { AddAccionMiembroPage } from './add-accion-miembro.page';
     CommonModule,
     FormsModule,
     IonicModule,
+    PipesModule
   ],
   declarations: [AddAccionMiembroPage]
 })

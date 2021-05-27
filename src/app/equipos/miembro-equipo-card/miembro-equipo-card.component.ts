@@ -32,7 +32,6 @@ export class MiembroEquipoCardComponent implements OnInit {
 
   @Input() totalTit: number;
   @Input() totalCap: number;
-  @ViewChild('item') card;
 
   @Output() miembroChange = new EventEmitter<void>();
   @Output() miembroSanciones = new EventEmitter<void>();
@@ -43,6 +42,8 @@ export class MiembroEquipoCardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.habilitarCard();
+    this.checkTarjetas();
   }
 
   async openChangeInfo() {
@@ -54,10 +55,21 @@ export class MiembroEquipoCardComponent implements OnInit {
     await modal.present();
     const result = await modal.onDidDismiss();
     if (result.data == true) {
+      this.habilitarCard();
+
+      this.miembroChange.emit();
+    }
+  }
+
+  private habilitarCard() {
+    if (this.miembro.rol === 'JUGADOR') {
       if ((this.miembro.titular === true || this.miembro.suplente === true) && this.totalTit + 1 <= 5) {
         this.deshabilitado = false;
       }
-      this.miembroChange.emit();
+    } else {
+      if (this.miembro.asiste === true) {
+        this.deshabilitado = false;
+      }
     }
   }
 
@@ -78,20 +90,23 @@ export class MiembroEquipoCardComponent implements OnInit {
     this.verTarjetaRoja = false;
     this.verTarjeta2Ama = false;
     this.verTarjetaAma = false;
-    this.miembro.sancion_partido = this.miembro.sancion_partido.filter(x => x.motivo !== '');
-    this.miembro.sancion_partido.forEach(x => {
-      switch (x.tarjeta) {
-        case Tarjeta.AMARILLA:
-          this.verTarjetaAma = true;
-          break;
-        case Tarjeta.SGAMARILLA:
-          this.verTarjeta2Ama = true;
-          break;
-        case Tarjeta.ROJA:
-          this.verTarjetaRoja = true;
-          break;
-      }
-    })
+    if (this.miembro.sancion_partido) {
+      this.miembro.sancion_partido = this.miembro.sancion_partido.filter(x => x.motivo !== '');
+      this.miembro.sancion_partido.forEach(x => {
+        switch (x.tarjeta) {
+          case Tarjeta.AMARILLA:
+            this.verTarjetaAma = true;
+            break;
+          case Tarjeta.SGAMARILLA:
+            this.verTarjeta2Ama = true;
+            break;
+          case Tarjeta.ROJA:
+            this.verTarjetaRoja = true;
+            break;
+        }
+      })
+    }
+
   }
 
 }

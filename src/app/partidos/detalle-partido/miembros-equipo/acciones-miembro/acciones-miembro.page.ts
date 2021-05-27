@@ -15,7 +15,8 @@ export class AccionesMiembroPage implements OnInit {
   titular = false;
   suplente = false;
   capitan = false;
-  cargos = ['ENTRENADOR', 'DELEGADO', 'ENCARGADO_MATERIAL', 'PREPARADOR_FISICO']
+  cargos = ['ENTRENADOR', 'DELEGADO', 'ENCARGADO_MATERIAL', 'PREPARADOR_FISICO'];
+  staffAsiste = false;
 
   constructor(public modalCtrl: ModalController, private toastCtrl: ToastController) { }
 
@@ -28,6 +29,9 @@ export class AccionesMiembroPage implements OnInit {
     if (this.miembro.capitan === true) {
       this.capitan = this.miembro.capitan;
     }
+    if (this.miembro.asiste === true) {
+      this.staffAsiste = true;
+    }
   }
 
   cancel() {
@@ -37,8 +41,8 @@ export class AccionesMiembroPage implements OnInit {
   campoObligatorio(): boolean {
     if (this.miembro.rol === 'JUGADOR') {
       return isNaN(this.miembro.dorsal);
-    }else{
-      return this.miembro.rol!=='' && this.miembro.rol !== undefined;
+    } else {
+      return this.miembro.rol === '' || this.staffAsiste === false;
     }
 
   }
@@ -47,6 +51,7 @@ export class AccionesMiembroPage implements OnInit {
     if (this.totalTitu + 1 <= 5) {
       this.miembro.suplente = this.suplente;
       this.miembro.titular = this.titular;
+      this.miembro.asiste = true;
       if (this.totalCap + 1 <= 1 && this.capitan === true) {
         this.miembro.capitan = this.capitan;
       } else if (this.totalCap + 1 >= 1 && this.capitan === true) {
