@@ -33,7 +33,7 @@ export class LoginPage implements OnInit {
         (await this.toast.create({
           duration: 3000,
           position: "bottom",
-          message: error.error.error,
+          message: error.message,
           color: 'danger'
         })).present();
       }
