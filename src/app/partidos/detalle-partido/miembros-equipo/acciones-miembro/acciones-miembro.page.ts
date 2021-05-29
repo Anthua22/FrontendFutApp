@@ -54,7 +54,7 @@ export class AccionesMiembroPage implements OnInit {
       this.miembro.asiste = true;
       if (this.totalCap + 1 <= 1 && this.capitan === true) {
         this.miembro.capitan = this.capitan;
-      } else if (this.totalCap + 1 >= 1 && this.capitan === true) {
+      } else if (this.totalCap + 1 >= 1 && this.capitan === true && this.miembro.capitan === false) {
         (await this.toastCtrl.create({
           position: 'bottom',
           duration: 3000,

@@ -1,6 +1,9 @@
+import { PartidosService } from './../../services/partidos.service';
 import { Categoria, Partido } from 'src/app/models/models';
 import { Component, Inject, OnInit } from '@angular/core';
 import { DetallePartidoPage } from '../detalle-partido.page';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-faltas-tm',
@@ -36,18 +39,42 @@ export class FaltasTMPage implements OnInit {
     lugar_encuentro: ''
 
   };
-  constructor(@Inject(DetallePartidoPage) private parentComponent: DetallePartidoPage) { }
+  constructor(@Inject(DetallePartidoPage) private parentComponent: DetallePartidoPage, private partidoService: PartidosService, private toast: ToastController) { }
 
   ngOnInit() {
     this.parentComponent.partido$.subscribe(
       partido => {
         this.partido = partido;
-        this.partido.equipo_local.numeroFaltasPrimeraParte = this.partido.equipo_local.numeroFaltasPrimeraParte ? this.partido.equipo_local.numeroFaltasPrimeraParte : 0;
-        this.partido.equipo_local.numeroFaltasSegundaParte = this.partido.equipo_local.numeroFaltasSegundaParte ? this.partido.equipo_local.numeroFaltasSegundaParte : 0;
-        this.partido.equipo_visitante.numeroFaltasPrimeraParte = this.partido.equipo_visitante.numeroFaltasPrimeraParte ? this.partido.equipo_visitante.numeroFaltasPrimeraParte : 0;
-        this.partido.equipo_visitante.numeroFaltasSegundaParte = this.partido.equipo_visitante.numeroFaltasSegundaParte ? this.partido.equipo_visitante.numeroFaltasSegundaParte : 0;
+        if (!this.partido.faltasTmLocal) {
+          this.partido.faltasTmLocal = {
+            faltasPrimeraParte: 0,
+            faltasSegundaParte: 0,
+            tiempoPrimeraParte: false,
+            tiempoSegundaParte: false
+          }
+        }
+        if (!this.partido.faltasTmVisitante) {
+          this.partido.faltasTmVisitante = {
+            faltasPrimeraParte: 0,
+            faltasSegundaParte: 0,
+            tiempoPrimeraParte: false,
+            tiempoSegundaParte: false
+          }
+        }
       }
     );
+  }
+
+  saveFaltasTiemposMuertos() {
+    this.partidoService.saveFaltasTM(this.partido).subscribe(() => { },
+      async (error: HttpErrorResponse) => {
+        (await this.toast.create({
+          duration: 3000,
+          position: "bottom",
+          message: error.message,
+          color: 'danger'
+        })).present();
+      });
   }
 
 }

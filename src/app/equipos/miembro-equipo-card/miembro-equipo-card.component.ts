@@ -41,7 +41,6 @@ export class MiembroEquipoCardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.miembro)
     this.habilitarCard();
     this.checkTarjetas();
   }
@@ -55,9 +54,7 @@ export class MiembroEquipoCardComponent implements OnInit {
     await modal.present();
     const result = await modal.onDidDismiss();
     if (result.data == true) {
-      console.log(this.miembro)
       this.habilitarCard();
-
       this.miembroChange.emit();
     }
   }
@@ -66,6 +63,8 @@ export class MiembroEquipoCardComponent implements OnInit {
     if (this.miembro.rol === 'JUGADOR') {
       if ((this.miembro.titular === true || this.miembro.suplente === true) && this.totalTit + 1 <= 5) {
         this.deshabilitado = false;
+      } else {
+        this.deshabilitado = true;
       }
     } else {
       if (this.miembro.asiste === true) {
@@ -83,6 +82,7 @@ export class MiembroEquipoCardComponent implements OnInit {
     const result = await modal.onDidDismiss();
     if (result.data == true) {
       this.checkTarjetas();
+      this.miembroChange.emit();
     }
   }
 

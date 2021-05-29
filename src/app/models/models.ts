@@ -37,7 +37,7 @@ export interface User extends Auth {
 export interface MiembroEquipo extends User {
   sancionado: boolean,
   titular?: boolean,
-  dorsal?: number,
+  dorsal?: string,
   suplente?: boolean,
   capitan?: boolean,
   portero?: boolean,
@@ -57,6 +57,13 @@ export interface Sancion {
   jugador?: string
 }
 
+export interface FaltasTM {
+  faltasPrimeraParte: number,
+  faltasSegundaParte: number,
+  tiempoPrimeraParte: boolean,
+  tiempoSegundaParte: boolean
+}
+
 export interface Equipo {
   _id?: string,
   nombre: string,
@@ -64,11 +71,7 @@ export interface Equipo {
   miembros?: MiembroEquipo[],
   email: string,
   categoria: Categoria,
-  direccion_campo: string,
-  numeroFaltasPrimeraParte?: number,
-  numeroFaltasSegundaParte?: number,
-  tiempoMuertoPrimeraParte?: boolean,
-  tiempoMuertoSegundaParte?: boolean
+  direccion_campo: string
 }
 export interface Partido {
   _id?: string,
@@ -94,6 +97,11 @@ export interface Partido {
   capitanVisitante?: MiembroEquipo,
   staffLocal?: MiembroEquipo[],
   staffVistante?: MiembroEquipo[],
-  sanciones_jugadores?:Sancion[],
-  sanciones_staff?:Sancion[]
+  sanciones_jugadores?: Sancion[],
+  sanciones_staff?: Sancion[],
+  porterosLocales?: MiembroEquipo[],
+  porterosVisitantes?: MiembroEquipo[],
+  faltasTmLocal?: FaltasTM,
+  faltasTmVisitante?: FaltasTM
+
 }

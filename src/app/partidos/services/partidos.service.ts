@@ -57,7 +57,19 @@ export class PartidosService {
     }).pipe(map(z => z.resultado));
   }
 
-  savePartidoJugadores(partido: Partido): Observable<Partido> {
-    return this.httpClient.put<Partido>(`${this.BASE_URL}/${partido._id}/save/jugadores`,partido);
+  savePartidoJugadores(partido: Partido): Observable<void> {
+    return this.httpClient.put<void>(`${this.BASE_URL}/${partido._id}/save/jugadores`, partido);
+  }
+
+  savePartidoStaff(partido: Partido): Observable<void> {
+    return this.httpClient.put<void>(`${this.BASE_URL}/${partido._id}/save/staff`, partido);
+  }
+
+  saveResultado(partido: Partido): Observable<void> {
+    return this.httpClient.patch<void>(`${this.BASE_URL}/${partido._id}/resultado`, { resultado: partido.resultado });
+  }
+
+  saveFaltasTM(partido: Partido): Observable<void> {
+    return this.httpClient.patch<void>(`${this.BASE_URL}/${partido._id}/faltastm`, partido);
   }
 }

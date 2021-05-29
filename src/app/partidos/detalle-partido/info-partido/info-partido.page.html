@@ -4,7 +4,7 @@
 
 <ion-content>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="tertiary" [disabled]="!terminado">
+    <ion-fab-button color="tertiary" [disabled]="!terminado" (click)="saveResultado()">
       <ion-icon name="save-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>

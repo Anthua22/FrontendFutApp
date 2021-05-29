@@ -1,7 +1,9 @@
+import { PartidosService } from './../../services/partidos.service';
 import { Component, Inject, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { Partido, Categoria, MiembroEquipo } from 'src/app/models/models';
 import { DetallePartidoPage } from '../detalle-partido.page';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-info-partido',
@@ -50,7 +52,7 @@ export class InfoPartidoPage implements OnInit {
   golesVisitantes = '0';
   terminado = false;
 
-  constructor(@Inject(DetallePartidoPage) private parentComponent: DetallePartidoPage) { }
+  constructor(@Inject(DetallePartidoPage) private parentComponent: DetallePartidoPage, private partidosService: PartidosService, private toast: ToastController) { }
 
   ngOnInit() {
     this.parentComponent.partido$.subscribe(
@@ -66,9 +68,33 @@ export class InfoPartidoPage implements OnInit {
             this.delegadoVisitante = x;
           }
         });
-        this.terminado = partido.fecha_modificacion ? true : false;
+        if (this.partido.resultado) {
+          this.terminado = true;
+          const golesArray = this.partido.resultado.split('-');
+          this.golesLocales = golesArray[0];
+          this.golesVisitantes = golesArray[1];
+        }
       }
     );
   }
 
+  saveResultado(): void {
+    this.partido.resultado = `${this.golesLocales}-${this.golesVisitantes}`;
+    this.partidosService.saveResultado(this.partido).subscribe(async () => {
+      (await this.toast.create({
+        duration: 3000,
+        position: "bottom",
+        message: 'Se ha enviado correctamente el resultado',
+        color: 'success'
+      })).present();
+    },
+      async (error: HttpErrorResponse) => {
+        (await this.toast.create({
+          duration: 3000,
+          position: "bottom",
+          message: error.message,
+          color: 'danger'
+        })).present();
+      });
+  }
 }

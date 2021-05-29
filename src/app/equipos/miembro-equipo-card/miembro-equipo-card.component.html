@@ -50,7 +50,7 @@
       <ion-icon slot="icon-only" name="information-circle-outline"></ion-icon>
     </ion-item-option>
     <ion-item-option (click)="openAddDataMiembro()"
-      [disabled]="miembro.titular=== true || miembro.suplente === true ? false : true">
+      [disabled]="miembro.titular=== true || miembro.suplente === true || miembro.asiste===true ? false : true">
       <ion-icon slot="icon-only" name="create-outline"></ion-icon>
     </ion-item-option>
   </ion-item-options>
