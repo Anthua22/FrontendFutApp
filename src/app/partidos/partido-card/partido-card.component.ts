@@ -53,7 +53,7 @@ export class PartidoCardComponent implements OnInit {
 
   async showOptions() {
     const actSheet = await this.actionSheetCtrl.create({
-      header: this.partido.lugar_encuentro,
+      header: `${this.partido.equipo_local.nombre} VS ${this.partido.equipo_visitante.nombre}`,
       buttons: [{
         text: 'Borrar',
         role: 'destructive',

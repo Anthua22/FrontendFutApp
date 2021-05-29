@@ -1,3 +1,4 @@
+import { PipesModule } from 'src/app/pipes/pipes.module';
 import { AuthTokenInterceptor } from './interceptors/auth-token.interceptor';
 import { BaseUrlInterceptor } from './interceptors/base-url.interceptor';
 import { NgModule } from '@angular/core';
@@ -23,7 +24,9 @@ import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
       accessToken: 'pk.eyJ1IjoiYW50aG9ueXViaSIsImEiOiJja2dtODlnMjAwYWQ2MnRqbzNlY29ib282In0.wi12UKThrEvuKZ5nWCxq8g'
       }),
     HttpClientModule,
-    NgbModule],
+    NgbModule,
+    PipesModule
+  ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {

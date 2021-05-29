@@ -23,7 +23,7 @@ export class AuthService {
     this.loginChange$.next(logged);
   }
 
-  login(auth:Auth): Observable<void> {
+  login(auth: Auth): Observable<void> {
     return this.http.post<TokenResponse>('auth/login', auth).pipe(
       switchMap(async r => {
         try {
@@ -47,12 +47,23 @@ export class AuthService {
     if (this.logged) { return of(true); }
     return from(Storage.get({ key: 'token' })).pipe(
       switchMap(token => {
-        console.log(token)
-        if (!token.value) { throw new Error(); }
-        this.loginChange$.next(true);
-        return of(true)
+        if (!token.value) {
+          throw new Error();
+        }
+        return this.http.get('auth/validate').pipe(
+          map(() => {
+            this.setLogged(true);
+            return true;
+          }), catchError(error => {
+            Storage.remove({ key: 'token' });
+            return of(false);
+          })
+        );
       }),
-      catchError(e => of(false))
+      catchError(e => {
+        Storage.remove({ key: 'token' });
+        return of(false);
+      })
     );
   }
 

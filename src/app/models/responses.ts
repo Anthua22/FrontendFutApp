@@ -1,10 +1,7 @@
+import { User } from 'src/app/models/models';
 import { MiembroEquipo, Partido, Equipo } from './models';
 export interface TokenResponse {
   token: string;
-}
-
-export interface ResponseGeneric {
-  resultado: any;
 }
 
 export interface PartidosResponse {
@@ -24,4 +21,8 @@ export interface MiembrosEquipoRespose {
 
 export interface EquiposResponse {
   resultado: Equipo[];
+}
+
+export interface UserResponse {
+  resultado: User;
 }
