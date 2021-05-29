@@ -12,7 +12,7 @@ import { ToastController } from '@ionic/angular';
 export class PartidosListPage implements OnInit {
 
   partidos!: Partido[];
-  data=false;
+  data = false;
   constructor(private partidosService: PartidosService, private toast: ToastController) { }
 
   ngOnInit() {
@@ -22,18 +22,22 @@ export class PartidosListPage implements OnInit {
         (await this.toast.create({
           duration: 3000,
           position: "bottom",
-          message: error.error.error,
+          message: 'No se han podido obtener los partidos',
           color: 'danger'
         })).present();
       });
 
-      setTimeout(()=>{
-        this.data=true;
-      },500)
+    setTimeout(() => {
+      this.data = true;
+    }, 500)
   }
 
   doRefresh(event: any) {
     this.partidosService.getPartidos().subscribe(x => { this.partidos = x; event.target.complete(); });
+  }
+
+  filterCategory(categoria: string) {
+    this.partidosService.getPartidosCategoria(categoria).subscribe(x=> this.partidos = x);
   }
 
 }

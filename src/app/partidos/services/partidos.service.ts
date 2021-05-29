@@ -1,7 +1,7 @@
 
 import { PartidosResponse, PartidoResponse } from './../../models/responses';
 import { Partido } from './../../models/models';
-import { Observable  } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
@@ -51,9 +51,13 @@ export class PartidosService {
     }).pipe(map(x => x.resultado));
   }
 
-  subirActa(partido: Partido):Observable<Partido>{
+  subirActa(partido: Partido): Observable<Partido> {
     return this.httpClient.patch<PartidoResponse>(`${this.BASE_URL}/${partido._id}/acta`, {
       acta: partido.acta,
-    }).pipe(map(z=> z.resultado));
+    }).pipe(map(z => z.resultado));
+  }
+
+  savePartidoJugadores(partido: Partido): Observable<Partido> {
+    return this.httpClient.put<Partido>(`${this.BASE_URL}/${partido._id}/save/jugadores`,partido);
   }
 }

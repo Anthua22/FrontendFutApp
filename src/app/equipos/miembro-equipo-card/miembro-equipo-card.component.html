@@ -19,48 +19,27 @@
     <ion-grid>
       <ion-row>
         <ion-col *ngIf="miembro.rol=== 'JUGADOR'">
-          <ion-thumbnail>
-            <img src="assets/images/camiseta-de-futbol.png" />
-          </ion-thumbnail>
+          <img src="assets/images/camiseta-de-futbol.png" class="icono" />
+
         </ion-col>
         <ion-col class="ion-align-self-center" *ngIf="miembro.rol=== 'JUGADOR'">
           <ion-label *ngIf="!miembro.dorsal"> --- </ion-label>
           <ion-label *ngIf="miembro.dorsal"> {{miembro.dorsal}} </ion-label>
         </ion-col>
         <ion-col *ngIf="miembro.capitan">
-          <ion-label>
-            <ion-thumbnail>
-              <img src="assets/images/capitan-jugador.png" />
-            </ion-thumbnail>
-          </ion-label>
+          <img class="icono" src="assets/images/capitan-jugador.png" />
         </ion-col>
         <ion-col *ngIf="miembro.portero">
-          <ion-label>
-            <ion-thumbnail>
-              <img src="assets/images/portero-jugador.png" />
-            </ion-thumbnail>
-          </ion-label>
+          <img class="icono" src="assets/images/portero-jugador.png" class="icono" />
         </ion-col>
         <ion-col *ngIf="verTarjetaAma">
-          <ion-label>
-            <ion-thumbnail>
-              <img src="assets/images/tarjeta-amarilla.png" />
-            </ion-thumbnail>
-          </ion-label>
+          <img src="assets/images/tarjeta-amarilla.png" class="icono" />
         </ion-col>
         <ion-col *ngIf="verTarjeta2Ama">
-          <ion-label>
-            <ion-thumbnail>
-              <img src="assets/images/doble-amarilla.png" />
-            </ion-thumbnail>
-          </ion-label>
+          <img class="icono" src="assets/images/doble-amarilla.png" />
         </ion-col>
         <ion-col *ngIf="verTarjetaRoja">
-          <ion-label>
-            <ion-thumbnail>
-              <img src="assets/images/tarjeta-roja.png" />
-            </ion-thumbnail>
-          </ion-label>
+          <img class="icono" src="assets/images/tarjeta-roja.png" />
         </ion-col>
       </ion-row>
     </ion-grid>

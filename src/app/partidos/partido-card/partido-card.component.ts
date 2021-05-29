@@ -2,6 +2,9 @@ import { Categoria, Partido } from 'src/app/models/models';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActionSheetController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { Plugins } from '@capacitor/core';
+const { Share } = Plugins;
+
 
 @Component({
   selector: 'app-partido-card',
@@ -52,7 +55,7 @@ export class PartidoCardComponent implements OnInit {
     const actSheet = await this.actionSheetCtrl.create({
       header: this.partido.lugar_encuentro,
       buttons: [{
-        text: 'Delete',
+        text: 'Borrar',
         role: 'destructive',
         icon: 'trash',
         handler: () => {
@@ -61,13 +64,13 @@ export class PartidoCardComponent implements OnInit {
           //);
         }
       }, {
-        text: 'See details',
+        text: 'Ver Detalle',
         icon: 'eye',
         handler: () => {
           this.nav.navigateRoot(['/partidos', this.partido._id])
         }
       }, {
-        text: 'Edit',
+        text: 'Editar',
         icon: 'create',
         handler: () => {
           this.router.navigate(['/products/edit']);
@@ -96,8 +99,15 @@ export class PartidoCardComponent implements OnInit {
          }]
        });*/
 
-    actSheet.present();
     // }
 
+  }
+
+  async compartir() {
+    Share.share({
+      dialogTitle: 'Camparir el partido',
+      text: 'Se comparte'
+
+    });
   }
 }

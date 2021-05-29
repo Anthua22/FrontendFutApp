@@ -88,10 +88,10 @@
           </ion-row>
           <ion-row>
             <ion-col size="3">
-              <ion-input name="min2amarilla" type="number" [(ngModel)]="sancionSegunAmarilla.minuto"></ion-input>
+              <ion-input name="min2amarilla" type="number" [(ngModel)]="sancionSegunAmarilla.minuto" [disabled]="!sancionAmarilla.motivo"></ion-input>
             </ion-col>
             <ion-col>
-              <ion-input name="2amarilla" type="text" [(ngModel)]="sancionSegunAmarilla.motivo"></ion-input>
+              <ion-input name="2amarilla" type="text" [(ngModel)]="sancionSegunAmarilla.motivo" [disabled]="!sancionAmarilla.motivo"></ion-input>
             </ion-col>
           </ion-row>
         </ion-card-content>

@@ -45,7 +45,7 @@ export class RegisterPage implements OnInit {
         (await this.toast.create({
           duration: 3000,
           position: "bottom",
-          message: err.error.error,
+          message: err.message,
           color: 'danger'
         })).present();
       }

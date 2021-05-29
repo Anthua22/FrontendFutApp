@@ -58,7 +58,7 @@ export class AuthService {
 
 
   async logout(): Promise<void> {
-    await Storage.remove({ key: 'fs-token' });
+    await Storage.remove({ key: 'token' });
     this.setLogged(false);
   }
 

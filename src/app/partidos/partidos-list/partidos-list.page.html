@@ -26,6 +26,25 @@
 
 
   <ion-searchbar animated debounce="500" placeholder="Nombre del equipo"></ion-searchbar>
+  <ion-grid>
+    <ion-row class="ion-justify-content-end">
+      <div ngbDropdown class="ml-auto mb-2 mr-1">
+        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+          Categoria
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button ngbDropdownItem (click)="filterCategory('Primera')">Primera</button>
+          <button ngbDropdownItem (click)="filterCategory('Segunda')">Segunda</button>
+          <button ngbDropdownItem (click)="filterCategory('Segunda B')">Segunda B</button>
+          <button ngbDropdownItem (click)="filterCategory('Tercera')">Tercera</button>
+          <button ngbDropdownItem (click)="filterCategory('Regional')">Regional</button>
+          <button ngbDropdownItem (click)="filterCategory('Futbol Base')">Fútbol Base</button>
+        </div>
+      </div>
+
+    </ion-row>
+  </ion-grid>
+
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Desliza para refrescar"
       refreshingSpinner="circles" refreshingText="Cargando...">

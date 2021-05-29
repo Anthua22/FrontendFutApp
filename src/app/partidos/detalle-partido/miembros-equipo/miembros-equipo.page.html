@@ -5,7 +5,7 @@
 
 <ion-content>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="tertiary">
+    <ion-fab-button color="tertiary" (click)="save()">
       <ion-icon name="save-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
@@ -26,20 +26,20 @@
             <ion-label>
               <ion-text>
                 Tit:
-                <span [innerText]="type==='locales' ? numeroTitLocales : numeroTitVisitantes"></span>
+                <span [innerText]="type==='locales' ? partido.titularesLocales.length : partido.titularesVisitantes.length"></span>
               </ion-text>
 
             </ion-label>
           </ion-col>
-          <ion-col size="2" class="ion-align-self-center">
+          <ion-col size="3" class="ion-align-self-center">
             <ion-label>
               Sup:
-              <span [innerText]="type==='locales' ? numeroSuplLocales : numeroSuplVisitantes"></span>
+              <span [innerText]="type==='locales' ? partido.suplentesLocales.length : partido.suplentesVisitantes.length"></span>
             </ion-label>
           </ion-col>
           <ion-col>
             <ion-row>
-              <ion-col>
+              <ion-col size="4">
                 <ion-img class="icon" src="assets/images/portero.png"></ion-img>
               </ion-col>
               <ion-col>
@@ -68,14 +68,14 @@
       <div *ngSwitchCase="'locales'">
         <div *ngFor="let local of locales">
           <app-miembro-equipo-card [miembro]="local" (miembroChange)="obtenerDatosMiembro($event)"
-            [totalCap]="numeroCapitanLocales" [totalTit]="numeroTitLocales">
+            [totalCap]="numeroCapitanLocales" [totalTit]="partido.titularesLocales.length">
           </app-miembro-equipo-card>
         </div>
       </div>
       <div *ngSwitchCase="'visitantes'">
         <div *ngFor="let visitante of visitantes">
           <app-miembro-equipo-card [miembro]="visitante" (miembroChange)="obtenerDatosMiembro($event)"
-            [totalCap]="numeroCapitanVisitantes" [totalTit]="numeroTitVisitantes">
+            [totalCap]="numeroCapitanVisitantes" [totalTit]="partido.titularesVisitantes.length">
           </app-miembro-equipo-card>
         </div>
       </div>

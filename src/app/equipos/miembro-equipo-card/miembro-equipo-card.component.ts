@@ -41,6 +41,7 @@ export class MiembroEquipoCardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.miembro)
     this.habilitarCard();
     this.checkTarjetas();
   }
@@ -54,6 +55,7 @@ export class MiembroEquipoCardComponent implements OnInit {
     await modal.present();
     const result = await modal.onDidDismiss();
     if (result.data == true) {
+      console.log(this.miembro)
       this.habilitarCard();
 
       this.miembroChange.emit();

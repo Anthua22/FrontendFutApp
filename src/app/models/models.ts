@@ -53,7 +53,8 @@ export interface Gol {
 export interface Sancion {
   tarjeta: Tarjeta,
   minuto: number,
-  motivo: string;
+  motivo: string,
+  jugador?: string
 }
 
 export interface Equipo {
@@ -64,10 +65,10 @@ export interface Equipo {
   email: string,
   categoria: Categoria,
   direccion_campo: string,
-  numeroFaltasPrimeraParte?:number,
-  numeroFaltasSegundaParte?:number,
-  tiempoMuertoPrimeraParte?:boolean,
-  tiempoMuertoSegundaParte?:boolean
+  numeroFaltasPrimeraParte?: number,
+  numeroFaltasSegundaParte?: number,
+  tiempoMuertoPrimeraParte?: boolean,
+  tiempoMuertoSegundaParte?: boolean
 }
 export interface Partido {
   _id?: string,
@@ -84,5 +85,15 @@ export interface Partido {
   resultado?: string,
   lugar_encuentro: string,
   acta?: string,
-  fecha_modificacion?: Date
+  fecha_modificacion?: Date,
+  titularesLocales?: MiembroEquipo[],
+  titularesVisitantes?: MiembroEquipo[],
+  suplentesLocales?: MiembroEquipo[],
+  suplentesVisitantes?: MiembroEquipo[],
+  capitanLocal?: MiembroEquipo,
+  capitanVisitante?: MiembroEquipo,
+  staffLocal?: MiembroEquipo[],
+  staffVistante?: MiembroEquipo[],
+  sanciones_jugadores?:Sancion[],
+  sanciones_staff?:Sancion[]
 }

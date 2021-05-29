@@ -40,7 +40,7 @@ export class AccionesMiembroPage implements OnInit {
 
   campoObligatorio(): boolean {
     if (this.miembro.rol === 'JUGADOR') {
-      return isNaN(this.miembro.dorsal);
+      return isNaN(+this.miembro.dorsal);
     } else {
       return this.miembro.rol === '' || this.staffAsiste === false;
     }

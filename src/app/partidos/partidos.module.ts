@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { PartidosPageRoutingModule } from './partidos-routing.module';
-import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordionModule, NgbDropdown, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 import { PipesModule } from '../pipes/pipes.module';
 import { SkeletonModule } from '../skeleton/skeleton.module';
@@ -25,7 +25,8 @@ import { PartidosListPage } from './partidos-list/partidos-list.page';
     PartidosPageRoutingModule,
     PipesModule,
     NgxMapboxGLModule,
-    EquiposPageModule
+    EquiposPageModule,
+    NgbDropdownModule
   ],
   declarations: [PartidosListPage, PartidoCardComponent],
   exports:[PartidoCardComponent]
