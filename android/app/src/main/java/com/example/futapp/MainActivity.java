@@ -2,6 +2,7 @@ package com.example.futapp;
 
 import android.os.Bundle;
 
+import com.capacitorjs.plugins.share.SharePlugin;
 import com.getcapacitor.BridgeActivity;
 import com.getcapacitor.Plugin;
 import com.servicesight.capacitor.startnavigation.StartNavigationPlugin;
@@ -19,6 +20,7 @@ public class MainActivity extends BridgeActivity {
       // Additional plugins you've installed go here
       // Ex: add(TotallyAwesomePlugin.class);
       add(StartNavigationPlugin.class);
+      add(SharePlugin.class);
     }});
   }
 }
