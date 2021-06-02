@@ -9,8 +9,9 @@ import { IonicModule } from '@ionic/angular';
 
 import { EquiposPageRoutingModule } from './equipos-routing.module';
 
-import { EquiposPage } from './equipos.page';
+
 import { AccionesMiembroPageModule } from '../partidos/detalle-partido/miembros-equipo/acciones-miembro/acciones-miembro.module';
+import { EquiposCardComponent } from './equipos-card/equipos-card.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,7 @@ import { AccionesMiembroPageModule } from '../partidos/detalle-partido/miembros-
     EquiposPageRoutingModule,
     AccionesMiembroPageModule,
   ],
-  declarations: [EquiposPage, MiembroEquipoCardComponent],
+  declarations: [ MiembroEquipoCardComponent, EquiposCardComponent],
   exports:[MiembroEquipoCardComponent]
 })
 export class EquiposPageModule {}
