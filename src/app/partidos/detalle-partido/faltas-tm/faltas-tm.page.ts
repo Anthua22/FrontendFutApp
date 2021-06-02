@@ -1,3 +1,4 @@
+import { ActaService } from './../../services/acta.service';
 import { PartidosService } from './../../services/partidos.service';
 import { Categoria, Partido } from 'src/app/models/models';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -34,14 +35,18 @@ export class FaltasTMPage implements OnInit {
       direccion_campo: ''
     },
     fecha_encuentro: new Date(),
-    categoria: '',
+    categoria: Categoria.FB,
     jornada: 0,
     lugar_encuentro: ''
 
+
   };
+
+  actaService: ActaService;
   constructor(@Inject(DetallePartidoPage) private parentComponent: DetallePartidoPage, private partidoService: PartidosService, private toast: ToastController) { }
 
   ngOnInit() {
+    this.actaService = new ActaService(this.partido);
     this.parentComponent.partido$.subscribe(
       partido => {
         this.partido = partido;
@@ -61,6 +66,7 @@ export class FaltasTMPage implements OnInit {
             tiempoSegundaParte: false
           }
         }
+        this.actaService = new ActaService(this.partido);
       }
     );
   }
@@ -75,6 +81,11 @@ export class FaltasTMPage implements OnInit {
           color: 'danger'
         })).present();
       });
+  }
+
+  async makePdf() {
+    const pdf: any = await this.actaService.makePdf();
+    pdf.open();
   }
 
 }

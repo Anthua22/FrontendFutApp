@@ -4,11 +4,24 @@
 </ion-header>
 
 <ion-content>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="tertiary" (click)="saveFaltasTiemposMuertos()">
-      <ion-icon name="save-outline"></ion-icon>
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button color="tertiary">
+      <ion-icon md="caret-back" ios="chevron-back-circle-outline"></ion-icon>
     </ion-fab-button>
+    <ion-fab-list side="start">
+      <ion-fab-button color="tertiary" (click)="saveFaltasTiemposMuertos()">
+        <ion-icon name="save-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)="makePdf()">
+        <ion-icon name="document-text-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light">
+        <ion-icon name="logo-vimeo"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
   </ion-fab>
+
+
   <ion-segment [(ngModel)]="type">
     <ion-segment-button value="locales">
       <ion-label>Locales</ion-label>
@@ -33,11 +46,11 @@
                 </ion-row>
                 <ion-row>
                   <ion-range min="0" max="25" pin color="primary"
-                    [(ngModel)]="partido.faltasTmLocal.faltasPrimeraParte">
+                    [(ngModel)]="partido.faltasTmLocal!.faltasPrimeraParte!">
                   </ion-range>
                 </ion-row>
                 <ion-row class="ion-justify-content-center">
-                  <ion-input type="text" name="locales" [(ngModel)]="partido.faltasTmLocal.faltasPrimeraParte">
+                  <ion-input type="text" name="locales" [(ngModel)]="partido.faltasTmLocal!.faltasPrimeraParte!">
                   </ion-input>
                 </ion-row>
               </ion-col>
@@ -51,7 +64,7 @@
                   </ion-range>
                 </ion-row>
                 <ion-row class="ion-justify-content-center">
-                  <ion-input type="text" name="vistantes" [(ngModel)]="partido.faltasTmLocal.faltasSegundaParte">
+                  <ion-input type="text" name="vistantes" [(ngModel)]="partido.faltasTmLocal!.faltasSegundaParte!">
                   </ion-input>
                 </ion-row>
               </ion-col>
@@ -71,7 +84,7 @@
                   1º Parte
                 </ion-row>
                 <ion-row class="ion-justify-content-center tm">
-                  <ion-toggle name="tm1" [(ngModel)]="partido.faltasTmLocal.tiempoPrimeraParte"></ion-toggle>
+                  <ion-toggle name="tm1" [(ngModel)]="partido.faltasTmLocal!.tiempoPrimeraParte!"></ion-toggle>
                 </ion-row>
 
               </ion-col>
@@ -80,7 +93,7 @@
                   2º Parte
                 </ion-row>
                 <ion-row class="ion-justify-content-center tm">
-                  <ion-toggle name="tm1" [(ngModel)]="partido.faltasTmLocal.tiempoSegundaParte"></ion-toggle>
+                  <ion-toggle name="tm1" [(ngModel)]="partido.faltasTmLocal!.tiempoSegundaParte!"></ion-toggle>
                 </ion-row>
 
               </ion-col>
@@ -107,7 +120,7 @@
                   </ion-range>
                 </ion-row>
                 <ion-row class="ion-justify-content-center">
-                  <ion-input type="text" name="locales" [(ngModel)]="partido.faltasTmVisitante.faltasPrimeraParte">
+                  <ion-input type="text" name="locales" [(ngModel)]="partido.faltasTmVisitante!.faltasPrimeraParte!">
                   </ion-input>
                 </ion-row>
               </ion-col>
@@ -117,11 +130,11 @@
                 </ion-row>
                 <ion-row>
                   <ion-range min="0" max="25" pin color="primary"
-                    [(ngModel)]="partido.faltasTmVisitante.faltasSegundaParte">
+                    [(ngModel)]="partido.faltasTmVisitante!.faltasSegundaParte!">
                   </ion-range>
                 </ion-row>
                 <ion-row class="ion-justify-content-center">
-                  <ion-input type="text" name="vistantes" [(ngModel)]="partido.faltasTmVisitante.faltasSegundaParte">
+                  <ion-input type="text" name="vistantes" [(ngModel)]="partido.faltasTmVisitante!.faltasSegundaParte!">
                   </ion-input>
                 </ion-row>
               </ion-col>
@@ -150,7 +163,7 @@
                   2º Parte
                 </ion-row>
                 <ion-row class="ion-justify-content-center tm">
-                  <ion-toggle name="tm1" [(ngModel)]="partido.faltasTmVisitante.tiempoPrimeraParte"></ion-toggle>
+                  <ion-toggle name="tm1" [(ngModel)]="partido.faltasTmVisitante.tiempoSegundaParte"></ion-toggle>
                 </ion-row>
 
               </ion-col>

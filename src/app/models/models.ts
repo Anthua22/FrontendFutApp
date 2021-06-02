@@ -81,7 +81,7 @@ export interface Partido {
   arbitro_secundario?: User,
   cronometrador?: User,
   fecha_encuentro: Date,
-  categoria: string,
+  categoria: Categoria,
   lt?: number,
   ln?: number,
   jornada: number,

@@ -46,7 +46,7 @@
   </ion-item>
 
   <ion-item-options side="end">
-    <ion-item-option color="secondary" (click)="openChangeInfo()">
+    <ion-item-option color="secondary" (click)="openChangeInfo()" [disabled]="!resultado || resultado===''">
       <ion-icon slot="icon-only" name="information-circle-outline"></ion-icon>
     </ion-item-option>
     <ion-item-option (click)="openAddDataMiembro()"

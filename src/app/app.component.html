@@ -6,11 +6,11 @@
           <ion-grid>
             <ion-row class="ion-justify-content-end">
               <ion-avatar>
-                <img [src]="usuarioLogueado.foto" />
+                <img [src]="usuarioLogueado!.foto!" />
               </ion-avatar>
             </ion-row>
             <ion-row class="ion-justify-content-end">
-              <h2>{{usuarioLogueado.nombre_completo |apellidoNombre }}</h2>
+              <h2>{{usuarioLogueado!.nombre_completo! |apellidoNombre }}</h2>
             </ion-row>
           </ion-grid>
         </ion-toolbar>

@@ -43,7 +43,7 @@
                 <ion-img class="icon" src="assets/images/portero.png"></ion-img>
               </ion-col>
               <ion-col>
-                <ion-label>Port:
+                <ion-label>Pt:
                   <span [innerText]="type==='locales' ? partido.porterosLocales.length : partido.porterosVisitantes.length"></span>
                 </ion-label>
               </ion-col>
@@ -68,14 +68,14 @@
       <div *ngSwitchCase="'locales'">
         <div *ngFor="let local of locales">
           <app-miembro-equipo-card [miembro]="local" (miembroChange)="obtenerDatosMiembro($event)"
-            [totalCap]="numeroCapitanLocales" [totalTit]="partido.titularesLocales.length">
+            [totalCap]="numeroCapitanLocales" [totalTit]="partido.titularesLocales.length" [golesMaximos]="numeroGolesLocal - golesAsignadosLocales" [resultado]="partido.resultado">
           </app-miembro-equipo-card>
         </div>
       </div>
       <div *ngSwitchCase="'visitantes'">
         <div *ngFor="let visitante of visitantes">
           <app-miembro-equipo-card [miembro]="visitante" (miembroChange)="obtenerDatosMiembro($event)"
-            [totalCap]="numeroCapitanVisitantes" [totalTit]="partido.titularesVisitantes.length">
+            [totalCap]="numeroCapitanVisitantes" [totalTit]="partido.titularesVisitantes.length" [golesMaximos]="numeroGolesVisitanes - golesAsignadosVisitantes" [resultado]="partido.resultado">
           </app-miembro-equipo-card>
         </div>
       </div>

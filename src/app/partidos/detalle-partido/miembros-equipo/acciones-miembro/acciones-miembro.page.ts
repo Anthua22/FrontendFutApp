@@ -48,10 +48,8 @@ export class AccionesMiembroPage implements OnInit {
   }
 
   async changeInfo() {
-    if (this.totalTitu + 1 <= 5) {
-      this.miembro.suplente = this.suplente;
+    if (this.miembro.titular && this.totalTitu <= 5) {
       this.miembro.titular = this.titular;
-      this.miembro.asiste = true;
       if (this.totalCap + 1 <= 1 && this.capitan === true) {
         this.miembro.capitan = this.capitan;
       } else if (this.totalCap + 1 >= 1 && this.capitan === true && this.miembro.capitan === false) {
@@ -63,9 +61,21 @@ export class AccionesMiembroPage implements OnInit {
         })).present();
       }
       this.modalCtrl.dismiss(true);
-    } else {
+    } else if (this.suplente) {
+      this.miembro.suplente = this.suplente;
+      this.modalCtrl.dismiss(true);
+    } else if (!this.suplente && !this.titular && this.miembro.rol === 'JUGADOR') {
+      this.miembro.suplente = this.suplente;
+      this.miembro.titular = this.titular;
+      this.modalCtrl.dismiss(true);
+    } else if (this.miembro.rol !== 'JUGADOR' && this.staffAsiste) {
+      this.miembro.asiste = this.staffAsiste;
+      this.modalCtrl.dismiss(true);
+    }
+    else {
       this.titular = false;
       this.suplente = false;
+      this.staffAsiste = false;
       this.modalCtrl.dismiss(false);
       (await this.toastCtrl.create({
         position: 'bottom',

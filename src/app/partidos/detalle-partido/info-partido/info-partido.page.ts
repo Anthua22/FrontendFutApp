@@ -33,7 +33,7 @@ export class InfoPartidoPage implements OnInit {
       direccion_campo: ''
     },
     fecha_encuentro: new Date(),
-    categoria: '',
+    categoria: Categoria.FB,
     jornada: 0,
     lugar_encuentro: ''
 

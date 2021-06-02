@@ -1,7 +1,7 @@
 import { Sancion, Tarjeta } from './../../../../models/models';
 import { Gol, MiembroEquipo } from 'src/app/models/models';
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-add-accion-miembro',
@@ -11,6 +11,7 @@ import { ModalController } from '@ionic/angular';
 export class AddAccionMiembroPage implements OnInit {
 
   @Input() miembro: MiembroEquipo;
+  @Input() golesMaximos: number;
   goles: number;
   golesArray: Gol[] = [];
   hayGoles = false;
@@ -31,7 +32,7 @@ export class AddAccionMiembroPage implements OnInit {
   };
 
 
-  constructor(public modalCtrl: ModalController) { }
+  constructor(public modalCtrl: ModalController, private toast: ToastController) { }
 
   ngOnInit() {
     if (this.miembro.sancion_partido) {
@@ -70,6 +71,7 @@ export class AddAccionMiembroPage implements OnInit {
         this.golesArray.push({ minuto: 0 });
         contador++;
       }
+      console.log(this.miembro.goles.length);
     } else {
       while (contador < this.goles) {
         this.golesArray.push({ minuto: 0 });
@@ -90,9 +92,28 @@ export class AddAccionMiembroPage implements OnInit {
     }
   }
 
-  save() {
+  async save() {
     this.miembro.sancion_partido = [];
-    this.miembro.goles = this.golesArray;
+    this.miembro.goles = this.miembro.goles ? this.miembro.goles : [];
+    let golesJugadorAsignado = this.miembro.goles ? this.miembro.goles.length : 0;
+    golesJugadorAsignado = golesJugadorAsignado + this.golesMaximos;
+    for (let i = 0; i < this.golesArray.length; i++) {
+      if (i < this.golesMaximos) {
+        this.miembro.goles.push(this.golesArray[i]);
+      }
+    }
+    if (this.golesArray.length < this.miembro.goles.length) {
+      this.miembro.goles = this.golesArray;
+    }
+
+    if (this.golesArray.length > golesJugadorAsignado) {
+      (await this.toast.create({
+        duration: 3000,
+        position: "bottom",
+        message: this.golesMaximos !== 0 ? `Los goles máximos que se pueden asignar son ${this.golesMaximos} goles` : 'No se pueden asignar más goles a este jugador ya que los goles asignados son mayor que los goles ha marcado el equipo en total',
+        color: 'danger'
+      })).present();
+    }
 
     if (this.sancionAmarilla.motivo !== '') {
       this.miembro.sancion_partido.push(this.sancionAmarilla);

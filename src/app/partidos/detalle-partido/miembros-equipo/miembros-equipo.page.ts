@@ -1,9 +1,10 @@
+import { Equipo } from './../../../models/models';
 import { PartidosService } from './../../services/partidos.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 
-import { Partido, MiembroEquipo, Categoria } from 'src/app/models/models';
+import { Partido, MiembroEquipo, Categoria, Gol } from 'src/app/models/models';
 import { DetallePartidoPage } from '../detalle-partido.page';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -35,7 +36,7 @@ export class MiembrosEquipoPage implements OnInit {
       direccion_campo: ''
     },
     fecha_encuentro: new Date(),
-    categoria: '',
+    categoria: Categoria.FB,
     jornada: 0,
     lugar_encuentro: ''
 
@@ -46,6 +47,11 @@ export class MiembrosEquipoPage implements OnInit {
   vistaJugadores = true;
   numeroCapitanLocales = 0;
   numeroCapitanVisitantes = 0;
+  numeroGolesLocal = 0;
+  numeroGolesVisitanes = 0;
+  golesAsignadosLocales = 0;
+  golesAsignadosVisitantes = 0;
+
 
   constructor(
     @Inject(DetallePartidoPage) private parentComponent: DetallePartidoPage,
@@ -56,7 +62,6 @@ export class MiembrosEquipoPage implements OnInit {
     this.resetCampos();
     this.parentComponent.partido$.subscribe((x) => {
       this.partido = x;
-      console.log(this.partido)
       if (this.router.url.includes('jugadores')) {
         this.locales = this.partido.equipo_local.miembros.filter(
           (miembro) => miembro.rol === 'JUGADOR'
@@ -64,11 +69,15 @@ export class MiembrosEquipoPage implements OnInit {
         this.visitantes = this.partido.equipo_visitante.miembros.filter(
           (miembro) => miembro.rol === 'JUGADOR'
         );
+        this.numeroGolesLocal = +this.partido.resultado.split('-')[0];
+        this.numeroGolesVisitanes = +this.partido.resultado.split('-')[1];
         this.obtenerCapitantesEncuentro();
         this.obtenerTitularesEncuentro();
         this.obtenerSuplentesEncuentro();
         this.obtenerPorterosEncuentro();
         this.obtenerSancionesJugadores();
+        this.golesAsignadosLocales = this.countGoles(this.partido.equipo_local);
+        this.golesAsignadosVisitantes = this.countGoles(this.partido.equipo_visitante);
       } else {
         this.vistaJugadores = false;
         this.locales = this.partido.equipo_local.miembros.filter(
@@ -96,18 +105,21 @@ export class MiembrosEquipoPage implements OnInit {
 
   obtenerDatosMiembro() {
     this.countDatos();
+    this.golesAsignadosLocales = this.countGoles(this.partido.equipo_local);
+    this.golesAsignadosVisitantes = this.countGoles(this.partido.equipo_visitante);
+
   }
 
   private obtenerCapitantesEncuentro() {
     this.partido.equipo_local.miembros.forEach(x => {
-      if (x.rol === 'JUGADOR' && x._id === this.partido.capitanLocal._id) {
+      if (x.rol === 'JUGADOR' && this.partido.capitanLocal && x._id === this.partido.capitanLocal._id) {
         x.capitan = true;
         this.numeroCapitanLocales++;
       }
     });
 
     this.partido.equipo_visitante.miembros.forEach(x => {
-      if (x.rol === 'JUGADOR' && x._id === this.partido.capitanVisitante._id) {
+      if (x.rol === 'JUGADOR' && this.partido.capitanVisitante && x._id === this.partido.capitanVisitante._id) {
         x.capitan = true;
         this.numeroCapitanVisitantes++;
       }
@@ -218,6 +230,8 @@ export class MiembrosEquipoPage implements OnInit {
     this.partido.suplentesVisitantes = [];
     this.partido.titularesLocales = [];
     this.partido.titularesVisitantes = [];
+    this.partido.staffLocal = [];
+    this.partido.staffVistante = [];
     this.numeroCapitanVisitantes = 0;
     this.numeroCapitanLocales = 0;
     this.partido.capitanLocal = this.partido.capitanLocal ? this.partido.capitanLocal : {
@@ -312,20 +326,43 @@ export class MiembrosEquipoPage implements OnInit {
     });
   }
 
-  save() {
+  async save() {
     if (this.router.url.includes('/jugadores')) {
-      this.partidoService.savePartidoJugadores(this.partido).subscribe(x => {
-      },
-        async (error: HttpErrorResponse) => {
+      if (this.partido.titularesLocales.length === 5 && this.partido.titularesVisitantes.length === 5) {
+        this.partidoService.savePartidoJugadores(this.partido).subscribe(async x => {
           (await this.toast.create({
             duration: 3000,
             position: "bottom",
-            message: error.message,
-            color: 'danger'
+            message: 'Se ha guardado las alineaciones del equipo local y visitante',
+            color: 'success'
           })).present();
-        })
+        },
+          async (error: HttpErrorResponse) => {
+            (await this.toast.create({
+              duration: 3000,
+              position: "bottom",
+              message: error.message,
+              color: 'danger'
+            })).present();
+          });
+      } else {
+        (await this.toast.create({
+          duration: 3000,
+          position: "bottom",
+          message: "Los equipos deben tener 5 jugadores titulares para poder guardar la alineación",
+          color: 'warning'
+        })).present();
+      }
+
     } else {
-      this.partidoService.savePartidoStaff(this.partido).subscribe(() => { },
+      this.partidoService.savePartidoStaff(this.partido).subscribe(async() => {
+        (await this.toast.create({
+          duration: 3000,
+          position: "bottom",
+          message: 'Se ha guardado el cuerpo técnico del equipo local y visitante',
+          color: 'success'
+        })).present();
+      },
         async (error: HttpErrorResponse) => {
           (await this.toast.create({
             duration: 3000,
@@ -338,5 +375,15 @@ export class MiembrosEquipoPage implements OnInit {
 
   }
 
-
+  private countGoles(equipo: Equipo): number {
+    let contador = 0;
+    equipo.miembros.forEach(miembro => {
+      if (miembro.goles) {
+        miembro.goles.forEach(() => {
+          contador++;
+        });
+      }
+    })
+    return contador;
+  }
 }

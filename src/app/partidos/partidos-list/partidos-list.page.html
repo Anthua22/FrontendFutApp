@@ -12,7 +12,7 @@
       <ion-icon md="caret-back" ios="chevron-back-circle-outline"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="start">
-      <ion-fab-button color="light">
+      <ion-fab-button color="light" (click)="pdf()">
         <ion-icon name="logo-facebook"></ion-icon>
       </ion-fab-button>
       <ion-fab-button color="light">
@@ -25,7 +25,7 @@
   </ion-fab>
 
 
-  <ion-searchbar animated debounce="500" placeholder="Nombre del equipo"></ion-searchbar>
+  <ion-searchbar animated debounce="500" placeholder="Nombre del equipo" autocomplete="on"></ion-searchbar>
   <ion-grid>
     <ion-row class="ion-justify-content-end">
       <div ngbDropdown class="ml-auto mb-2 mr-1">

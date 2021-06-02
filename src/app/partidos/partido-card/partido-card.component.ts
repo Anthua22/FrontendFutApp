@@ -1,5 +1,6 @@
-import { Categoria, Partido } from 'src/app/models/models';
-import { Component, Input, OnInit } from '@angular/core';
+import { AppComponent } from './../../app.component';
+import { Categoria, Partido, User } from 'src/app/models/models';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { ActionSheetController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
@@ -35,16 +36,21 @@ export class PartidoCardComponent implements OnInit {
       direccion_campo: ''
     },
     fecha_encuentro: new Date(),
-    categoria: '',
+    categoria: Categoria.FB,
     jornada: 0,
     lugar_encuentro: ''
 
   };
 
-  constructor(private nav: NavController, private actionSheetCtrl: ActionSheetController, private router: Router) {
+  userLogueado: User;
+
+  constructor(private nav: NavController, private actionSheetCtrl: ActionSheetController, private router: Router, @Inject(AppComponent) private parentComponent: AppComponent) {
   }
 
   ngOnInit() {
+    this.parentComponent.usuarioLogueado$.subscribe(x => {
+      this.userLogueado = x;
+    })
   }
 
   goDetail() {
@@ -52,6 +58,25 @@ export class PartidoCardComponent implements OnInit {
   }
 
   async showOptions() {
+    let optionDetailPartido: any;
+    if (this.userLogueado.rol === 'ADMIN' || this.partido.arbitro_principal._id === this.userLogueado._id || this.partido.arbitro_secundario._id === this.userLogueado._id || this.partido.cronometrador._id === this.userLogueado._id) {
+      optionDetailPartido = {
+        text: 'Ver Detalle',
+        icon: 'eye',
+        handler: () => {
+          this.nav.navigateRoot(['/partidos', this.partido._id]);
+        }
+      }
+    } else {
+      optionDetailPartido = {
+        text: 'Ver Acta',
+        icon: 'trash',
+        handler: () => {
+          console.log('ff');
+        }
+      }
+    }
+
     const actSheet = await this.actionSheetCtrl.create({
       header: `${this.partido.equipo_local.nombre} VS ${this.partido.equipo_visitante.nombre}`,
       buttons: [{
@@ -63,20 +88,15 @@ export class PartidoCardComponent implements OnInit {
           //  () => this.products.splice(this.products.indexOf(prod), 1)
           //);
         }
-      }, {
-        text: 'Ver Detalle',
-        icon: 'eye',
-        handler: () => {
-          this.nav.navigateRoot(['/partidos', this.partido._id])
-        }
-      }, {
+      }, optionDetailPartido,
+      {
         text: 'Editar',
         icon: 'create',
         handler: () => {
           this.router.navigate(['/products/edit']);
         }
       }, {
-        text: 'Cancel',
+        text: 'Cancelar',
         icon: 'close',
         role: 'cancel',
       }]
@@ -103,7 +123,7 @@ export class PartidoCardComponent implements OnInit {
 
   }
 
-  async compartir() {
+  compartir() {
     Share.share({
       dialogTitle: 'Camparir el partido',
       text: 'Se comparte'

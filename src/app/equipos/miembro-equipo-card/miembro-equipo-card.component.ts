@@ -30,8 +30,10 @@ export class MiembroEquipoCardComponent implements OnInit {
   verTarjeta2Ama = false;
   verTarjetaRoja = false;
 
+  @Input() golesMaximos: number;
   @Input() totalTit: number;
   @Input() totalCap: number;
+  @Input() resultado: string;
 
   @Output() miembroChange = new EventEmitter<void>();
 
@@ -61,7 +63,7 @@ export class MiembroEquipoCardComponent implements OnInit {
 
   private habilitarCard() {
     if (this.miembro.rol === 'JUGADOR') {
-      if ((this.miembro.titular === true || this.miembro.suplente === true) && this.totalTit + 1 <= 5) {
+      if ((this.miembro.titular === true || this.miembro.suplente === true) && this.totalTit <= 5) {
         this.deshabilitado = false;
       } else {
         this.deshabilitado = true;
@@ -76,7 +78,7 @@ export class MiembroEquipoCardComponent implements OnInit {
   async openAddDataMiembro() {
     const modal = await this.modalCtrl.create({
       component: AddAccionMiembroPage,
-      componentProps: { miembro: this.miembro }
+      componentProps: { miembro: this.miembro, golesMaximos: this.golesMaximos }
     });
     await modal.present();
     const result = await modal.onDidDismiss();
