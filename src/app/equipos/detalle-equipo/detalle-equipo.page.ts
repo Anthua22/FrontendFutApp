@@ -45,8 +45,8 @@ export class DetalleEquipoPage implements OnInit {
   }
 
   actualizarBorrado(event: string) {
-    this.jugadores = this.equipo.miembros.filter(x => x._id !== event);
-    this.staffs = this.equipo.miembros.filter(x => x._id !== event);
+    this.jugadores = this.equipo.miembros.filter(x => x._id !== event &&x.rol === 'JUGADOR' );
+    this.staffs = this.equipo.miembros.filter(x => x._id !== event && x.rol !== 'JUGADOR');
   }
 
 }

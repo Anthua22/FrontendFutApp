@@ -1,6 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
-import { Equipo } from 'src/app/models/models';
+import { AppComponent } from 'src/app/app.component';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { Equipo, User } from 'src/app/models/models';
+import { UsersService } from 'src/app/users/services/users.service';
 import { AddMiembroPage } from '../add-miembro/add-miembro.page';
 
 @Component({
@@ -11,11 +14,18 @@ import { AddMiembroPage } from '../add-miembro/add-miembro.page';
 export class EquipoCardPage implements OnInit {
 
   @Input() equipo: Equipo;
+  userLogueado:User = {
+    'foto':'',
+    'rol':'',
+    'nombre_completo':''
+  }
 
+  constructor(public modalCtrl: ModalController, private toast:ToastController, 
+    private authService:AuthService) { }
 
-  constructor(public modalCtrl: ModalController, private toast:ToastController) { }
-
-  ngOnInit() { }
+  ngOnInit() { 
+    this.authService.userLogueado$.subscribe(x=>this.userLogueado = x)
+  }
 
   async addMiembro() {
     const modal = await this.modalCtrl.create({

@@ -1,7 +1,7 @@
 import { User } from './models/models';
 import { UsersService } from './users/services/users.service';
 import { AuthService } from './auth/services/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { shareReplay } from 'rxjs/operators';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   menuDisabled = true;
   public appPages = [
     {
@@ -39,18 +39,20 @@ export class AppComponent implements OnInit {
     nombre_completo: '',
     foto: '',
   }
-  usuarioLogueado$: Observable<User>;
 
+  
 
   constructor(private authService: AuthService, private nav: NavController, private userService: UsersService) {
-    this.authService.loginChange$.subscribe(logueado => this.menuDisabled = !logueado);
-    this.usuarioLogueado$ = this.userService.getMyProfile().pipe(shareReplay(1));
+    this.authService.loginChange$.subscribe(logueado => {
+      this.menuDisabled = !logueado;
+    });
+    this.authService.userLogueado$.subscribe(x=>{
+      this.usuarioLogueado = x
+    });
+
+
   }
-  ngOnInit(): void {
-    this.usuarioLogueado$.subscribe(
-      user => this.usuarioLogueado = user
-    )
-  }
+  
 
   async logout() {
     await this.authService.logout();

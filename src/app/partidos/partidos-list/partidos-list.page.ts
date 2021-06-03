@@ -7,6 +7,7 @@ import { ToastController } from '@ionic/angular';
 import { AppComponent } from 'src/app/app.component';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { AuthService } from 'src/app/auth/services/auth.service';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-partidos-list',
@@ -18,7 +19,7 @@ export class PartidosListPage implements OnInit {
   partidos!: Partido[];
   data = false;
   userLoguado: User;
-  constructor(private partidosService: PartidosService, private toast: ToastController, @Inject(AppComponent) private parentComponent: AppComponent) { }
+  constructor(private partidosService: PartidosService, private authService:AuthService,private toast: ToastController) { }
 
   ngOnInit() {
     this.partidosService.getPartidos().subscribe(
@@ -35,7 +36,7 @@ export class PartidosListPage implements OnInit {
       this.data = true;
     }, 500);
 
-    this.parentComponent.usuarioLogueado$.subscribe(x => {
+    this.authService.userLogueado$.subscribe(x => {
       this.userLoguado = x;
     })
   }

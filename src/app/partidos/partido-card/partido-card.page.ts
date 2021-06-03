@@ -4,6 +4,7 @@ import { ActionSheetController, NavController } from '@ionic/angular';
 import { AppComponent } from 'src/app/app.component';
 import { Categoria, Partido, User } from 'src/app/models/models';
 import { Plugins } from '@capacitor/core';
+import { AuthService } from 'src/app/auth/services/auth.service';
 const { Share } = Plugins;
 
 @Component({
@@ -41,13 +42,18 @@ export class PartidoCardPage implements OnInit {
 
   };
 
-  userLogueado: User;
+  userLogueado: User= {
+    'foto':'',
+    'rol':'',
+    'nombre_completo':''
+  }
 
-  constructor(private nav: NavController, private actionSheetCtrl: ActionSheetController, private router: Router, @Inject(AppComponent) private parentComponent: AppComponent) {
+  constructor(private nav: NavController, private authService:AuthService,
+    private actionSheetCtrl: ActionSheetController, private router: Router) {
   }
 
   ngOnInit() {
-    this.parentComponent.usuarioLogueado$.subscribe(x => {
+    this.authService.userLogueado$.subscribe(x => {
       this.userLogueado = x;
     })
   }

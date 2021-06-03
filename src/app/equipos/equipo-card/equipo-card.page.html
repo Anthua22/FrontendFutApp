@@ -21,7 +21,7 @@
         <ion-col> <span style="font-weight: bold;">Dirección del campo:</span> </ion-col>
         <ion-col>{{equipo.direccion_campo}}</ion-col>
       </ion-row>
-      <ion-row class="ion-justify-content-center">
+      <ion-row class="ion-justify-content-center" *ngIf="userLogueado.rol ==='ADMIN'">
         <ion-button color="secondary" (click)="addMiembro()">
           <ion-icon name="person-add" style="margin-right: 5px;"></ion-icon>
           Añadir un miembro

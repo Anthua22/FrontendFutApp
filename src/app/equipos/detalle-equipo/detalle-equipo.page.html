@@ -39,7 +39,7 @@
     </div>
     <div *ngSwitchCase="'staff'">
       <ion-list>
-        <app-miembro-equipo-card [miembro]="staff" [idEquipo]="equipo._id" *ngFor="let staff of staffs"></app-miembro-equipo-card>
+        <app-miembro-equipo-card [miembro]="staff" [idEquipo]="equipo._id" *ngFor="let staff of staffs" (delete)="actualizarBorrado($event)"></app-miembro-equipo-card>
       </ion-list>
     </div>
    

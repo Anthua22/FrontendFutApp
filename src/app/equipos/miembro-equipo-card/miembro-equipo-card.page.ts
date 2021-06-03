@@ -1,8 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ModalController, ToastController } from '@ionic/angular';
-import { MiembroEquipo, Tarjeta } from 'src/app/models/models';
+import { AppComponent } from 'src/app/app.component';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { MiembroEquipo, Tarjeta, User } from 'src/app/models/models';
 import { AccionesMiembroPage } from 'src/app/partidos/detalle-partido/miembros-equipo/acciones-miembro/acciones-miembro.page';
 import { AddAccionMiembroPage } from 'src/app/partidos/detalle-partido/miembros-equipo/add-accion-miembro/add-accion-miembro.page';
 import { EquipoService } from '../service/equipo.service';
@@ -36,19 +38,24 @@ export class MiembroEquipoCardPage implements OnInit {
   vistaPartidos = false;
   @Output() miembroChange = new EventEmitter<void>();
   @Output() delete = new EventEmitter<string>();
-
+  userLogueado: User = {
+    'foto': '',
+    'rol': '',
+    'nombre_completo': ''
+  }
   constructor(
     public modalCtrl: ModalController,
     public toast: ToastController,
     private router: Router,
     private equipoService: EquipoService,
-    private alertController: AlertController
-  ) { }
+    private alertController: AlertController,
+    private authService: AuthService) { }
 
   ngOnInit() {
     this.habilitarCard();
     this.checkTarjetas();
     this.vistaPartidos = this.router.url.includes('partidos');
+    this.authService.userLogueado$.subscribe(x => this.userLogueado = x);
   }
 
   async openChangeInfo() {
@@ -132,18 +139,18 @@ export class MiembroEquipoCardPage implements OnInit {
               (await this.toast.create({
                 duration: 3000,
                 position: "bottom",
-                message: `Se ha borrado al jugador con éxito`,
+                message: `Se ha borrado al miembro del equipo con éxito`,
                 color: 'success'
               })).present();
             },
-            async (error: HttpErrorResponse) => {
-              (await this.toast.create({
-                duration: 3000,
-                position: "bottom",
-                message: error.message,
-                color: 'danger'
-              })).present();
-            })
+              async (error: HttpErrorResponse) => {
+                (await this.toast.create({
+                  duration: 3000,
+                  position: "bottom",
+                  message: error.message,
+                  color: 'danger'
+                })).present();
+              })
           }
         }
       ]

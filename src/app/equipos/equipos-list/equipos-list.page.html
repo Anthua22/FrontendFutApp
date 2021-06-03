@@ -8,20 +8,10 @@
 </ion-header>
 <ion-content>
   <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-    <ion-fab-button color="tertiary">
-      <ion-icon md="caret-back" ios="chevron-back-circle-outline"></ion-icon>
+    <ion-fab-button color="tertiary" [routerDirection]="'root'" [routerLink]="['/equipos/add']">
+      <ion-icon name="add" ios="chevron-back-circle-outline"></ion-icon>
     </ion-fab-button>
-    <ion-fab-list side="start">
-      <ion-fab-button color="light">
-        <ion-icon name="logo-facebook"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="light">
-        <ion-icon name="logo-twitter"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="light">
-        <ion-icon name="logo-vimeo"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
+  
   </ion-fab>
 
   <ion-searchbar animated debounce="500" placeholder="Nombre del equipo" autocomplete="on" (ionChange)="filterItems($event)"></ion-searchbar>
