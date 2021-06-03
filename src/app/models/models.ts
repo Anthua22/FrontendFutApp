@@ -71,7 +71,9 @@ export interface Equipo {
   miembros?: MiembroEquipo[],
   email: string,
   categoria: Categoria,
-  direccion_campo: string
+  direccion_campo: string,
+  lt?:number,
+  ln?:number
 }
 export interface Partido {
   _id?: string,

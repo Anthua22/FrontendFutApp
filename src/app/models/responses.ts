@@ -19,6 +19,9 @@ export interface MiembrosEquipoRespose {
   resultado: MiembroEquipo[];
 }
 
+export interface EquipoResponse{
+  resultado: Equipo;
+}
 export interface EquiposResponse {
   resultado: Equipo[];
 }

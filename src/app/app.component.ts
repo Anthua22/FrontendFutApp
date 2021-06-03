@@ -15,11 +15,15 @@ export class AppComponent implements OnInit {
   menuDisabled = true;
   public appPages = [
     {
-      title: 'Product list',
-      url: '/products',
+      title: 'Partidos',
+      url: '/partidos',
       icon: 'home'
     },
     {
+      title: 'Equipos',
+      url: '/equipos',
+      icon: 'people'
+    }, {
       title: 'Add product',
       url: '/products/add',
       icon: 'add-circle'

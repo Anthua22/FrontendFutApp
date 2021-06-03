@@ -12,6 +12,8 @@ import { EquiposPageRoutingModule } from './equipos-routing.module';
 
 import { AccionesMiembroPageModule } from '../partidos/detalle-partido/miembros-equipo/acciones-miembro/acciones-miembro.module';
 import { EquiposCardComponent } from './equipos-card/equipos-card.component';
+import { EquiposListPage } from './equipos-list/equipos-list.page';
+import { SkeletonModule } from '../skeleton/skeleton.module';
 
 @NgModule({
   imports: [
@@ -19,10 +21,11 @@ import { EquiposCardComponent } from './equipos-card/equipos-card.component';
     FormsModule,
     IonicModule,
     PipesModule,
+    SkeletonModule,
     EquiposPageRoutingModule,
     AccionesMiembroPageModule,
   ],
-  declarations: [ MiembroEquipoCardComponent, EquiposCardComponent],
-  exports:[MiembroEquipoCardComponent]
+  declarations: [MiembroEquipoCardComponent, EquiposCardComponent, EquiposListPage],
+  exports: [MiembroEquipoCardComponent]
 })
-export class EquiposPageModule {}
+export class EquiposPageModule { }

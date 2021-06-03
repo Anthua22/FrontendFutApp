@@ -7,6 +7,17 @@ const routes: Routes = [
     path: '',
     component: EquiposListPage
   },
+  {
+    path: ':id',
+    loadChildren: () => import('./detalle-equipo/detalle-equipo.module').then( m => m.DetalleEquipoPageModule)
+  },
+  {
+    path: 'add',
+    loadChildren: () => import('./equipo-form/equipo-form.module').then( m => m.EquipoFormPageModule)
+  },
+
+
+
 ];
 
 @NgModule({

@@ -19,7 +19,7 @@ export class PartidosService {
     );
   }
 
-  getPartido(id: number): Observable<Partido> {
+  getPartido(id: string): Observable<Partido> {
     return this.httpClient.get<PartidoResponse>(`${this.BASE_URL}/${id}`).pipe(
       map(x => x.resultado)
     );

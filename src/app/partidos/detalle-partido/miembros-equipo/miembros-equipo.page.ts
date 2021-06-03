@@ -103,7 +103,7 @@ export class MiembrosEquipoPage implements OnInit {
   }
 
 
-  obtenerDatosMiembro() {
+  obtenerDatosMiembro(event) {
     this.countDatos();
     this.golesAsignadosLocales = this.countGoles(this.partido.equipo_local);
     this.golesAsignadosVisitantes = this.countGoles(this.partido.equipo_visitante);

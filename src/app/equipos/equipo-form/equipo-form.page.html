@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Añadir Equipo</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form #equipoForm="ngForm">
+    <ngb-accordion #acc="ngbAccordion" [activeIds]="'toggle-1'">
+      <ngb-panel id="toggle-1" title="Datos Básicos">
+        <ng-template ngbPanelContent>
+          <ion-list>
+            <ion-item>
+              <ion-label>
+                <label>Nombre:</label>
+              </ion-label>
+              <ion-input name="nombre" required #nombreModel="ngModel" type="text" minlength="5"
+                [(ngModel)]="equipo.nombre"></ion-input>
+            </ion-item>
+            <ion-text *ngIf="nombreModel.errors && nombreModel.errors.minlength && nombreModel.touched">Faltan
+              {{
+              nombreModel.errors.minlength.requiredLength -
+              nombreModel.errors.minlength.actualLength
+              }}
+              caracteres</ion-text>
+
+            <ion-text *ngIf="nombreModel.errors && nombreModel.errors.required && nombreModel.touched">
+              Campo Requerido</ion-text>
+            <ion-item>
+              <ion-label>
+                <label>Email:</label>
+              </ion-label>
+              <ion-input name="email"  placeholder="example@example.com" required type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                [(ngModel)]="equipo.email" #emailModel="ngModel"></ion-input>
+            </ion-item>
+            <ion-text *ngIf="emailModel.errors && emailModel.errors.required && emailModel.touched">El email es requerido
+            </ion-text>
+            <ion-text *ngIf="emailModel.errors && emailModel.errors.pattern && emailModel.touched">El email es incorrecto
+            </ion-text>
+            <ion-item>
+              <ion-label>
+                <label>Categoria</label>
+              </ion-label>
+              <ion-select required name="categoria" [(ngModel)]="equipo.categoria" interface="popover">
+                <ion-select-option *ngFor="let categoria of categorias" [value]="categoria">
+                  {{categoria}}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+
+          </ion-list>
+
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel id="toggle-2" title="Foto Escudo">
+        <ng-template ngbPanelContent>
+          <ion-item>
+            <ion-icon name="camera" slot="start"></ion-icon>
+            <ion-button color="secondary" (click)="tomarFoto()">
+              <ion-icon name="camera" slot="start"></ion-icon>
+              Cámara
+            </ion-button>
+            <ion-button color="tertiary" (click)="elegirFotoGaleria()">
+              <ion-icon name="images" slot="start"></ion-icon>
+              Galería
+            </ion-button>
+          </ion-item>
+          <ion-img [src]="equipo.escudo" *ngIf="equipo.escudo"></ion-img>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </form>
+
+  <mgl-map [style]="'mapbox://styles/mapbox/streets-v11'" [zoom]="[14]" [center]="[lng!, lat!]">
+    <mgl-marker [lngLat]="[lng, lat]"></mgl-marker>
+    <mgl-control mglGeocoder (geocoderResult)="getLugarCampo($event.result)">
+    </mgl-control>
+  </mgl-map>
+  <ion-grid>
+    <ion-row style="margin-top: 10px;">
+      <ion-col>
+        <ion-button type="submit" color="primary" expand="block" (click)="add()"
+          [disabled]="equipoForm.invalid || !equipo.escudo || equipo.categoria.toString() === 'Sin Categoria' || !equipo.direccion_campo">
+          <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+          Guardar
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button color="danger" expand="block">
+          <ion-icon name="trash" slot="start"></ion-icon>
+          Cancelar
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,5 +1,5 @@
-import { Equipo } from './../../models/models';
-import { MiembrosEquipoRespose, EquiposResponse } from './../../models/responses';
+import { Equipo, Partido } from './../../models/models';
+import { MiembrosEquipoRespose, EquiposResponse, EquipoResponse, PartidosResponse } from './../../models/responses';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -19,5 +19,17 @@ export class EquipoService {
 
   getEquipos(): Observable<Equipo[]> {
     return this.httpClient.get<EquiposResponse>(`${this.BASE_URL}`).pipe(map(x => x.resultado));
+  }
+
+  addEquipo(equipo: Equipo): Observable<Equipo> {
+    return this.httpClient.post<EquipoResponse>(`${this.BASE_URL}`, equipo).pipe(map(x => x.resultado));
+  }
+
+  getEquipo(id: string): Observable<Equipo> {
+    return this.httpClient.get<EquipoResponse>(`${this.BASE_URL}/${id}`).pipe(map(x => x.resultado));
+  }
+
+  getPartidos(id: string): Observable<Partido[]> {
+    return this.httpClient.get<PartidosResponse>(`${this.BASE_URL}/${id}/partidos`).pipe(map(x => x.resultado));
   }
 }
