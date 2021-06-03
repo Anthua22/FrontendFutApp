@@ -1,0 +1,42 @@
+<ion-card>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <img [routerDirection]="'root'" [routerLink]="['/equipos',equipo._id]" [src]="equipo.escudo" />
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-card-header>
+    <ion-card-title [routerDirection]="'root'" [routerLink]="['/equipos',equipo._id]">{{equipo.nombre}}</ion-card-title>
+    <ion-card-subtitle>{{equipo.categoria}}</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col><span style="font-weight: bold;">Email</span></ion-col>
+        <ion-col>{{equipo.email}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col> <span style="font-weight: bold;">Dirección del campo:</span> </ion-col>
+        <ion-col>{{equipo.direccion_campo}}</ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-button color="secondary">
+          <ion-icon name="person-add" style="margin-right: 5px;"></ion-icon>
+          Añadir un miembro
+        </ion-button>
+        <ion-button color="tertiary">
+          <ion-icon name="create" style="margin-right: 5px;"></ion-icon>
+          editar
+        </ion-button>
+
+        <ion-button color="danger">
+          <ion-icon name="trash" style="margin-right: 5px;"></ion-icon>
+          borrar
+        </ion-button>
+
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>

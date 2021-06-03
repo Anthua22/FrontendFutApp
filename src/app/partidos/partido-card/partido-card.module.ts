@@ -1,30 +1,34 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { EquipoFormPage } from './equipo-form.page';
-import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
+
+
+import { PartidoCardPage } from './partido-card.page';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
     path: '',
-    component: EquipoFormPage
+    component: PartidoCardPage
   }
 ];
+
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ReactiveFormsModule,
-    RouterModule.forChild(routes),
-    NgxMapboxGLModule,
-    NgbAccordionModule
+    PipesModule,
+    NgbAccordionModule,
+    RouterModule.forChild(routes)
   ],
-  declarations: [EquipoFormPage]
+  declarations: [PartidoCardPage],
+  exports: [PartidoCardPage]
 })
-export class EquipoFormPageModule {}
+export class PartidoCardPageModule { }

@@ -4,7 +4,7 @@ import { MapComponent } from 'ngx-mapbox-gl';
 import { NavController } from '@ionic/angular';
 import { DetallePartidoPage } from '../detalle-partido.page';
 import { Plugins } from '@capacitor/core';
-const { Geolocation, StartNavigationPlugin } = Plugins;
+const { StartNavigationPlugin } = Plugins;
 
 @Component({
   selector: 'app-mapa-partido',
@@ -39,7 +39,7 @@ export class MapaPartidoPage implements OnInit, AfterViewInit {
     StartNavigationPlugin.launchMapsApp({
       latitude: this.partido.lt,
       longitude: this.partido.ln,
-      name: 'Directions example',
+      name: 'Dirección partido',
     });
   }
 

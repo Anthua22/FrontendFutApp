@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { MiembrosEquipoPageRoutingModule } from './miembros-equipo-routing.module';
 
 import { MiembrosEquipoPage } from './miembros-equipo.page';
+import { MiembroEquipoCardPageModule } from 'src/app/equipos/miembro-equipo-card/miembro-equipo-card.module';
 
 
 @NgModule({
@@ -16,7 +17,7 @@ import { MiembrosEquipoPage } from './miembros-equipo.page';
     FormsModule,
     IonicModule,
     MiembrosEquipoPageRoutingModule,
-    EquiposPageModule
+    MiembroEquipoCardPageModule
   ],
   declarations: [MiembrosEquipoPage]
 })

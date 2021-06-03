@@ -14,8 +14,10 @@ const routes: Routes = [
   {
     path: 'add',
     loadChildren: () => import('./equipo-form/equipo-form.module').then( m => m.EquipoFormPageModule)
+  },  {
+    path: 'equipo-card',
+    loadChildren: () => import('./equipo-card/equipo-card.module').then( m => m.EquipoCardPageModule)
   },
-
 
 
 ];

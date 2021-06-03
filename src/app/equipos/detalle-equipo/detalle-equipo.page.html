@@ -13,27 +13,7 @@
 </ng-container>
 
 <ion-content>
-  <ion-card>
-    <ion-card-content>
-      <img [src]="equipo.escudo" />
-      <ion-grid>
-        <ion-row>
-          <ion-col size="3"><span style="font-weight: bold; text-align: right;">Categoria:</span></ion-col>
-          <ion-col>{{equipo.categoria}}</ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="3"> <span style="font-weight: bold; text-align: right;">Email:</span> </ion-col>
-          <ion-col>{{equipo.email}}</ion-col>
-        </ion-row>
-        <ion-row cl ass="ion-justify-content-center">
-          <ion-button color="secondary">
-            <ion-icon name="person-add" style="margin-right: 5px;"></ion-icon>
-              Añadir un miembro
-          </ion-button>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
+  <app-equipo-card [equipo]="equipo"></app-equipo-card>
   <ion-segment [(ngModel)]="type">
     <ion-segment-button value="partidos">
       <ion-label>Partidos</ion-label>
@@ -44,22 +24,24 @@
     <ion-segment-button value="staff">
       <ion-label>Staff</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="campo">
-      <ion-label>Campo</ion-label>
-    </ion-segment-button>
   </ion-segment>
 
   <div [ngSwitch]="type">
     <div *ngSwitchCase="'partidos'">
       <ion-list>
-       
+        <app-partido-card [partido]="partido" *ngFor="let partido of partidosParticipa"></app-partido-card>
       </ion-list>
     </div>
-    <div *ngSwitchCase="'visitantes'">
-      <div>
-
-      </div>
+    <div *ngSwitchCase="'jugadores'">
+      <ion-list>
+        <app-miembro-equipo-card [miembro]="jugador" *ngFor="let jugador of jugadores"></app-miembro-equipo-card>
+      </ion-list>
     </div>
-
+    <div *ngSwitchCase="'staff'">
+      <ion-list>
+        <app-miembro-equipo-card [miembro]="staff" *ngFor="let staff of staffs"></app-miembro-equipo-card>
+      </ion-list>
+    </div>
+   
   </div>
 </ion-content>

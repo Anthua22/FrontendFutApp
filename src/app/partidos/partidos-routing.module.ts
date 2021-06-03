@@ -14,7 +14,8 @@ const routes: Routes = [
   {
     path: ':id',
     loadChildren: ()=>import('./detalle-partido/detalle-partido.module').then(m=>m.DetallePartidoPageModule)
-  }
+  },
+  
 
 ];
 

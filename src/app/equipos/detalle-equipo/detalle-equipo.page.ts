@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
-import { Categoria, Equipo, Partido } from 'src/app/models/models';
-import { PartidosService } from 'src/app/partidos/services/partidos.service';
+import { Categoria, Equipo, MiembroEquipo, Partido } from 'src/app/models/models';
 import { EquipoService } from '../service/equipo.service';
+import { Plugins } from '@capacitor/core';
+const { StartNavigationPlugin } = Plugins;
+
 
 @Component({
   selector: 'app-detalle-equipo',
@@ -20,6 +20,9 @@ export class DetalleEquipoPage implements OnInit {
     'nombre': ''
   }
 
+  staffs: MiembroEquipo[];
+  jugadores: MiembroEquipo[];
+
   data = false;
   partidosParticipa: Partido[] = [];
   type = 'partidos'
@@ -34,9 +37,12 @@ export class DetalleEquipoPage implements OnInit {
       this.data = true;
       this.equipoService.getPartidos(this.equipo._id).subscribe(partidos => {
         this.partidosParticipa = partidos;
-      })
+      });
+      this.jugadores = this.equipo.miembros.filter(x => x.rol === 'JUGADOR');
+      this.staffs = this.equipo.miembros.filter(x => x.rol !== 'JUGADOR');
     });
 
   }
+
 
 }

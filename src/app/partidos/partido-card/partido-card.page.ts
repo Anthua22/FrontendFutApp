@@ -1,18 +1,17 @@
-import { AppComponent } from './../../app.component';
-import { Categoria, Partido, User } from 'src/app/models/models';
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { ActionSheetController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { ActionSheetController, NavController } from '@ionic/angular';
+import { AppComponent } from 'src/app/app.component';
+import { Categoria, Partido, User } from 'src/app/models/models';
 import { Plugins } from '@capacitor/core';
 const { Share } = Plugins;
 
-
 @Component({
   selector: 'app-partido-card',
-  templateUrl: './partido-card.component.html',
-  styleUrls: ['./partido-card.component.scss'],
+  templateUrl: './partido-card.page.html',
+  styleUrls: ['./partido-card.page.scss'],
 })
-export class PartidoCardComponent implements OnInit {
+export class PartidoCardPage implements OnInit {
 
   @Input() partido: Partido = {
     arbitro_principal: {

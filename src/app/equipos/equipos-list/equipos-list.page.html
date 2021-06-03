@@ -27,7 +27,7 @@
   <ion-searchbar animated debounce="500" placeholder="Nombre del equipo" autocomplete="on" (ionChange)="filterItems($event)"></ion-searchbar>
 
   <ion-list *ngIf="data">
-    <app-equipos-card [equipo]="equipo" *ngFor="let equipo of equipos"></app-equipos-card>
+    <app-equipo-card [equipo]="equipo" *ngFor="let equipo of equipos"></app-equipo-card>
   </ion-list>
 
   <app-equipo-skeleton *ngIf="!data"></app-equipo-skeleton>
