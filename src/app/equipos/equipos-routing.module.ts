@@ -22,7 +22,11 @@ const routes: Routes = [
     resolve:{
       equipo:EquipoResolverService
     }
+  },  {
+    path: 'add-miembro',
+    loadChildren: () => import('./add-miembro/add-miembro.module').then( m => m.AddMiembroPageModule)
   }
+
 
 ];
 

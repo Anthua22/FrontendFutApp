@@ -15,8 +15,8 @@ export interface ErrorResponse {
   error: string;
 }
 
-export interface MiembrosEquipoRespose {
-  resultado: MiembroEquipo[];
+export interface MiembroEquipoRespose {
+  resultado: MiembroEquipo;
 }
 
 export interface EquipoResponse{

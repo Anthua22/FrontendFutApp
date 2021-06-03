@@ -1,9 +1,11 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { MiembroEquipo, Tarjeta } from 'src/app/models/models';
 import { AccionesMiembroPage } from 'src/app/partidos/detalle-partido/miembros-equipo/acciones-miembro/acciones-miembro.page';
 import { AddAccionMiembroPage } from 'src/app/partidos/detalle-partido/miembros-equipo/add-accion-miembro/add-accion-miembro.page';
+import { EquipoService } from '../service/equipo.service';
 
 @Component({
   selector: 'app-miembro-equipo-card',
@@ -18,6 +20,8 @@ export class MiembroEquipoCardPage implements OnInit {
     sancionado: false,
   };
 
+  @Input() idEquipo: string;
+
   deshabilitado = true;
 
   verTarjetaAma = false;
@@ -31,11 +35,14 @@ export class MiembroEquipoCardPage implements OnInit {
 
   vistaPartidos = false;
   @Output() miembroChange = new EventEmitter<void>();
+  @Output() delete = new EventEmitter<string>();
 
   constructor(
     public modalCtrl: ModalController,
     public toast: ToastController,
-    private router: Router
+    private router: Router,
+    private equipoService: EquipoService,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -105,6 +112,44 @@ export class MiembroEquipoCardPage implements OnInit {
         }
       })
     }
+
+  }
+
+  async deleteMiembro() {
+    const alert = await this.alertController.create({
+      header: 'Confirmación Borrado',
+      message: 'Estas seguro de querer borrar a este miembro?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.equipoService.deleteMiembro(this.idEquipo, this.miembro._id).subscribe(async x => {
+              this.delete.emit(this.miembro._id);
+              (await this.toast.create({
+                duration: 3000,
+                position: "bottom",
+                message: `Se ha borrado al jugador con éxito`,
+                color: 'success'
+              })).present();
+            },
+            async (error: HttpErrorResponse) => {
+              (await this.toast.create({
+                duration: 3000,
+                position: "bottom",
+                message: error.message,
+                color: 'danger'
+              })).present();
+            })
+          }
+        }
+      ]
+    });
+
+    await alert.present();
 
   }
 }

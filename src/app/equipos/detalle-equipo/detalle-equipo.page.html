@@ -34,12 +34,12 @@
     </div>
     <div *ngSwitchCase="'jugadores'">
       <ion-list>
-        <app-miembro-equipo-card [miembro]="jugador" *ngFor="let jugador of jugadores"></app-miembro-equipo-card>
+        <app-miembro-equipo-card [miembro]="jugador" *ngFor="let jugador of jugadores" [idEquipo]="equipo._id" (delete)="actualizarBorrado($event)"></app-miembro-equipo-card>
       </ion-list>
     </div>
     <div *ngSwitchCase="'staff'">
       <ion-list>
-        <app-miembro-equipo-card [miembro]="staff" *ngFor="let staff of staffs"></app-miembro-equipo-card>
+        <app-miembro-equipo-card [miembro]="staff" [idEquipo]="equipo._id" *ngFor="let staff of staffs"></app-miembro-equipo-card>
       </ion-list>
     </div>
    

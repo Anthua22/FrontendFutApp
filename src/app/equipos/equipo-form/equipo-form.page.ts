@@ -7,6 +7,7 @@ import { MapComponent } from 'ngx-mapbox-gl';
 import { EquipoService } from '../service/equipo.service';
 import { NavController, ToastController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 const { Geolocation } = Plugins;
 
 
@@ -76,7 +77,15 @@ export class EquipoFormPage implements OnInit {
           color: 'success'
         })).present();
 
-      })
+      },
+        async (error: HttpErrorResponse) => {
+          (await this.toast.create({
+            duration: 3000,
+            position: "bottom",
+            message: error.message,
+            color: 'danger'
+          })).present();
+        })
     } else {
       this.equipoService.addEquipo(this.equipo).subscribe(async x => {
         (await this.toast.create({
@@ -84,6 +93,13 @@ export class EquipoFormPage implements OnInit {
           position: "bottom",
           message: `Se ha creado correctamente al equipo ${x.nombre}`,
           color: 'success'
+        })).present();
+      }, async (error: HttpErrorResponse) => {
+        (await this.toast.create({
+          duration: 3000,
+          position: "bottom",
+          message: error.message,
+          color: 'danger'
         })).present();
       });
     }
