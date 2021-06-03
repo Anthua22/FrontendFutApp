@@ -32,4 +32,8 @@ export class EquipoService {
   getPartidos(id: string): Observable<Partido[]> {
     return this.httpClient.get<PartidosResponse>(`${this.BASE_URL}/${id}/partidos`).pipe(map(x => x.resultado));
   }
+
+  editEquipo(equipo: Equipo): Observable<Equipo> {
+    return this.httpClient.put<EquipoResponse>(`${this.BASE_URL}/${equipo._id}`, equipo).pipe(map(x => x.resultado));
+  }
 }
