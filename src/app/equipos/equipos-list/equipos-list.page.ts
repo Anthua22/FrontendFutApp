@@ -10,7 +10,7 @@ import { EquipoService } from '../service/equipo.service';
 export class EquiposListPage implements OnInit {
   data = false;
   equipos: Equipo[];
-  equiposCopia:Equipo[];
+  equiposCopia: Equipo[];
   constructor(private equipoService: EquipoService) { }
 
   ngOnInit() {
@@ -27,11 +27,15 @@ export class EquiposListPage implements OnInit {
     if (search && search.trim() !== '') {
       search = search.trim().toLowerCase();
       this.equipos = this.equipos
-      .filter(i => i.nombre.toLowerCase().includes(search));
-      } else {
+        .filter(i => i.nombre.toLowerCase().includes(search));
+    } else {
       this.equipos = this.equiposCopia;
-      }
-     
+    }
+
   }
 
+  deleteEquipo(id: string) {
+    this.equipos = this.equipos.filter(x => x._id !== id);
+    this.equiposCopia = this.equiposCopia.filter(x => x._id !== id);
+  }
 }

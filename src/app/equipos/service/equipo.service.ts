@@ -46,7 +46,12 @@ export class EquipoService {
 
   }
 
+  deleteEquipo(id: string): Observable<Equipo> {
+    return this.httpClient.delete<EquipoResponse>(`${this.BASE_URL}/${id}`).pipe(map(x => x.resultado));
+  }
+
   deleteMiembro(idEquipo: string, idMiembro: string): Observable<MiembroEquipo> {
     return this.httpClient.delete<MiembroEquipoRespose>(`${this.BASE_URL}/${idEquipo}/miembros_equipo/${idMiembro}`).pipe(map(x => x.resultado));
   }
+
 }
