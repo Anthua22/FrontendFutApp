@@ -1,0 +1,41 @@
+<ion-header *ngIf="!user.me">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="users"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{user.nombre_completo |apellidoNombre}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-header *ngIf="user.me">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Mi Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <app-user-card [user]="user"></app-user-card>
+  <ion-segment [(ngModel)]="type">
+    <ion-segment-button value="partidos-nuevos">
+      <ion-label>Partidos Nuevos</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="partidos-viejos">
+      <ion-label>Partidos Antiguos</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="type">
+    <div *ngSwitchCase="'partidos-nuevos'">
+      <ion-list>
+        <app-partido-card [partido]="partido" *ngFor="let partido of partidosNuevos"></app-partido-card>
+      </ion-list>
+    </div>
+    <div *ngSwitchCase="'partidos-viejos'">
+      <ion-list>
+        <app-partido-card [partido]="partido" *ngFor="let partido of partidosViejos"></app-partido-card>
+      </ion-list>
+    </div>
+
+  </div>
+</ion-content>

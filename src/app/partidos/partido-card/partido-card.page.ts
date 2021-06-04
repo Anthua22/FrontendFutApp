@@ -22,6 +22,7 @@ export class PartidoCardPage implements OnInit {
       categoria: ''
     },
     equipo_local: {
+      _id:'',
       nombre: '',
       categoria: Categoria.FB,
       escudo: '',
@@ -29,6 +30,7 @@ export class PartidoCardPage implements OnInit {
       direccion_campo: ''
     },
     equipo_visitante: {
+      _id:'',
       nombre: '',
       categoria: Categoria.FB,
       escudo: '',
@@ -45,7 +47,8 @@ export class PartidoCardPage implements OnInit {
   userLogueado: User= {
     'foto':'',
     'rol':'',
-    'nombre_completo':''
+    'nombre_completo':'',
+    '_id':''
   }
 
   constructor(private nav: NavController, private authService:AuthService,
@@ -59,23 +62,23 @@ export class PartidoCardPage implements OnInit {
   }
 
   goDetail() {
-    this.nav.navigateRoot(['/partidos', this.partido._id])
+    this.nav.navigateRoot(['/partidos/details', this.partido._id])
   }
 
   async showOptions() {
     let optionDetailPartido: any;
-    if (this.userLogueado.rol === 'ADMIN' || this.partido.arbitro_principal._id === this.userLogueado._id || this.partido.arbitro_secundario._id === this.userLogueado._id || this.partido.cronometrador._id === this.userLogueado._id) {
+    if (this.userLogueado.rol === 'ADMIN' || this.partido.arbitro_principal._id === this.userLogueado._id || (this.partido.arbitro_secundario && this.partido.arbitro_secundario._id === this.userLogueado._id )|| (this.partido.cronometrador &&  this.partido.cronometrador._id === this.userLogueado._id)) {
       optionDetailPartido = {
         text: 'Ver Detalle',
         icon: 'eye',
         handler: () => {
-          this.nav.navigateRoot(['/partidos', this.partido._id]);
+          this.nav.navigateRoot(['/partidos/details', this.partido._id]);
         }
       }
     } else {
       optionDetailPartido = {
         text: 'Ver Acta',
-        icon: 'trash',
+        icon: 'eye',
         handler: () => {
           console.log('ff');
         }
@@ -108,23 +111,7 @@ export class PartidoCardPage implements OnInit {
     });
 
     actSheet.present();
-    /* }else{
-       const actSheet = await this.actionSheetCtrl.create({
-         header: prod.description,
-         buttons: [ {
-           text: 'See details',
-           icon: 'eye',
-           handler: () => {
-             this.router.navigate(['/products/details', prod.id]);
-           }
-         }, {
-           text: 'Cancel',
-           icon: 'close',
-           role: 'cancel',
-         }]
-       });*/
-
-    // }
+    
 
   }
 

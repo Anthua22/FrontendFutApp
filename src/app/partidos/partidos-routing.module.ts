@@ -1,5 +1,3 @@
-import { TokenGuard } from './../guards/token.guard';
-
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PartidosListPage } from './partidos-list/partidos-list.page';
@@ -12,10 +10,14 @@ const routes: Routes = [
   },
 
   {
-    path: ':id',
+    path: 'details/:id',
     loadChildren: ()=>import('./detalle-partido/detalle-partido.module').then(m=>m.DetallePartidoPageModule)
   },
-  
+  {
+    path: 'add',
+    loadChildren: () => import('./partido-form/partido-form.module').then( m => m.PartidoFormPageModule)
+  },
+
 
 ];
 

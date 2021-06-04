@@ -31,7 +31,8 @@ export interface User extends Auth {
   nombre_completo: string;
   foto: string;
   rol?: string,
-  categoria?: string
+  categoria?: string,
+  me?:boolean
 }
 
 export interface MiembroEquipo extends User {

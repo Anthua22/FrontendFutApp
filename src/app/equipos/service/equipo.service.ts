@@ -54,4 +54,8 @@ export class EquipoService {
     return this.httpClient.delete<MiembroEquipoRespose>(`${this.BASE_URL}/${idEquipo}/miembros_equipo/${idMiembro}`).pipe(map(x => x.resultado));
   }
 
+  getEquiposCategoria(categoria: string):Observable<Equipo[]> {
+    return this.httpClient.post<EquiposResponse>(`${this.BASE_URL}/categoria`,{categoria:categoria}).pipe(map(x=>x.resultado));
+  }
+
 }

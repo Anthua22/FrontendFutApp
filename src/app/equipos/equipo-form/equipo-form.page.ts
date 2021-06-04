@@ -36,7 +36,9 @@ export class EquipoFormPage implements OnInit {
     Categoria.REGIONAL, Categoria.FB]
 
   @ViewChild(MapComponent) mapComp: MapComponent;
-  constructor(private equipoService: EquipoService, private nav: NavController, private route: ActivatedRoute, private router: Router, private toast: ToastController) { }
+  
+  constructor(private equipoService: EquipoService, private nav: NavController, private route: ActivatedRoute,
+    private router: Router, private toast: ToastController) { }
 
 
   async ngOnInit() {

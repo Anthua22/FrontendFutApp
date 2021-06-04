@@ -1,0 +1,153 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Editar Usuario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+  <form #userForm="ngForm" (ngSubmit)="changeInfo()">
+    <ion-list>
+      <ion-list-header>
+        Información Principal
+      </ion-list-header>
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input name="name" required [(ngModel)]="name" #namemodel="ngModel"></ion-input>
+        <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="namemodel.dirty && namemodel.valid">
+        </ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Apellidos </ion-label>
+        <ion-input name="apellidos" required [(ngModel)]="apellidos" #apellidosModel="ngModel"></ion-input>
+        <ion-icon name="checkmark-circle" slot="end" color="success"
+          *ngIf="apellidosModel.dirty && apellidosModel.valid">
+        </ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input name="email" required [(ngModel)]="user.email" #emailmodel="ngModel"></ion-input>
+        <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="emailmodel.dirty && emailmodel.valid">
+        </ion-icon>
+      </ion-item>
+
+      <ion-item *ngIf="userLogueado.rol==='ADMIN' && userLogueado._id !== user._id">
+        <ion-label>
+          <label>Rol</label>
+        </ion-label>
+        <ion-select required name="funcion" [(ngModel)]="user.rol" interface="popover">
+          <ion-select-option *ngFor="let rol of roles" [value]="rol">
+            {{ rol === 'ADMIN' ? 'ADMINISTRADOR':'USUARIO'}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button type="submit" color="primary" expand="block" [disabled]="userForm.invalid">
+            <ion-icon name="save" slot="start"></ion-icon>
+            Save
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button color="danger" expand="block" (click)="cancel()">
+            <ion-icon name="trash" slot="start"></ion-icon>
+            Cancel
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </form>
+
+  <form #userPassForm="ngForm" (ngSubmit)="updatePass()">
+    <ion-list>
+      <ion-list-header>
+        Cambiar Contraseña
+      </ion-list-header>
+      <div *ngIf="userLogueado._id === user._id">
+        <ion-item>
+          <ion-icon name="lock-closed" slot="start"></ion-icon>
+          <ion-input type="password" name="passantigua" placeholder="Contraseña Antigua" required
+            [(ngModel)]="passantigua" #passAntiModel="ngModel"></ion-input>
+          <ion-icon name="checkmark-circle" slot="end" color="success"
+            *ngIf="passAntiModel.dirty && passAntiModel.valid">
+          </ion-icon>
+          <ion-icon name="close-circle-outline" slot="end" color="danger"
+            *ngIf="passAntiModel.invalid && passAntiModel.touched"></ion-icon>
+
+        </ion-item>
+        <ion-text *ngIf="passAntiModel.errors && passAntiModel.errors.required && passAntiModel.touched">La contraseña
+          antigua es requerida
+        </ion-text>
+      </div>
+
+      <div ngModelGroup="passGroup" #passGroupModel="ngModelGroup" appMatch="password,password2">
+        <ion-item>
+          <ion-icon name="lock-closed" slot="start"></ion-icon>
+          <ion-input type="password" name="password" minlength="8" placeholder="Contraseña Nueva" required
+            [(ngModel)]="passnueva" #passModel="ngModel"></ion-input>
+          <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="passModel.dirty && passModel.valid">
+          </ion-icon>
+          <ion-icon name="close-circle-outline" slot="end" color="danger"
+            *ngIf="passModel.invalid && passModel.touched"></ion-icon>
+        </ion-item>
+        <ion-text *ngIf="passModel.errors && passModel.errors.required && passModel.touched">La contraseña nueva es
+          requerida
+        </ion-text>
+        <ion-text *ngIf="passModel.errors && passModel.errors.minlength && passModel.touched">Faltan
+          {{
+          passModel.errors.minlength.requiredLength -
+          passModel.errors.minlength.actualLength
+          }}
+          caracteres</ion-text>
+
+        <ion-item>
+          <ion-icon name="lock-closed" slot="start"></ion-icon>
+          <ion-input type="password" name="password2" required [(ngModel)]="passrepeat" #passModel2="ngModel"
+            placeholder="Vuelva a repetir la contraseña"></ion-input>
+          <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="passModel2.dirty && passGroupModel.valid">
+          </ion-icon>
+          <ion-icon name="close-circle-outline" slot="end" color="danger"
+            *ngIf="passModel2.invalid && passModel2.touched || passGroupModel.invalid && passModel2.touched"></ion-icon>
+        </ion-item>
+        <div class="row" *ngIf="passModel2.errors && passModel2.errors.required && passModel2.touched">
+          <ion-text>Confirmacíon de
+            contraseña es requerida
+          </ion-text>
+        </div>
+        <div class="row" *ngIf="passGroupModel.invalid && passModel2.touched">
+          <ion-text>No coinciden las contraseñas
+          </ion-text>
+        </div>
+
+
+      </div>
+
+    </ion-list>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button type="submit" color="primary" expand="block" [disabled]="userPassForm.invalid">
+            <ion-icon name="save" slot="start"></ion-icon>
+            Save
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button color="danger" expand="block" (click)="cancel()">
+            <ion-icon name="trash" slot="start"></ion-icon>
+            Cancel
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </form>
+
+
+
+
+
+</ion-content>

@@ -18,7 +18,11 @@ export class PartidosListPage implements OnInit {
 
   partidos!: Partido[];
   data = false;
-  userLoguado: User;
+  userLoguado: User ={
+    'rol':'',
+    'nombre_completo':'',
+    'foto':''
+  }
   constructor(private partidosService: PartidosService, private authService:AuthService,private toast: ToastController) { }
 
   ngOnInit() {

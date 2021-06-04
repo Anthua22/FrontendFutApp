@@ -5,7 +5,7 @@ import { switchMap, catchError, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Plugins } from '@capacitor/core';
 import { User } from 'src/app/models/models';
-import { TokenResponse } from 'src/app/models/responses';
+import { PasswordResponse, TokenResponse } from 'src/app/models/responses';
 import { UsersService } from 'src/app/users/services/users.service';
 const { Storage } = Plugins;
 
@@ -18,7 +18,7 @@ export class AuthService {
   loginChange$ = new ReplaySubject<boolean>();
   userLogueado$ = new ReplaySubject<User>();
 
-  constructor(private http: HttpClient, private userService:UsersService) { }
+  constructor(private http: HttpClient, private userService: UsersService) { }
 
   private setLogged(logged: boolean) {
     this.logged = logged;
@@ -31,7 +31,7 @@ export class AuthService {
         try {
           await Storage.set({ key: 'token', value: r.token });
           this.setLogged(true);
-          this.userService.getMyProfile().subscribe(x=>{
+          this.userService.getMyProfile().subscribe(x => {
             this.userLogueado$.next(x);
           });
         } catch (e) {
@@ -58,7 +58,7 @@ export class AuthService {
         return this.http.get('auth/validate').pipe(
           map(() => {
             this.setLogged(true);
-            this.userService.getMyProfile().subscribe(x=>{
+            this.userService.getMyProfile().subscribe(x => {
               this.userLogueado$.next(x);
             });
             return true;
@@ -75,6 +75,11 @@ export class AuthService {
     );
   }
 
+  validatePassword(password_check: string, password: string): Observable<boolean> {
+    return this.http.post<PasswordResponse>('auth/validate/password', { password_check, password }).pipe(
+      map(x => x.resultado)
+    );
+  }
 
   async logout(): Promise<void> {
     await Storage.remove({ key: 'token' });

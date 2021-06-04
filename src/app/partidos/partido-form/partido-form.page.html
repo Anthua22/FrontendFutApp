@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="partidos"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{tittle}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form>
+    <ion-list>
+      <ion-item>
+        <ion-label>
+          <label>Categoria</label>
+        </ion-label>
+        <ion-select required name="categoria" [(ngModel)]="partido.categoria" interface="popover" (ionChange)="obtnerCategoria()">
+          <ion-select-option *ngFor="let categoria of categorias" [value]="categoria">
+            {{categoria }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <label>Equipo Local</label>
+        </ion-label>
+        <ion-select required name="local" (ionChange)="habilitarVisitantes()" [disabled]="equipoLocalDisabled" [(ngModel)]="partido.equipo_local" interface="popover">
+          <ion-select-option *ngFor="let equipo of equiposLocales" [value]="equipo">
+            {{equipo.nombre }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <label>Equipo Visitante</label>
+        </ion-label>
+        <ion-select required name="visitante" [disabled]="equipoVisitanteDisabled" [(ngModel)]="partido.equipo_visitante" interface="popover">
+          <ion-select-option *ngFor="let equipo of equiposVisitantes" [value]="equipo">
+            {{equipo.nombre }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>

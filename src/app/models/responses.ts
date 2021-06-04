@@ -4,6 +4,9 @@ export interface TokenResponse {
   token: string;
 }
 
+export interface PasswordResponse{
+  resultado:boolean;
+}
 export interface PartidosResponse {
   resultado: Partido[]
 }
@@ -19,7 +22,7 @@ export interface MiembroEquipoRespose {
   resultado: MiembroEquipo;
 }
 
-export interface EquipoResponse{
+export interface EquipoResponse {
   resultado: Equipo;
 }
 export interface EquiposResponse {
@@ -28,4 +31,8 @@ export interface EquiposResponse {
 
 export interface UserResponse {
   resultado: User;
+}
+
+export interface UsersResponse {
+  resultado: User[];
 }

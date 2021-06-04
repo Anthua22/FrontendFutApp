@@ -1,0 +1,48 @@
+<ion-card>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <img [routerDirection]="'root'" *ngIf="userLogueado._id !== user._id" [routerLink]="['/users/profile',user._id]" [src]="user.foto" />
+          <img [routerDirection]="'root'" *ngIf="userLogueado._id === user._id" [routerLink]="['/users/me']" [src]="user.foto" />
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-card-header>
+      <ion-card-title *ngIf="userLogueado._id !== user._id" [routerDirection]="'root'"
+        [routerLink]="['/users/profile',user._id]">{{user.nombre_completo
+        |apellidoNombre}}</ion-card-title>
+      <ion-card-title *ngIf="userLogueado._id === user._id" [routerDirection]="'root'" [routerLink]="['/users/me']">
+        {{user.nombre_completo
+        |apellidoNombre}}</ion-card-title>
+      <ion-card-subtitle>{{user.categoria}}</ion-card-subtitle>
+      
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col><span style="font-weight: bold;">Email</span></ion-col>
+          <ion-col>{{user.email}}</ion-col>
+        </ion-row>
+        <ion-row *ngIf="user.telefono">
+          <ion-col> <span style="font-weight: bold;">Teléfono:</span> </ion-col>
+          <ion-col>{{user.telefono}}</ion-col>
+        </ion-row>
+        <ion-row class="ion-justify-content-center" *ngIf="userLogueado.rol ==='ADMIN' || user._id === userLogueado._id">
+          <ion-button color="tertiary" (click)="editar()">
+            <ion-icon name="create" style="margin-right: 5px;"></ion-icon>
+            editar
+          </ion-button>
+          <ion-button  color="primary" *ngIf="user._id === userLogueado._id">
+            <ion-icon name="camera" style="margin-right: 5px;"></ion-icon>
+             Foto
+          </ion-button>
+          <ion-button color="danger" >
+            <ion-icon name="trash" style="margin-right: 5px;"></ion-icon>
+            borrar
+          </ion-button>
+  
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  
+  </ion-card> 	
