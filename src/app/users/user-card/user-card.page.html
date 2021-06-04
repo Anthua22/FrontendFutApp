@@ -32,11 +32,11 @@
             <ion-icon name="create" style="margin-right: 5px;"></ion-icon>
             editar
           </ion-button>
-          <ion-button  color="primary" *ngIf="user._id === userLogueado._id">
+          <ion-button  color="primary" *ngIf="user._id === userLogueado._id" (click)="changeAvatar()">
             <ion-icon name="camera" style="margin-right: 5px;"></ion-icon>
              Foto
           </ion-button>
-          <ion-button color="danger" >
+          <ion-button color="danger" (click)="deleteUser()" *ngIf="user._id !== userLogueado._id && user.rol==='USER'">
             <ion-icon name="trash" style="margin-right: 5px;"></ion-icon>
             borrar
           </ion-button>

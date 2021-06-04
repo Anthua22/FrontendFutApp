@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { User } from 'src/app/models/models';
+import { Categoria, User } from 'src/app/models/models';
 import { UsersService } from '../../services/users.service';
 
 @Component({
@@ -20,6 +20,9 @@ export class EditProfilePage implements OnInit {
   passnueva = '';
   passrepeat = '';
   roles = ['ADMIN', 'USER'];
+  categorias: Categoria[] =
+    [Categoria.PRIMERA, Categoria.SEGUNDA, Categoria.SEGUNDAB, Categoria.TERCERA,
+    Categoria.REGIONAL, Categoria.FB]
 
   constructor(private modalController: ModalController, private userService: UsersService, private authService: AuthService,
     private toast: ToastController) { }
@@ -64,7 +67,7 @@ export class EditProfilePage implements OnInit {
     if (this.userLogueado._id === this.user._id) {
       this.authService.validatePassword(this.passantigua, this.user.password).subscribe(async x => {
         if (x) {
-         
+
           this.userService.updatePassword(this.passnueva).subscribe(async resp => {
             (await this.toast.create({
               duration: 3000,
@@ -92,7 +95,7 @@ export class EditProfilePage implements OnInit {
           })).present()
         }
       })
-    } else { 
+    } else {
       this.userService.updatePassword(this.user.password, this.user._id).subscribe(async resp => {
         (await this.toast.create({
           duration: 3000,

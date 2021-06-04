@@ -8,5 +8,6 @@
 </ion-header>
 
 <ion-content>
-  <app-user-card [user]="user" *ngFor="let user of users"></app-user-card>
+  <ion-searchbar animated debounce="500" placeholder="Nombre del usuario" autocomplete="on" (ionChange)="filterItems($event)"></ion-searchbar>
+  <app-user-card [user]="user" *ngFor="let user of users" (delete)="deleteUser($event)"></app-user-card>
 </ion-content>

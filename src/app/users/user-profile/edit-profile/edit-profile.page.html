@@ -5,32 +5,33 @@
 </ion-header>
 
 <ion-content>
-
-
   <form #userForm="ngForm" (ngSubmit)="changeInfo()">
     <ion-list>
       <ion-list-header>
         Información Principal
       </ion-list-header>
-      <ion-item>
-        <ion-label position="floating">Nombre</ion-label>
-        <ion-input name="name" required [(ngModel)]="name" #namemodel="ngModel"></ion-input>
-        <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="namemodel.dirty && namemodel.valid">
-        </ion-icon>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Apellidos </ion-label>
-        <ion-input name="apellidos" required [(ngModel)]="apellidos" #apellidosModel="ngModel"></ion-input>
-        <ion-icon name="checkmark-circle" slot="end" color="success"
-          *ngIf="apellidosModel.dirty && apellidosModel.valid">
-        </ion-icon>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Email</ion-label>
-        <ion-input name="email" required [(ngModel)]="user.email" #emailmodel="ngModel"></ion-input>
-        <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="emailmodel.dirty && emailmodel.valid">
-        </ion-icon>
-      </ion-item>
+      <div *ngIf="user.rol==='USER' || user._id === userLogueado._id">
+        <ion-item>
+          <ion-label position="floating">Nombre</ion-label>
+          <ion-input name="name" required [(ngModel)]="name" #namemodel="ngModel"></ion-input>
+          <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="namemodel.dirty && namemodel.valid">
+          </ion-icon>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Apellidos </ion-label>
+          <ion-input name="apellidos" required [(ngModel)]="apellidos" #apellidosModel="ngModel"></ion-input>
+          <ion-icon name="checkmark-circle" slot="end" color="success"
+            *ngIf="apellidosModel.dirty && apellidosModel.valid">
+          </ion-icon>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input name="email" required [(ngModel)]="user.email" #emailmodel="ngModel"></ion-input>
+          <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="emailmodel.dirty && emailmodel.valid">
+          </ion-icon>
+        </ion-item>
+      </div>
+
 
       <ion-item *ngIf="userLogueado.rol==='ADMIN' && userLogueado._id !== user._id">
         <ion-label>
@@ -39,6 +40,16 @@
         <ion-select required name="funcion" [(ngModel)]="user.rol" interface="popover">
           <ion-select-option *ngFor="let rol of roles" [value]="rol">
             {{ rol === 'ADMIN' ? 'ADMINISTRADOR':'USUARIO'}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="userLogueado.rol==='ADMIN' && userLogueado._id !== user._id && user.rol!=='ADMIN'">
+        <ion-label>
+          <label>Categoria</label>
+        </ion-label>
+        <ion-select required name="categoria" [(ngModel)]="user.categoria" interface="popover">
+          <ion-select-option *ngFor="let categoria of categorias" [value]="categoria">
+            {{categoria}}
           </ion-select-option>
         </ion-select>
       </ion-item>

@@ -41,8 +41,16 @@ export class UsersService {
   }
 
   updatePassword(password: string, id?: string): Observable<void> {
-    return id ? this.httpClient.patch<void>(`${this.BASE_URL}/${id}/password`, { password }) :
+    return id ? this.httpClient.patch<void>(`${this.BASE_URL}/${id}/password_change`, { password }) :
       this.httpClient.patch<void>(`${this.BASE_URL}/me/password`, { password });
 
+  }
+
+  updateAvatar(foto: string): Observable<void> {
+    return this.httpClient.patch<void>(`${this.BASE_URL}/me/avatar`, { foto });
+  }
+
+  deleteUser(id: string): Observable<User> {
+    return this.httpClient.delete<UserResponse>(`${this.BASE_URL}/${id}`).pipe(map(x => x.resultado));
   }
 }

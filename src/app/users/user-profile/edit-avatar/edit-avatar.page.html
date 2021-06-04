@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Cambiar Foto</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form #avatarForm="ngForm" (ngSubmit)="changeAvatar()">
+    <ion-item>
+      <ion-icon name="camera" slot="start"></ion-icon>
+      <ion-button color="secondary" (click)="tomarFoto()">
+        <ion-icon name="camera" slot="start"></ion-icon>
+        Cámara
+      </ion-button>
+      <ion-button color="tertiary" (click)="elegirFotoGaleria()">
+        <ion-icon name="images" slot="start"></ion-icon>
+        Galería
+      </ion-button>
+    </ion-item>
+    <ion-img [src]="user.foto" *ngIf="user.foto"></ion-img>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button type="submit" color="primary" expand="block" [disabled]="!user.foto">
+            <ion-icon name="save" slot="start"></ion-icon>
+            Save
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button color="danger" expand="block" (click)="cancel()">
+            <ion-icon name="trash" slot="start"></ion-icon>
+            Cancel
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
