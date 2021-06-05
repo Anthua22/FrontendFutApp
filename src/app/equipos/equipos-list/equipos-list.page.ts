@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Equipo } from 'src/app/models/models';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { Equipo, User } from 'src/app/models/models';
 import { EquipoService } from '../service/equipo.service';
 
 @Component({
@@ -11,7 +12,8 @@ export class EquiposListPage implements OnInit {
   data = false;
   equipos: Equipo[];
   equiposCopia: Equipo[];
-  constructor(private equipoService: EquipoService) { }
+  userLogueado:User;
+  constructor(private equipoService: EquipoService, private authService:AuthService) { }
 
   ngOnInit() {
     this.equipoService.getEquipos().subscribe(x => {
@@ -19,6 +21,9 @@ export class EquiposListPage implements OnInit {
       this.equiposCopia = this.equipos;
       this.data = true
     });
+    this.authService.userLogueado$.subscribe(x=>{
+      this.userLogueado = x;
+    })
 
   }
 

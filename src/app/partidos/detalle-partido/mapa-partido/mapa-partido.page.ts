@@ -28,9 +28,6 @@ export class MapaPartidoPage implements OnInit, AfterViewInit {
     this.parentComponent.partido$.subscribe(
       partido => {
         this.partido = partido
-        this.partido.lt = 38.37029113674234;
-        this.partido.ln = -0.49055717301099777;
-        console.log(this.partido);
       }
     );
   }

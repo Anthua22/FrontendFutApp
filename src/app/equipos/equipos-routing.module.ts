@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AdminGuard } from '../guards/admin.guard';
 import { EquiposListPage } from './equipos-list/equipos-list.page';
 import { EquipoResolverService } from './service/equipo-resolver.service';
 
@@ -14,18 +15,17 @@ const routes: Routes = [
   },
   {
     path: 'add',
-    loadChildren: () => import('./equipo-form/equipo-form.module').then( m => m.EquipoFormPageModule)
+    loadChildren: () => import('./equipo-form/equipo-form.module').then( m => m.EquipoFormPageModule),
+    canActivate:[AdminGuard]
   },
   {
     path: 'edit/:id',
     loadChildren: () => import('./equipo-form/equipo-form.module').then( m => m.EquipoFormPageModule),
     resolve:{
       equipo:EquipoResolverService
-    }
-  },  {
-    path: 'add-miembro',
-    loadChildren: () => import('./add-miembro/add-miembro.module').then( m => m.AddMiembroPageModule)
-  }
+    },
+    canActivate:[AdminGuard]
+  },
 
 
 ];
