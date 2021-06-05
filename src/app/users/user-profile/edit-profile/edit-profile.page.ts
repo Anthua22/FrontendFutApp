@@ -96,7 +96,7 @@ export class EditProfilePage implements OnInit {
         }
       })
     } else {
-      this.userService.updatePassword(this.user.password, this.user._id).subscribe(async resp => {
+      this.userService.updatePassword(this.passnueva, this.user._id).subscribe(async resp => {
         (await this.toast.create({
           duration: 3000,
           position: "bottom",
