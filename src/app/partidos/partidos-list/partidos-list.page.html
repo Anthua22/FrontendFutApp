@@ -41,7 +41,7 @@
     </ion-refresher-content>
   </ion-refresher>
   <ion-list *ngIf="data">
-    <app-partido-card [partido]="partido" *ngFor="let partido of partidos"></app-partido-card>
+    <app-partido-card [partido]="partido" *ngFor="let partido of partidos" (delete)="deletePartido($event)"></app-partido-card>
   </ion-list>
   <ng-container>
     <app-partido-skeleton *ngIf="!data"></app-partido-skeleton>

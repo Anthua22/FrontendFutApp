@@ -1,6 +1,6 @@
 
 import { PartidosResponse, PartidoResponse } from './../../models/responses';
-import { Partido } from './../../models/models';
+import { Partido, PartidoAdd } from './../../models/models';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -31,24 +31,18 @@ export class PartidosService {
     );
   }
 
-  addPartido(partido: Partido): Observable<Partido> {
+  addPartido(partido: PartidoAdd): Observable<Partido> {
     return this.httpClient.post<PartidoResponse>(this.BASE_URL, partido).pipe(
       map(x => x.resultado)
     );
   }
 
-  updatePartido(partido: Partido): Observable<Partido> {
-    return this.httpClient.put<PartidoResponse>(`${this.BASE_URL}/${partido._id}`, {
-      equipo_local: partido.equipo_local,
-      equipo_visitante: partido.equipo_visitante,
-      arbitro_principal: partido.arbitro_principal,
-      arbitro_secundario: partido.arbitro_secundario,
-      cronometrador: partido.cronometrador,
-      lugar_encuentro: partido.lugar_encuentro,
-      lt: partido.lt,
-      ln: partido.ln,
-      fecha_encuentro: partido.fecha_encuentro
-    }).pipe(map(x => x.resultado));
+  updatePartido(partido: PartidoAdd): Observable<Partido> {
+    return this.httpClient.put<PartidoResponse>(`${this.BASE_URL}/${partido._id}`, partido).pipe(map(x => x.resultado));
+  }
+
+  deletePartido(id:string):Observable<Partido>{
+    return this.httpClient.delete<PartidoResponse>(`${this.BASE_URL}/${id}`).pipe(map(x=>x.resultado));
   }
 
   subirActa(partido: Partido): Observable<Partido> {

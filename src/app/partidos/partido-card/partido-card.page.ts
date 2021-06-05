@@ -1,10 +1,12 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { ActionSheetController, NavController } from '@ionic/angular';
+import { ActionSheetController, AlertController, NavController, ToastController } from '@ionic/angular';
 import { AppComponent } from 'src/app/app.component';
 import { Categoria, Partido, User } from 'src/app/models/models';
 import { Plugins } from '@capacitor/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { PartidosService } from '../services/partidos.service';
+import { HttpErrorResponse } from '@angular/common/http';
 const { Share } = Plugins;
 
 @Component({
@@ -51,8 +53,11 @@ export class PartidoCardPage implements OnInit {
     '_id':''
   }
 
-  constructor(private nav: NavController, private authService:AuthService,
-    private actionSheetCtrl: ActionSheetController, private router: Router) {
+  @Output() delete = new EventEmitter<string>();
+
+
+  constructor(private nav: NavController, private authService:AuthService, private alert:AlertController, private toast:ToastController,
+    private actionSheetCtrl: ActionSheetController, private router: Router, private partidoService:PartidosService) {
   }
 
   ngOnInit() {
@@ -91,17 +96,48 @@ export class PartidoCardPage implements OnInit {
         text: 'Borrar',
         role: 'destructive',
         icon: 'trash',
-        handler: () => {
-          // this.productService.deleteProduct(prod.id).subscribe(
-          //  () => this.products.splice(this.products.indexOf(prod), 1)
-          //);
+        handler: async () => {
+          const alert = await this.alert.create({
+            header: 'Confirmación Borrado',
+            message: 'Estas seguro de querer borrar este partido?',
+            buttons: [
+              {
+                text: 'Cancelar',
+                role: 'cancel'
+              },
+              {
+                text: 'Aceptar',
+                handler: () => {
+                  this.partidoService.deletePartido(this.partido._id).subscribe(async x => {
+                    this.delete.emit(x._id);
+                    (await this.toast.create({
+                      duration: 3000,
+                      position: "bottom",
+                      message: `Se ha borrado el partido con éxito`,
+                      color: 'success'
+                    })).present();
+                  },
+                    async (error: HttpErrorResponse) => {
+                      (await this.toast.create({
+                        duration: 3000,
+                        position: "bottom",
+                        message: error.message,
+                        color: 'danger'
+                      })).present();
+                    })
+                }
+              }
+            ]
+          });
+      
+          await alert.present();
         }
       }, optionDetailPartido,
       {
         text: 'Editar',
         icon: 'create',
         handler: () => {
-          this.router.navigate(['/products/edit']);
+          this.router.navigate(['/partidos/edit',this.partido._id]);
         }
       }, {
         text: 'Cancelar',

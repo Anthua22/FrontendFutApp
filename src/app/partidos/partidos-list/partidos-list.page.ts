@@ -18,12 +18,12 @@ export class PartidosListPage implements OnInit {
 
   partidos!: Partido[];
   data = false;
-  userLoguado: User ={
-    'rol':'',
-    'nombre_completo':'',
-    'foto':''
+  userLoguado: User = {
+    'rol': '',
+    'nombre_completo': '',
+    'foto': ''
   }
-  constructor(private partidosService: PartidosService, private authService:AuthService,private toast: ToastController) { }
+  constructor(private partidosService: PartidosService, private authService: AuthService, private toast: ToastController) { }
 
   ngOnInit() {
     this.partidosService.getPartidos().subscribe(
@@ -45,7 +45,9 @@ export class PartidosListPage implements OnInit {
     })
   }
 
-
+  deletePartido($event:string) {
+    this.partidos = this.partidos.filter(x=>x._id!== $event);
+  }
   doRefresh(event: any) {
     this.partidosService.getPartidos().subscribe(x => { this.partidos = x; event.target.complete(); });
   }
@@ -97,7 +99,7 @@ export class PartidosListPage implements OnInit {
           ]
         },
         {
-          text: 'Partido suspendido', color:'#E70020', margin:[0,0,0,5]
+          text: 'Partido suspendido', color: '#E70020', margin: [0, 0, 0, 5]
         },
         {
           style: 'tableInfo',

@@ -23,17 +23,22 @@
       </ion-item>
       <ion-item>
         <ion-label>Fecha Encuentro</ion-label>
-        <ion-datetime required display-format="MMM DD, YYYY HH:mm" picker-format="MMM DD, YYYY HH:mm" [value]="fechaActual"
+        <ion-datetime required display-format="MMM DD, YYYY HH:mm" name="fecha" picker-format="MMM DD, YYYY HH:mm" [(ngModel)]="fechaActual"
           monthShortNames='Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic'  (ionChange)="obtenerFecha($event)">
         </ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-range min="1" max="30" pin [(ngModel)]="partido.jornada" name="jornada" color="primary">
+          <ion-label slot="start">Jornada</ion-label>
+        </ion-range>
       </ion-item>
       <ion-item>
         <ion-label>
           <label>Equipo Local</label>
         </ion-label>
-        <ion-select required name="local" (ionChange)="habilitarVisitantes()" [disabled]="categoriaDisabled"
-          [(ngModel)]="partido.equipo_local" interface="popover">
-          <ion-select-option *ngFor="let equipo of equiposLocales" [value]="equipo">
+        <ion-select required name="local" (ionChange)="habilitarVisitantes()" [multiple]="false" [disabled]="categoriaDisabled"
+          [(ngModel)]="idLocal" interface="popover" >
+          <ion-select-option *ngFor="let equipo of equiposLocales" [value]="equipo._id" >
             {{equipo.nombre }}
           </ion-select-option>
         </ion-select>
@@ -43,8 +48,8 @@
           <label>Equipo Visitante</label>
         </ion-label>
         <ion-select required name="visitante" [disabled]="equipoVisitanteDisabled"
-          [(ngModel)]="partido.equipo_visitante" interface="popover">
-          <ion-select-option *ngFor="let equipo of equiposVisitantes" [value]="equipo">
+          [(ngModel)]="partido.equipo_visitante._id" interface="popover">
+          <ion-select-option *ngFor="let equipo of equiposVisitantes" [value]="equipo._id">
             {{equipo.nombre }}
           </ion-select-option>
         </ion-select>
@@ -54,8 +59,8 @@
           <label>Árbitro Principal</label>
         </ion-label>
         <ion-select required name="arbitro_principal" (ionChange)="arbitroElegido()" [disabled]="categoriaDisabled"
-          [(ngModel)]="partido.arbitro_principal" interface="popover">
-          <ion-select-option *ngFor="let arbitro of arbitrosPrincipal" [value]="arbitro">
+          [(ngModel)]="partido.arbitro_principal._id" interface="popover">
+          <ion-select-option *ngFor="let arbitro of arbitrosPrincipal" [value]="arbitro._id">
             {{arbitro.nombre_completo |apellidoNombre}}
           </ion-select-option>
         </ion-select>
@@ -65,8 +70,8 @@
           <label>Árbitro Secundario</label>
         </ion-label>
         <ion-select required name="arbitro_secundario" [disabled]="arbitroSecundarioDisabled"
-          [(ngModel)]="partido.arbitro_secundario" interface="popover">
-          <ion-select-option *ngFor="let arbitro of arbitrosSecundario" [value]="arbitro">
+          [(ngModel)]="partido.arbitro_secundario._id" interface="popover">
+          <ion-select-option *ngFor="let arbitro of arbitrosSecundario" [value]="arbitro._id">
             {{arbitro.nombre_completo |apellidoNombre}}
           </ion-select-option>
         </ion-select>
@@ -76,15 +81,18 @@
           <label>Árbitro Asistente</label>
         </ion-label>
         <ion-select required name="arbitro_cronometrador" [disabled]="arbitroSecundarioDisabled"
-          [(ngModel)]="partido.cronometrador" interface="popover">
-          <ion-select-option *ngFor="let arbitro of arbitrosCronometrador" [value]="arbitro">
+          [(ngModel)]="partido.cronometrador._id" interface="popover">
+          <ion-select-option *ngFor="let arbitro of arbitrosCronometrador" [value]="arbitro._id">
             {{arbitro.nombre_completo |apellidoNombre}}
           </ion-select-option>
         </ion-select>
       </ion-item>
-
+    
     </ion-list>
   </form>
+  <ion-list-header>
+    Lugar Encuentro
+   </ion-list-header>
   <mgl-map [style]="'mapbox://styles/mapbox/streets-v11'" [zoom]="[14]" [center]="[lng, lat]">
     <mgl-marker [lngLat]="[lng, lat]"></mgl-marker>
     <mgl-control mglGeocoder (geocoderResult)="getLugarCampo($event.result)">
@@ -101,7 +109,7 @@
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button color="danger" expand="block" [routerDirection]="'root'" [routerLink]="['/equipos']">
+        <ion-button color="danger" expand="block" [routerDirection]="'root'" [routerLink]="['/partidos']">
           <ion-icon name="trash" slot="start"></ion-icon>
           Cancelar
         </ion-button>

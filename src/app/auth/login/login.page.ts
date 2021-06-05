@@ -30,12 +30,15 @@ export class LoginPage implements OnInit {
         this.nav.navigateRoot(['/partidos']);
       },
       async (error: HttpErrorResponse) => {
-        (await this.toast.create({
-          duration: 3000,
-          position: "bottom",
-          message: error.message,
-          color: 'danger'
-        })).present();
+        if (error.status === 401) {
+          (await this.toast.create({
+            duration: 3000,
+            position: "bottom",
+            message: 'Email o contraseña erróneos',
+            color: 'danger'
+          })).present();
+        }
+
       }
     );
   }

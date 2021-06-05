@@ -32,7 +32,7 @@ export interface User extends Auth {
   foto: string;
   rol?: string,
   categoria?: Categoria,
-  me?:boolean
+  me?: boolean
 }
 
 export interface MiembroEquipo extends User {
@@ -73,23 +73,35 @@ export interface Equipo {
   email: string,
   categoria: Categoria,
   direccion_campo: string,
-  lt?:number,
-  ln?:number
+  lt?: number,
+  ln?: number
 }
-export interface Partido {
+
+interface PartidoBase {
   _id?: string,
-  equipo_local: Equipo,
-  equipo_visitante: Equipo,
-  arbitro_principal: User,
-  arbitro_secundario?: User,
-  cronometrador?: User,
   fecha_encuentro: Date,
   categoria: Categoria,
   lt?: number,
   ln?: number,
   jornada: number,
-  resultado?: string,
   lugar_encuentro: string,
+
+}
+
+export interface PartidoAdd extends PartidoBase {
+  equipo_local: string,
+  equipo_visitante: string,
+  arbitro_principal: string,
+  arbitro_secundario?: string,
+  cronometrador?: string
+}
+export interface Partido extends PartidoBase {
+  equipo_local: Equipo,
+  equipo_visitante: Equipo,
+  arbitro_principal: User,
+  arbitro_secundario?: User,
+  cronometrador?: User,
+  resultado?: string,
   acta?: string,
   fecha_modificacion?: Date,
   titularesLocales?: MiembroEquipo[],
