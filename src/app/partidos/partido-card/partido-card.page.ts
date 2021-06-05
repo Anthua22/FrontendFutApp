@@ -19,7 +19,7 @@ export class PartidoCardPage implements OnInit {
       nombre_completo: '',
       foto: '',
       rol: '',
-      categoria: ''
+      categoria: Categoria.SC
     },
     equipo_local: {
       _id:'',

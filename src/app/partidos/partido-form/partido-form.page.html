@@ -8,23 +8,31 @@
 </ion-header>
 
 <ion-content>
-  <form>
+  <form #partidoForm="ngForm">
     <ion-list>
       <ion-item>
         <ion-label>
           <label>Categoria</label>
         </ion-label>
-        <ion-select required name="categoria" [(ngModel)]="partido.categoria" interface="popover" (ionChange)="obtnerCategoria()">
+        <ion-select required name="categoria" [(ngModel)]="partido.categoria" interface="popover"
+          (ionChange)="obtnerCategoria()">
           <ion-select-option *ngFor="let categoria of categorias" [value]="categoria">
             {{categoria }}
           </ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
+        <ion-label>Fecha Encuentro</ion-label>
+        <ion-datetime required display-format="MMM DD, YYYY HH:mm" picker-format="MMM DD, YYYY HH:mm" [value]="fechaActual"
+          monthShortNames='Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic'  (ionChange)="obtenerFecha($event)">
+        </ion-datetime>
+      </ion-item>
+      <ion-item>
         <ion-label>
           <label>Equipo Local</label>
         </ion-label>
-        <ion-select required name="local" (ionChange)="habilitarVisitantes()" [disabled]="equipoLocalDisabled" [(ngModel)]="partido.equipo_local" interface="popover">
+        <ion-select required name="local" (ionChange)="habilitarVisitantes()" [disabled]="categoriaDisabled"
+          [(ngModel)]="partido.equipo_local" interface="popover">
           <ion-select-option *ngFor="let equipo of equiposLocales" [value]="equipo">
             {{equipo.nombre }}
           </ion-select-option>
@@ -34,12 +42,71 @@
         <ion-label>
           <label>Equipo Visitante</label>
         </ion-label>
-        <ion-select required name="visitante" [disabled]="equipoVisitanteDisabled" [(ngModel)]="partido.equipo_visitante" interface="popover">
+        <ion-select required name="visitante" [disabled]="equipoVisitanteDisabled"
+          [(ngModel)]="partido.equipo_visitante" interface="popover">
           <ion-select-option *ngFor="let equipo of equiposVisitantes" [value]="equipo">
             {{equipo.nombre }}
           </ion-select-option>
         </ion-select>
       </ion-item>
+      <ion-item>
+        <ion-label>
+          <label>Árbitro Principal</label>
+        </ion-label>
+        <ion-select required name="arbitro_principal" (ionChange)="arbitroElegido()" [disabled]="categoriaDisabled"
+          [(ngModel)]="partido.arbitro_principal" interface="popover">
+          <ion-select-option *ngFor="let arbitro of arbitrosPrincipal" [value]="arbitro">
+            {{arbitro.nombre_completo |apellidoNombre}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="partido.categoria !== 'Regional' && partido.categoria !=='Futbol Base'">
+        <ion-label>
+          <label>Árbitro Secundario</label>
+        </ion-label>
+        <ion-select required name="arbitro_secundario" [disabled]="arbitroSecundarioDisabled"
+          [(ngModel)]="partido.arbitro_secundario" interface="popover">
+          <ion-select-option *ngFor="let arbitro of arbitrosSecundario" [value]="arbitro">
+            {{arbitro.nombre_completo |apellidoNombre}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="partido.categoria!=='Futbol Base'">
+        <ion-label>
+          <label>Árbitro Asistente</label>
+        </ion-label>
+        <ion-select required name="arbitro_cronometrador" [disabled]="arbitroSecundarioDisabled"
+          [(ngModel)]="partido.cronometrador" interface="popover">
+          <ion-select-option *ngFor="let arbitro of arbitrosCronometrador" [value]="arbitro">
+            {{arbitro.nombre_completo |apellidoNombre}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
     </ion-list>
   </form>
+  <mgl-map [style]="'mapbox://styles/mapbox/streets-v11'" [zoom]="[14]" [center]="[lng, lat]">
+    <mgl-marker [lngLat]="[lng, lat]"></mgl-marker>
+    <mgl-control mglGeocoder (geocoderResult)="getLugarCampo($event.result)">
+    </mgl-control>
+  </mgl-map>
+
+  <ion-grid>
+    <ion-row style="margin-top: 10px;">
+      <ion-col>
+        <ion-button type="submit" color="primary" expand="block" (click)="save()"
+          [disabled]="partidoForm.invalid  || !partido.lugar_encuentro && partido.lugar_encuentro!==''">
+          <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+          Guardar
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button color="danger" expand="block" [routerDirection]="'root'" [routerLink]="['/equipos']">
+          <ion-icon name="trash" slot="start"></ion-icon>
+          Cancelar
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>

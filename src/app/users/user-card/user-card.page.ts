@@ -80,7 +80,7 @@ export class UserCardPage implements OnInit {
           }
         }
       ]
-    })
+    });
     await alert.present();
   }
 

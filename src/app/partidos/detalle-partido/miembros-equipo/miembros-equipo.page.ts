@@ -19,7 +19,7 @@ export class MiembrosEquipoPage implements OnInit {
       nombre_completo: '',
       foto: '',
       rol: '',
-      categoria: ''
+      categoria: Categoria.SC
     },
     equipo_local: {
       nombre: '',

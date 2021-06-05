@@ -31,7 +31,7 @@ export interface User extends Auth {
   nombre_completo: string;
   foto: string;
   rol?: string,
-  categoria?: string,
+  categoria?: Categoria,
   me?:boolean
 }
 

@@ -1,7 +1,7 @@
 import { ErrorResponse } from './../../models/responses';
 import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/models/models';
+import { Categoria, User } from 'src/app/models/models';
 import { Plugins, CameraResultType, CameraSource } from "@capacitor/core";
 import { NavController, ToastController } from '@ionic/angular';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -18,7 +18,7 @@ export class RegisterPage implements OnInit {
     rol: 'USER',
     nombre_completo:'',
     foto:'',
-    categoria: 'Sin Categoria',
+    categoria: Categoria.SC,
   }
   nombre = '';
   apellidos = '';

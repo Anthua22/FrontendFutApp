@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/core';
 import { Result } from 'ngx-mapbox-gl/lib/control/geocoder-control.directive';
 import { Categoria, Equipo } from 'src/app/models/models';
@@ -16,7 +16,7 @@ const { Geolocation } = Plugins;
   templateUrl: './equipo-form.page.html',
   styleUrls: ['./equipo-form.page.scss'],
 })
-export class EquipoFormPage implements OnInit {
+export class EquipoFormPage implements OnInit, AfterViewInit{
   disabled = false;
   equipo: Equipo = {
     categoria: Categoria.SC,
