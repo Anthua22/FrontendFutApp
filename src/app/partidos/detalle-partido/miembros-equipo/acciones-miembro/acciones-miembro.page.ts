@@ -48,7 +48,9 @@ export class AccionesMiembroPage implements OnInit {
   }
 
   async changeInfo() {
-    if (this.miembro.titular && this.totalTitu <= 5) {
+    console.log(this.totalTitu)
+    console.log(this.miembro)
+    if (this.titular && this.totalTitu <= 5 || !this.totalTitu) {
       this.miembro.titular = this.titular;
       if (this.totalCap + 1 <= 1 && this.capitan === true) {
         this.miembro.capitan = this.capitan;

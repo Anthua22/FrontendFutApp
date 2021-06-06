@@ -6,12 +6,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-
+import { FileOpener } from '@ionic-native/file-opener/ngx'
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +23,7 @@ import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
     AppRoutingModule,
     NgxMapboxGLModule.withConfig({
       accessToken: 'pk.eyJ1IjoiYW50aG9ueXViaSIsImEiOiJja2dtODlnMjAwYWQ2MnRqbzNlY29ib282In0.wi12UKThrEvuKZ5nWCxq8g'
-      }),
+    }),
     HttpClientModule,
     NgbModule,
     PipesModule
@@ -38,7 +39,8 @@ import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthTokenInterceptor,
       multi: true
-    }
+    },
+    FileOpener
   ],
   bootstrap: [AppComponent],
 })

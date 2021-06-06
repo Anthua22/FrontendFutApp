@@ -14,7 +14,7 @@
         <ion-label>
           <label>Categoria</label>
         </ion-label>
-        <ion-select required name="categoria" [(ngModel)]="partido.categoria" interface="popover"
+        <ion-select name="categoria" [(ngModel)]="partido.categoria" interface="popover"
           (ionChange)="obtnerCategoria()">
           <ion-select-option *ngFor="let categoria of categorias" [value]="categoria">
             {{categoria }}
@@ -23,8 +23,9 @@
       </ion-item>
       <ion-item>
         <ion-label>Fecha Encuentro</ion-label>
-        <ion-datetime required display-format="MMM DD, YYYY HH:mm" name="fecha" picker-format="MMM DD, YYYY HH:mm" [(ngModel)]="fechaActual"
-          monthShortNames='Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic'  (ionChange)="obtenerFecha($event)">
+        <ion-datetime required display-format="MMM DD, YYYY HH:mm" name="fecha" picker-format="MMM DD, YYYY HH:mm"
+          [(ngModel)]="fechaActual" monthShortNames='Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic'
+          (ionChange)="obtenerFecha($event)">
         </ion-datetime>
       </ion-item>
       <ion-item>
@@ -36,9 +37,9 @@
         <ion-label>
           <label>Equipo Local</label>
         </ion-label>
-        <ion-select required name="local" (ionChange)="habilitarVisitantes()" [multiple]="false" [disabled]="categoriaDisabled"
-          [(ngModel)]="idLocal" interface="popover" >
-          <ion-select-option *ngFor="let equipo of equiposLocales" [value]="equipo._id" >
+        <ion-select required name="local" (ionChange)="habilitarVisitantes()" [multiple]="false"
+          [disabled]="categoriaDisabled" [(ngModel)]="idLocal" interface="popover">
+          <ion-select-option *ngFor="let equipo of equiposLocales" [value]="equipo._id">
             {{equipo.nombre }}
           </ion-select-option>
         </ion-select>
@@ -87,12 +88,11 @@
           </ion-select-option>
         </ion-select>
       </ion-item>
-    
     </ion-list>
   </form>
   <ion-list-header>
     Lugar Encuentro
-   </ion-list-header>
+  </ion-list-header>
   <mgl-map [style]="'mapbox://styles/mapbox/streets-v11'" [zoom]="[14]" [center]="[lng, lat]">
     <mgl-marker [lngLat]="[lng, lat]"></mgl-marker>
     <mgl-control mglGeocoder (geocoderResult)="getLugarCampo($event.result)">
@@ -102,8 +102,7 @@
   <ion-grid>
     <ion-row style="margin-top: 10px;">
       <ion-col>
-        <ion-button type="submit" color="primary" expand="block" (click)="save()"
-          [disabled]="partidoForm.invalid  || !partido.lugar_encuentro && partido.lugar_encuentro!==''">
+        <ion-button type="submit" color="primary" expand="block" (click)="save()" [disabled]="partidoForm.invalid || partido.categoria==='Sin Categoria'">
           <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
           Guardar
         </ion-button>

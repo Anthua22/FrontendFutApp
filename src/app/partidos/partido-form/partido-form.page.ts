@@ -242,12 +242,22 @@ export class PartidoFormPage implements OnInit, AfterViewInit {
       this.partidoRest._id = this.partido._id;
       this.partidoService.updatePartido(this.partidoRest).subscribe(async x => {
         this.nav.navigateRoot(['/auth/login']);
-        (await this.toast.create({
-          duration: 3000,
-          position: "bottom",
-          message: "Partido modificado correctamente",
-          color: 'success'
-        })).present();
+        this.partidoService.sendEmail(this.partido).subscribe(async () => {
+          (await this.toast.create({
+            duration: 3000,
+            position: "bottom",
+            message: "Partido creado correctamente",
+            color: 'success'
+          })).present();
+        },
+          async (error: HttpErrorResponse) => {
+            (await this.toast.create({
+              duration: 3000,
+              position: "bottom",
+              message: 'No se ha podido mandar el correo de asingación del partido',
+              color: 'danger'
+            })).present()
+          });
       }, async (error: HttpErrorResponse) => {
         (await this.toast.create({
           duration: 3000,
@@ -258,15 +268,24 @@ export class PartidoFormPage implements OnInit, AfterViewInit {
       }
       )
     } else {
-      this.partidoService.addPartido(this.partidoRest).subscribe(async x => {
+      this.partidoService.addPartido(this.partidoRest).subscribe(x => {
         this.nav.navigateRoot(['/auth/login']);
-        console.log(x);
-        (await this.toast.create({
-          duration: 3000,
-          position: "bottom",
-          message: "Partido creado correctamente",
-          color: 'success'
-        })).present();
+        this.partidoService.sendEmail(this.partido).subscribe(async () => {
+          (await this.toast.create({
+            duration: 3000,
+            position: "bottom",
+            message: "Partido creado correctamente",
+            color: 'success'
+          })).present();
+        },
+          async (error: HttpErrorResponse) => {
+            (await this.toast.create({
+              duration: 3000,
+              position: "bottom",
+              message: 'No se ha podido mandar el correo de asingación del partido',
+              color: 'danger'
+            })).present()
+          });
       },
         async (error: HttpErrorResponse) => {
           (await this.toast.create({

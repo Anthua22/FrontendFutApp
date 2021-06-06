@@ -42,11 +42,10 @@ export class FaltasTMPage implements OnInit {
 
   };
 
-  actaService: ActaService;
-  constructor(@Inject(DetallePartidoPage) private parentComponent: DetallePartidoPage, private partidoService: PartidosService, private toast: ToastController) { }
+  constructor(@Inject(DetallePartidoPage) private parentComponent: DetallePartidoPage,
+   private partidoService: PartidosService, private toast: ToastController, private actaService:ActaService) { }
 
   ngOnInit() {
-    this.actaService = new ActaService(this.partido);
     this.parentComponent.partido$.subscribe(
       partido => {
         this.partido = partido;
@@ -66,7 +65,6 @@ export class FaltasTMPage implements OnInit {
             tiempoSegundaParte: false
           }
         }
-        this.actaService = new ActaService(this.partido);
       }
     );
   }
@@ -84,8 +82,7 @@ export class FaltasTMPage implements OnInit {
   }
 
   async makePdf() {
-    const pdf: any = await this.actaService.makePdf();
-    pdf.open();
+    const pdf: any = await this.actaService.makePdf(this.partido);
   }
 
 }

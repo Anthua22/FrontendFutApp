@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
+import { Platform } from '@ionic/angular';
 import * as moment from 'moment';
 import * as pdfMake from 'pdfmake/build/pdfmake';
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { FileOpener } from '@ionic-native/file-opener/ngx'
+import { Plugins, FilesystemDirectory } from '@capacitor/core'
+const { Filesystem, Share } = Plugins
+
 import {
   Categoria,
   Partido,
   MiembroEquipo,
   Equipo,
 } from 'src/app/models/models';
+
 
 @Injectable({
   providedIn: 'root',
@@ -19,12 +24,12 @@ export class ActaService {
   logoFederacion =
     'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Royal_Spanish_Football_Federation_logo.svg/1200px-Royal_Spanish_Football_Federation_logo.svg.png';
 
-  constructor(partido: Partido) {
-    this.partido = partido;
+  constructor(private plt: Platform, private fileOpener: FileOpener) {
     moment.locale('es');
   }
 
-  makePdf() {
+  makePdf(partido: Partido) {
+    this.partido = partido;
     return new Promise(async (resolve, reject) => {
       try {
         this.contentpdf = {
@@ -158,7 +163,22 @@ export class ActaService {
             },
           },
         };
-        resolve(pdfMake.createPdf(this.contentpdf));
+        const pdf = pdfMake.createPdf(this.contentpdf);
+        if (this.plt.is('cordova')) {
+          pdf.getBase64(async (data) => {
+            let path = `pdf/${new Date()}.pdf`;
+            const result = await Filesystem.writeFile({
+              path,
+              data,
+              directory: FilesystemDirectory.Documents,
+              recursive: true
+            });
+            resolve(this.fileOpener.open(`${result.uri}`,'application/pdf'));
+          })
+        }else{
+          resolve(pdf.open());
+        }
+
       } catch (error) {
         reject(error);
       }
@@ -235,7 +255,7 @@ export class ActaService {
     };
     const contadorTitu =
       this.partido.titularesLocales.length >=
-      this.partido.titularesVisitantes.length
+        this.partido.titularesVisitantes.length
         ? this.partido.titularesLocales.length
         : this.partido.titularesVisitantes.length;
     for (let i = 0; i < contadorTitu; i++) {
@@ -286,7 +306,7 @@ export class ActaService {
       ]);
       const contadorSup =
         this.partido.suplentesLocales.length >=
-        this.partido.suplentesVisitantes.length
+          this.partido.suplentesVisitantes.length
           ? this.partido.suplentesLocales.length
           : this.partido.suplentesVisitantes.length;
 
@@ -541,7 +561,7 @@ export class ActaService {
   }
 
   private getAmonestaciones() {
- //   this.partido.sa
+    //   this.partido.sa
   }
 
   private cantidadGoles(miembros: MiembroEquipo[]) {
@@ -551,4 +571,7 @@ export class ActaService {
     });
     return contador;
   }
+
+
+
 }

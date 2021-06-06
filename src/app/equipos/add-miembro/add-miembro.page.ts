@@ -21,8 +21,8 @@ export class AddMiembroPage implements OnInit {
   }
   name = '';
   apellidos = '';
-  funciones = ['JUGADOR', 'ENTRENADOR', 'ENCARGADO_MATERIAL', 'PREPARADOR_FISICO']
-  constructor(public modalCtrl: ModalController, private equipoService: EquipoService, private toast:ToastController) { }
+  funciones = ['JUGADOR', 'ENTRENADOR', 'ENCARGADO_MATERIAL', 'PREPARADOR_FISICO', 'DELEGADO']
+  constructor(public modalCtrl: ModalController, private equipoService: EquipoService, private toast: ToastController) { }
 
   ngOnInit() {
   }
@@ -37,14 +37,14 @@ export class AddMiembroPage implements OnInit {
     this.equipoService.addMiembro(this.equipo._id, this.miembroNuevo).subscribe(x => {
       this.modalCtrl.dismiss(x);
     },
-    async (error: HttpErrorResponse) => {
-      (await this.toast.create({
-        duration: 3000,
-        position: "bottom",
-        message: error.message,
-        color: 'danger'
-      })).present();
-    })
+      async (error: HttpErrorResponse) => {
+        (await this.toast.create({
+          duration: 3000,
+          position: "bottom",
+          message: error.message,
+          color: 'danger'
+        })).present();
+      })
   }
 
   async tomarFoto() {

@@ -12,7 +12,11 @@ export class EquiposListPage implements OnInit {
   data = false;
   equipos: Equipo[];
   equiposCopia: Equipo[];
-  userLogueado:User;
+  userLogueado:User = {
+    'foto':'',
+    'nombre_completo':'',
+    'rol':''
+  }
   constructor(private equipoService: EquipoService, private authService:AuthService) { }
 
   ngOnInit() {
