@@ -7,6 +7,7 @@ import { ToastController } from '@ionic/angular';
 import { Partido, MiembroEquipo, Categoria, Gol } from 'src/app/models/models';
 import { DetallePartidoPage } from '../detalle-partido.page';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ActaService } from '../../services/acta.service';
 
 @Component({
   selector: 'app-miembros-equipo',
@@ -55,8 +56,12 @@ export class MiembrosEquipoPage implements OnInit {
 
   constructor(
     @Inject(DetallePartidoPage) private parentComponent: DetallePartidoPage,
-    private router: Router, private partidoService: PartidosService, private toast: ToastController
+    private router: Router, private actaService:ActaService, private partidoService: PartidosService, private toast: ToastController
   ) { }
+
+  async makePdf() {
+    const pdf: any = await this.actaService.makePdf(this.partido);
+  }
 
   ngOnInit() {
     this.resetCampos();

@@ -11,11 +11,11 @@
     <ion-fab-button color="tertiary" [routerDirection]="'root'" [routerLink]="['/partidos/add']">
       <ion-icon name="add" ios="chevron-back-circle-outline"></ion-icon>
     </ion-fab-button>
-  
+
   </ion-fab>
 
 
-  <ion-searchbar animated debounce="500" placeholder="Nombre del equipo" autocomplete="on"></ion-searchbar>
+  <ion-searchbar animated debounce="500" placeholder="Nombre del equipo" (ionChange)="filterItems($event)" autocomplete="on"></ion-searchbar>
   <ion-grid>
     <ion-row class="ion-justify-content-end">
       <div ngbDropdown class="ml-auto mb-2 mr-1">

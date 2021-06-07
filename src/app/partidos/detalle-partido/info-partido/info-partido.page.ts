@@ -4,6 +4,7 @@ import { NavController, ToastController } from '@ionic/angular';
 import { Partido, Categoria, MiembroEquipo } from 'src/app/models/models';
 import { DetallePartidoPage } from '../detalle-partido.page';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ActaService } from '../../services/acta.service';
 
 @Component({
   selector: 'app-info-partido',
@@ -52,7 +53,7 @@ export class InfoPartidoPage implements OnInit {
   golesVisitantes = '0';
   terminado = false;
 
-  constructor(@Inject(DetallePartidoPage) private parentComponent: DetallePartidoPage, private partidosService: PartidosService, private toast: ToastController) { }
+  constructor(@Inject(DetallePartidoPage) private parentComponent: DetallePartidoPage, private actaService:ActaService, private partidosService: PartidosService, private toast: ToastController) { }
 
   ngOnInit() {
     this.parentComponent.partido$.subscribe(
@@ -76,6 +77,9 @@ export class InfoPartidoPage implements OnInit {
         }
       }
     );
+  }
+  async makePdf() {
+    const pdf: any = await this.actaService.makePdf(this.partido);
   }
 
   saveResultado(): void {

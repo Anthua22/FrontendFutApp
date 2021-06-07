@@ -1,12 +1,25 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { ActionSheetController, AlertController, NavController, ToastController } from '@ionic/angular';
+import {
+  ActionSheetController,
+  AlertController,
+  NavController,
+  ToastController,
+} from '@ionic/angular';
 import { AppComponent } from 'src/app/app.component';
 import { Categoria, Partido, User } from 'src/app/models/models';
 import { Plugins } from '@capacitor/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { PartidosService } from '../services/partidos.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import * as moment from 'moment';
 const { Share } = Plugins;
 
 @Component({
@@ -15,147 +28,183 @@ const { Share } = Plugins;
   styleUrls: ['./partido-card.page.scss'],
 })
 export class PartidoCardPage implements OnInit {
-
   @Input() partido: Partido = {
     arbitro_principal: {
       nombre_completo: '',
       foto: '',
       rol: '',
-      categoria: Categoria.SC
+      categoria: Categoria.SC,
     },
     equipo_local: {
-      _id:'',
+      _id: '',
       nombre: '',
       categoria: Categoria.FB,
       escudo: '',
       email: '',
-      direccion_campo: ''
+      direccion_campo: '',
     },
     equipo_visitante: {
-      _id:'',
+      _id: '',
       nombre: '',
       categoria: Categoria.FB,
       escudo: '',
       email: '',
-      direccion_campo: ''
+      direccion_campo: '',
     },
     fecha_encuentro: new Date(),
     categoria: Categoria.FB,
     jornada: 0,
-    lugar_encuentro: ''
-
+    lugar_encuentro: '',
   };
 
-  userLogueado: User= {
-    'foto':'',
-    'rol':'',
-    'nombre_completo':'',
-    '_id':''
-  }
+  userLogueado: User = {
+    foto: '',
+    rol: '',
+    nombre_completo: '',
+    _id: '',
+  };
 
   @Output() delete = new EventEmitter<string>();
 
-
-  constructor(private nav: NavController, private authService:AuthService, private alert:AlertController, private toast:ToastController,
-    private actionSheetCtrl: ActionSheetController, private router: Router, private partidoService:PartidosService) {
+  constructor(
+    private nav: NavController,
+    private authService: AuthService,
+    private alert: AlertController,
+    private toast: ToastController,
+    private actionSheetCtrl: ActionSheetController,
+    private router: Router,
+    private partidoService: PartidosService
+  ) {
+    moment.locale('es');
   }
 
   ngOnInit() {
-    this.authService.userLogueado$.subscribe(x => {
+    this.authService.userLogueado$.subscribe((x) => {
       this.userLogueado = x;
-    })
+    });
   }
 
   goDetail() {
-    this.nav.navigateRoot(['/partidos/details', this.partido._id])
+    this.nav.navigateRoot(['/partidos/details', this.partido._id]);
   }
 
   async showOptions() {
     let optionDetailPartido: any;
-    if (this.userLogueado.rol === 'ADMIN' || this.partido.arbitro_principal._id === this.userLogueado._id || (this.partido.arbitro_secundario && this.partido.arbitro_secundario._id === this.userLogueado._id )|| (this.partido.cronometrador &&  this.partido.cronometrador._id === this.userLogueado._id)) {
-      optionDetailPartido = {
-        text: 'Ver Detalle',
-        icon: 'eye',
-        handler: () => {
-          this.nav.navigateRoot(['/partidos/details', this.partido._id]);
-        }
-      }
-    } else {
-      optionDetailPartido = {
-        text: 'Ver Acta',
-        icon: 'eye',
-        handler: () => {
-          console.log('ff');
-        }
-      }
-    }
-
-    const actSheet = await this.actionSheetCtrl.create({
-      header: `${this.partido.equipo_local.nombre} VS ${this.partido.equipo_visitante.nombre}`,
-      buttons: [{
-        text: 'Borrar',
-        role: 'destructive',
-        icon: 'trash',
-        handler: async () => {
-          const alert = await this.alert.create({
-            header: 'Confirmación Borrado',
-            message: 'Estas seguro de querer borrar este partido?',
-            buttons: [
-              {
-                text: 'Cancelar',
-                role: 'cancel'
-              },
-              {
-                text: 'Aceptar',
-                handler: () => {
-                  this.partidoService.deletePartido(this.partido._id).subscribe(async x => {
-                    this.delete.emit(x._id);
-                    (await this.toast.create({
-                      duration: 3000,
-                      position: "bottom",
-                      message: `Se ha borrado el partido con éxito`,
-                      color: 'success'
-                    })).present();
+    if (this.userLogueado.rol === 'ADMIN') {
+      const actSheet = await this.actionSheetCtrl.create({
+        header: `${this.partido.equipo_local.nombre} VS ${this.partido.equipo_visitante.nombre}`,
+        buttons: [
+          {
+            text: 'Borrar',
+            role: 'destructive',
+            icon: 'trash',
+            handler: async () => {
+              const alert = await this.alert.create({
+                header: 'Confirmación Borrado',
+                message: 'Estas seguro de querer borrar este partido?',
+                buttons: [
+                  {
+                    text: 'Cancelar',
+                    role: 'cancel',
                   },
-                    async (error: HttpErrorResponse) => {
-                      (await this.toast.create({
-                        duration: 3000,
-                        position: "bottom",
-                        message: error.message,
-                        color: 'danger'
-                      })).present();
-                    })
-                }
-              }
-            ]
-          });
-      
-          await alert.present();
-        }
-      }, optionDetailPartido,
-      {
-        text: 'Editar',
-        icon: 'create',
-        handler: () => {
-          this.router.navigate(['/partidos/edit',this.partido._id]);
-        }
-      }, {
-        text: 'Cancelar',
-        icon: 'close',
-        role: 'cancel',
-      }]
-    });
+                  {
+                    text: 'Aceptar',
+                    handler: () => {
+                      this.partidoService
+                        .deletePartido(this.partido._id)
+                        .subscribe(
+                          async (x) => {
+                            this.delete.emit(x._id);
+                            (
+                              await this.toast.create({
+                                duration: 3000,
+                                position: 'bottom',
+                                message: `Se ha borrado el partido con éxito`,
+                                color: 'success',
+                              })
+                            ).present();
+                          },
+                          async (error: HttpErrorResponse) => {
+                            (
+                              await this.toast.create({
+                                duration: 3000,
+                                position: 'bottom',
+                                message: error.message,
+                                color: 'danger',
+                              })
+                            ).present();
+                          }
+                        );
+                    },
+                  },
+                ],
+              });
 
-    actSheet.present();
-    
+              await alert.present();
+            },
+          },
+          {
+            text: 'Ver Detalle',
+            icon: 'eye',
+            handler: () => {
+              this.nav.navigateRoot(['/partidos/details', this.partido._id]);
+            },
+          },
+          {
+            text: 'Editar',
+            icon: 'create',
+            handler: () => {
+              this.router.navigate(['/partidos/edit', this.partido._id]);
+            },
+          },
+          {
+            text: 'Cancelar',
+            icon: 'close',
+            role: 'cancel',
+          },
+        ],
+      });
+
+      actSheet.present();
+    }
+    else if (
+      this.partido.arbitro_principal._id === this.userLogueado._id ||
+      (this.partido.arbitro_secundario &&
+        this.partido.arbitro_secundario._id === this.userLogueado._id) ||
+      (this.partido.cronometrador &&
+        this.partido.cronometrador._id === this.userLogueado._id)
+    ) {
+      const actSheet = await this.actionSheetCtrl.create({
+        header: `${this.partido.equipo_local.nombre} VS ${this.partido.equipo_visitante.nombre}`,
+        buttons: [
+          {
+            text: 'Ver Detalle',
+            icon: 'eye',
+            handler: () => {
+              this.nav.navigateRoot(['/partidos/details', this.partido._id]);
+            },
+          },
+          {
+            text: 'Cancelar',
+            icon: 'close',
+            role: 'cancel',
+          },
+        ],
+      });
+
+      actSheet.present();
+    }
 
   }
 
   compartir() {
     Share.share({
       dialogTitle: 'Camparir el partido',
-      text: 'Se comparte'
-
+      text: `${this.partido.equipo_local.nombre} vs ${
+        this.partido.equipo_visitante.nombre
+      }\n Fecha: ${moment(this.partido.fecha_encuentro).format(
+        'll'
+      )}\nHora: ${moment(this.partido.fecha_encuentro).format('hh:mm A')}`,
     });
   }
 }

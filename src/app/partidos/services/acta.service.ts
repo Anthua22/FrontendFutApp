@@ -551,7 +551,6 @@ export class ActaService {
 
   private getMiembrosGOles(equipo: Equipo) {
     let miembros: MiembroEquipo[] = [];
-    console.log(equipo);
     equipo.miembros.forEach((x) => {
       if (x.rol === 'JUGADOR' && x.goles) {
         miembros.push(x);

@@ -3,13 +3,13 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <img [src]="partido.equipo_local.escudo">
+          <img [src]="partido.equipo_local.escudo" />
         </ion-col>
         <ion-col>
           <img src="assets/images/vs.png" class="vs" />
         </ion-col>
         <ion-col>
-          <img [src]="partido.equipo_visitante.escudo">
+          <img [src]="partido.equipo_visitante.escudo" />
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -17,15 +17,17 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <ion-card-title style="text-align: center;">{{partido.equipo_local.nombre}}</ion-card-title>
+            <ion-card-title style="text-align: center"
+              >{{partido.equipo_local.nombre}}</ion-card-title
+            >
           </ion-col>
           <ion-col>
-            <ion-card-title  style="text-align: center;">{{partido.equipo_visitante.nombre}}</ion-card-title>
+            <ion-card-title style="text-align: center"
+              >{{partido.equipo_visitante.nombre}}</ion-card-title
+            >
           </ion-col>
         </ion-row>
-
       </ion-grid>
-
     </ion-card-header>
     <ion-card-content>
       <ion-grid>
@@ -34,7 +36,9 @@
             <ion-text>Fecha del encuentro:</ion-text>
           </ion-col>
           <ion-col>
-            <ion-text><b [innerText]="partido.fecha_encuentro | fecha"></b></ion-text>
+            <ion-text
+              ><b [innerText]="partido.fecha_encuentro | fecha"></b
+            ></ion-text>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -50,7 +54,9 @@
             <ion-text>Hora:</ion-text>
           </ion-col>
           <ion-col>
-            <ion-text><b [innerText]="partido.fecha_encuentro | hora"></b></ion-text>
+            <ion-text
+              ><b [innerText]="partido.fecha_encuentro | hora"></b
+            ></ion-text>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -69,12 +75,16 @@
             <ion-text><b>{{partido.jornada}}</b></ion-text>
           </ion-col>
         </ion-row>
-        <ion-row style="margin-bottom: 5px;">
+        <ion-row style="margin-bottom: 5px">
           <ion-col>
             <ion-text>Estado:</ion-text>
           </ion-col>
           <ion-col>
-            <ion-text><b [innerText]="partido.fecha_modificacion ? 'Disputado': 'Sin Disputar'"></b></ion-text>
+            <ion-text
+              ><b
+                [innerText]="partido.fecha_modificacion ? 'Disputado': 'Sin Disputar'"
+              ></b
+            ></ion-text>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -95,13 +105,20 @@
                             </ion-thumbnail>
                           </ion-col>
                           <ion-col>
-                            <ion-card-subtitle><b>{{partido.arbitro_principal.nombre_completo | apellidoNombre}}</b></ion-card-subtitle>
+                            <ion-card-subtitle
+                              ><b
+                                >{{partido.arbitro_principal.nombre_completo |
+                                apellidoNombre}}</b
+                              ></ion-card-subtitle
+                            >
                           </ion-col>
                         </ion-row>
                       </ion-col>
                     </ion-row>
                     <ion-row *ngIf="partido.arbitro_secundario">
-                      <ion-col class="ion-align-self-center">Árbitro Secundario:</ion-col>
+                      <ion-col class="ion-align-self-center"
+                        >Árbitro Secundario:</ion-col
+                      >
                       <ion-col>
                         <ion-row>
                           <ion-col>
@@ -110,14 +127,20 @@
                             </ion-thumbnail>
                           </ion-col>
                           <ion-col>
-                            <ion-card-subtitle><b>{{partido.arbitro_secundario.nombre_completo | apellidoNombre}}</b></ion-card-subtitle>
+                            <ion-card-subtitle
+                              ><b
+                                >{{partido.arbitro_secundario.nombre_completo |
+                                apellidoNombre}}</b
+                              ></ion-card-subtitle
+                            >
                           </ion-col>
                         </ion-row>
-
                       </ion-col>
                     </ion-row>
                     <ion-row *ngIf="partido.cronometrador">
-                      <ion-col class="ion-align-self-center">Asistente:</ion-col>
+                      <ion-col class="ion-align-self-center"
+                        >Asistente:</ion-col
+                      >
                       <ion-col>
                         <ion-row>
                           <ion-col>
@@ -126,10 +149,14 @@
                             </ion-thumbnail>
                           </ion-col>
                           <ion-col>
-                            <ion-card-subtitle><b>{{partido.cronometrador.nombre_completo | apellidoNombre}}</b></ion-card-subtitle>
+                            <ion-card-subtitle
+                              ><b
+                                >{{partido.cronometrador.nombre_completo |
+                                apellidoNombre}}</b
+                              ></ion-card-subtitle
+                            >
                           </ion-col>
                         </ion-row>
-
                       </ion-col>
                     </ion-row>
                   </ion-grid>
@@ -138,7 +165,16 @@
             </ngb-accordion>
           </ion-col>
           <ion-col size="2" class="ion-align-self-center">
-            <ion-button fill="clear" color="dark" (click)="showOptions()">
+            <ion-button
+              fill="clear"
+              color="dark"
+              (click)="showOptions()"
+              *ngIf="userLogueado.rol==='ADMIN' ||  this.partido.arbitro_principal._id === this.userLogueado._id ||
+            (this.partido.arbitro_secundario &&
+              this.partido.arbitro_secundario._id === this.userLogueado._id) ||
+            (this.partido.cronometrador &&
+              this.partido.cronometrador._id === this.userLogueado._id) "
+            >
               <ion-icon size="large" name="menu"></ion-icon>
             </ion-button>
             <ion-button fill="clear" color="dark" (click)="compartir()">
@@ -147,9 +183,6 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-
-
     </ion-card-content>
   </ng-container>
-
 </ion-card>
