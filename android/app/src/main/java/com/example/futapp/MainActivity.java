@@ -9,7 +9,7 @@ import com.servicesight.capacitor.startnavigation.StartNavigationPlugin;
 
 import java.util.ArrayList;
 
-public class MainActivity extends BridgeActivity  ,{
+public class MainActivity extends BridgeActivity {
   @Override
 
   public void onCreate(Bundle savedInstanceState) {

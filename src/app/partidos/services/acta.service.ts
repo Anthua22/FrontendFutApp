@@ -164,7 +164,7 @@ export class ActaService {
           },
         };
         const pdf = pdfMake.createPdf(this.contentpdf);
-        if (this.plt.is('cordova')) {
+        if (this.plt.is('capacitor')) {
           pdf.getBase64(async (data) => {
             let path = `pdf/${new Date()}.pdf`;
             const result = await Filesystem.writeFile({
