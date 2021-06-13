@@ -22,8 +22,8 @@
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label>Fecha Encuentro</ion-label>
-        <ion-datetime required display-format="MMM DD, YYYY HH:mm" name="fecha" picker-format="MMM DD, YYYY HH:mm"
+        <ion-label><label>Fecha Encuentro</label></ion-label>
+        <ion-datetime  display-format="MMM DD, YYYY HH:mm" name="fecha" picker-format="MMM DD, YYYY HH:mm"
           [(ngModel)]="fechaActual" monthShortNames='Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic'
           (ionChange)="obtenerFecha($event)">
         </ion-datetime>

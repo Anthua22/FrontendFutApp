@@ -79,7 +79,19 @@ export class InfoPartidoPage implements OnInit {
     );
   }
   async makePdf() {
-    const pdf: any = await this.actaService.makePdf(this.partido);
+    try{
+      const pdf: any = await this.actaService.makePdf(this.partido);
+    }catch(err){
+      (
+        await this.toast.create({
+          duration: 3000,
+          position: 'bottom',
+          message: err,
+          color: 'danger',
+        })
+      ).present();
+    }
+
   }
 
   saveResultado(): void {

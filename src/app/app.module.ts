@@ -7,6 +7,7 @@ import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { FileOpener } from '@ionic-native/file-opener/ngx'
+import {File} from '@ionic-native/file/ngx'
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -40,7 +41,8 @@ import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
       useClass: AuthTokenInterceptor,
       multi: true
     },
-    FileOpener
+    FileOpener,
+    File
   ],
   bootstrap: [AppComponent],
 })

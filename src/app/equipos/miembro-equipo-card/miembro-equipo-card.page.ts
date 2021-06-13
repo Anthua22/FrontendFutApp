@@ -1,7 +1,20 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, ModalController, ToastController } from '@ionic/angular';
+import {
+  AlertController,
+  IonList,
+  ModalController,
+  ToastController,
+} from '@ionic/angular';
 import { AppComponent } from 'src/app/app.component';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { MiembroEquipo, Tarjeta, User } from 'src/app/models/models';
@@ -15,7 +28,6 @@ import { EquipoService } from '../service/equipo.service';
   styleUrls: ['./miembro-equipo-card.page.scss'],
 })
 export class MiembroEquipoCardPage implements OnInit {
-
   @Input() miembro: MiembroEquipo = {
     nombre_completo: '',
     foto: '',
@@ -35,46 +47,68 @@ export class MiembroEquipoCardPage implements OnInit {
   @Input() totalCap: number;
   @Input() resultado: string;
 
+  @ViewChild('lista') lista : IonList;
+
   vistaPartidos = false;
   @Output() miembroChange = new EventEmitter<void>();
   @Output() delete = new EventEmitter<string>();
   userLogueado: User = {
-    'foto': '',
-    'rol': '',
-    'nombre_completo': ''
-  }
+    foto: '',
+    rol: '',
+    nombre_completo: '',
+  };
   constructor(
     public modalCtrl: ModalController,
     public toast: ToastController,
     private router: Router,
     private equipoService: EquipoService,
     private alertController: AlertController,
-    private authService: AuthService) { }
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.habilitarCard();
     this.checkTarjetas();
     this.vistaPartidos = this.router.url.includes('partidos');
-    this.authService.userLogueado$.subscribe(x => this.userLogueado = x);
+    this.authService.userLogueado$.subscribe((x) => (this.userLogueado = x));
   }
 
   async openChangeInfo() {
-    const modal = await this.modalCtrl.create({
-      component: AccionesMiembroPage,
-      componentProps: { miembro: this.miembro, totalTitu: this.totalTit, totalCap: this.totalCap },
-    });
+    if (this.resultado && this.resultado !== '') {
+      const modal = await this.modalCtrl.create({
+        component: AccionesMiembroPage,
+        componentProps: {
+          miembro: this.miembro,
+          totalTitu: this.totalTit,
+          totalCap: this.totalCap,
+        },
+      });
 
-    await modal.present();
-    const result = await modal.onDidDismiss();
-    if (result.data == true) {
-      this.habilitarCard();
-      this.miembroChange.emit();
+      await modal.present();
+      const result = await modal.onDidDismiss();
+      if (result.data == true) {
+        this.habilitarCard();
+        this.miembroChange.emit();
+      }
+      this.lista.closeSlidingItems();
+    } else {
+      (
+        await this.toast.create({
+          duration: 3000,
+          position: 'bottom',
+          message: `Se tiene que finalizar el partido y enviar el resultado para acceder a esta opción`,
+          color: 'warning',
+        })
+      ).present();
     }
   }
 
   private habilitarCard() {
     if (this.miembro.rol === 'JUGADOR') {
-      if ((this.miembro.titular === true || this.miembro.suplente === true) && this.totalTit <= 5) {
+      if (
+        (this.miembro.titular === true || this.miembro.suplente === true) &&
+        this.totalTit <= 5
+      ) {
         this.deshabilitado = false;
       } else {
         this.deshabilitado = true;
@@ -89,7 +123,10 @@ export class MiembroEquipoCardPage implements OnInit {
   async openAddDataMiembro() {
     const modal = await this.modalCtrl.create({
       component: AddAccionMiembroPage,
-      componentProps: { miembro: this.miembro, golesMaximos: this.golesMaximos }
+      componentProps: {
+        miembro: this.miembro,
+        golesMaximos: this.golesMaximos,
+      },
     });
     await modal.present();
     const result = await modal.onDidDismiss();
@@ -97,6 +134,7 @@ export class MiembroEquipoCardPage implements OnInit {
       this.checkTarjetas();
       this.miembroChange.emit();
     }
+    this.lista.closeSlidingItems();
   }
 
   private checkTarjetas() {
@@ -104,8 +142,10 @@ export class MiembroEquipoCardPage implements OnInit {
     this.verTarjeta2Ama = false;
     this.verTarjetaAma = false;
     if (this.miembro.sancion_partido) {
-      this.miembro.sancion_partido = this.miembro.sancion_partido.filter(x => x.motivo !== '');
-      this.miembro.sancion_partido.forEach(x => {
+      this.miembro.sancion_partido = this.miembro.sancion_partido.filter(
+        (x) => x.motivo !== ''
+      );
+      this.miembro.sancion_partido.forEach((x) => {
         switch (x.tarjeta) {
           case Tarjeta.AMARILLA:
             this.verTarjetaAma = true;
@@ -117,9 +157,8 @@ export class MiembroEquipoCardPage implements OnInit {
             this.verTarjetaRoja = true;
             break;
         }
-      })
+      });
     }
-
   }
 
   async deleteMiembro() {
@@ -129,34 +168,42 @@ export class MiembroEquipoCardPage implements OnInit {
       buttons: [
         {
           text: 'Cancelar',
-          role: 'cancel'
+          role: 'cancel',
         },
         {
           text: 'Aceptar',
           handler: () => {
-            this.equipoService.deleteMiembro(this.idEquipo, this.miembro._id).subscribe(async x => {
-              this.delete.emit(this.miembro._id);
-              (await this.toast.create({
-                duration: 3000,
-                position: "bottom",
-                message: `Se ha borrado al miembro del equipo con éxito`,
-                color: 'success'
-              })).present();
-            },
-              async (error: HttpErrorResponse) => {
-                (await this.toast.create({
-                  duration: 3000,
-                  position: "bottom",
-                  message: error.message,
-                  color: 'danger'
-                })).present();
-              })
-          }
-        }
-      ]
+            this.equipoService
+              .deleteMiembro(this.idEquipo, this.miembro._id)
+              .subscribe(
+                async (x) => {
+                  this.delete.emit(this.miembro._id);
+                  (
+                    await this.toast.create({
+                      duration: 3000,
+                      position: 'bottom',
+                      message: `Se ha borrado al miembro del equipo con éxito`,
+                      color: 'success',
+                    })
+                  ).present();
+                },
+                async (error: HttpErrorResponse) => {
+                  (
+                    await this.toast.create({
+                      duration: 3000,
+                      position: 'bottom',
+                      message: error.message,
+                      color: 'danger',
+                    })
+                  ).present();
+                }
+              );
+          },
+        },
+      ],
     });
 
     await alert.present();
-
+    this.lista.closeSlidingItems();
   }
 }

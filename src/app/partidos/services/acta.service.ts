@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { Platform, ToastController } from '@ionic/angular';
 import * as moment from 'moment';
-import * as pdfMake from 'pdfmake/build/pdfmake';
-import { FileOpener } from '@ionic-native/file-opener/ngx'
-import { Plugins, FilesystemDirectory } from '@capacitor/core'
-const { Filesystem, Share } = Plugins
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { Plugins, FilesystemDirectory } from '@capacitor/core';
+
+const { Filesystem, Browser } = Plugins;
 
 import {
   Categoria,
@@ -12,7 +16,6 @@ import {
   MiembroEquipo,
   Equipo,
 } from 'src/app/models/models';
-
 
 @Injectable({
   providedIn: 'root',
@@ -24,165 +27,174 @@ export class ActaService {
   logoFederacion =
     'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Royal_Spanish_Football_Federation_logo.svg/1200px-Royal_Spanish_Football_Federation_logo.svg.png';
 
-  constructor(private plt: Platform, private fileOpener: FileOpener) {
+  constructor(
+    private plt: Platform,
+    private fileOpener: FileOpener,
+    private file: File,
+    private toast: ToastController
+  ) {
     moment.locale('es');
   }
 
-  makePdf(partido: Partido) {
+  async makePdf(partido: Partido) {
     this.partido = partido;
-    return new Promise(async (resolve, reject) => {
-      try {
-        this.contentpdf = {
-          pageSize: 'A4',
-          content: [
-            {
-              image: await this.getBase64ImageFromURL(this.logoFederacion),
-              fit: [60, 60],
-              margin: [225, 0, 0, 10],
-            },
-            {
-              text:
-                this.partido.categoria != Categoria.FB
-                  ? `${this.partido.categoria} División`
-                  : this.partido.categoria,
-              style: 'header',
-            },
-            {
-              text: this.partido.jornada,
-              style: 'subheader',
-            },
-            {
-              alignment: 'center',
-              columns: [
-                {
-                  image: await this.getBase64ImageFromURL(
-                    this.partido.equipo_local.escudo
-                  ),
-                  fit: [100, 100],
-                },
-                {
-                  image: await this.getBase64ImageFromURL(
-                    this.partido.equipo_visitante.escudo
-                  ),
-                  fit: [100, 100],
-                },
-              ],
-            },
-            {
-              alignment: 'center',
-              columns: [
-                {
-                  text: this.partido.equipo_local.nombre,
-                  style: 'nombreEquipo',
-                },
-                {
-                  text: this.partido.equipo_visitante.nombre,
-                  style: 'nombreEquipo',
-                },
-              ],
-            },
-            {
-              text: 'Partido suspendido',
-              color: '#E70020',
-              margin: [0, 0, 0, 5],
-            },
-            {
-              style: 'tableInfo',
-              table: {
-                headerRows: 1,
-                widths: [100, 120, '*'],
-                body: [
-                  [
-                    { text: 'Fecha Encuentro', bold: true },
-                    { text: 'Hora Encuentro', bold: true },
-                    { text: 'Lugar Encuentro', bold: true },
-                  ],
-                  [
-                    moment(this.partido.fecha_encuentro).format('ll'),
-                    moment(this.partido.fecha_encuentro).format('hh:mm A'),
-                    this.partido.lugar_encuentro,
-                  ],
+
+    try {
+      this.contentpdf = {
+        pageSize: 'A4',
+        content: [
+          {
+            image: await this.getBase64ImageFromURL(this.logoFederacion),
+            fit: [60, 60],
+            margin: [225, 0, 0, 10],
+          },
+          {
+            text:
+              this.partido.categoria != Categoria.FB
+                ? `${this.partido.categoria} División`
+                : this.partido.categoria,
+            style: 'header',
+          },
+          {
+            text: this.partido.jornada,
+            style: 'subheader',
+          },
+          {
+            alignment: 'center',
+            columns: [
+              {
+                image: await this.getBase64ImageFromURL(
+                  this.partido.equipo_local.escudo
+                ),
+                fit: [100, 100],
+              },
+              {
+                image: await this.getBase64ImageFromURL(
+                  this.partido.equipo_visitante.escudo
+                ),
+                fit: [100, 100],
+              },
+            ],
+          },
+          {
+            alignment: 'center',
+            columns: [
+              {
+                text: this.partido.equipo_local.nombre,
+                style: 'nombreEquipo',
+              },
+              {
+                text: this.partido.equipo_visitante.nombre,
+                style: 'nombreEquipo',
+              },
+            ],
+          },
+          {
+            text: 'Partido suspendido',
+            color: '#E70020',
+            margin: [0, 0, 0, 5],
+          },
+          {
+            style: 'tableInfo',
+            table: {
+              headerRows: 1,
+              widths: [100, 120, '*'],
+              body: [
+                [
+                  { text: 'Fecha Encuentro', bold: true },
+                  { text: 'Hora Encuentro', bold: true },
+                  { text: 'Lugar Encuentro', bold: true },
                 ],
+                [
+                  moment(this.partido.fecha_encuentro).format('ll'),
+                  moment(this.partido.fecha_encuentro).format('hh:mm A'),
+                  this.partido.lugar_encuentro,
+                ],
+              ],
+            },
+            layout: {
+              fillColor: function (rowIndex, node, columnIndex) {
+                return rowIndex === 0 ? '#CCCCCC' : null;
               },
-              layout: {
-                fillColor: function (rowIndex, node, columnIndex) {
-                  return rowIndex === 0 ? '#CCCCCC' : null;
-                },
-              },
-            },
-            {
-              table: this.getTablePrincipal(),
-              layout: {
-                fillColor: function (rowIndex, node, columnIndex) {
-                  return rowIndex === 0 || rowIndex === 2 || rowIndex === 9
-                    ? '#CCCCCC'
-                    : null;
-                },
-              },
-            },
-            {
-              text: 'GOLES',
-              alignment: 'center',
-              bold: true,
-              margin: [0, 15, 0, 15],
-            },
-            {
-              style: 'tableInfo',
-              table: this.getTableGoles(),
-            },
-          ],
-          styles: {
-            header: {
-              fontSize: 20,
-              bold: true,
-              alignment: 'center',
-              margin: [0, 0, 0, 5],
-            },
-            subheader: {
-              fontSize: 18,
-              bold: true,
-              alignment: 'center',
-              margin: [0, 0, 0, 15],
-            },
-            headertable: {
-              fontSize: 15,
-              bold: true,
-            },
-            nombreEquipo: {
-              fontSize: 16,
-              bold: true,
-              alignment: 'center',
-              margin: [0, 5, 0, 15],
-            },
-            tableInfo: {
-              margin: [0, 0, 0, 15],
-            },
-            gol: {
-              fontSize: 15,
-              bold: true,
             },
           },
-        };
-        const pdf = pdfMake.createPdf(this.contentpdf);
-        if (this.plt.is('capacitor')) {
-          pdf.getBase64(async (data) => {
-            let path = `pdf/${new Date()}.pdf`;
-            const result = await Filesystem.writeFile({
-              path,
-              data,
-              directory: FilesystemDirectory.Documents,
-              recursive: true
-            });
-            resolve(this.fileOpener.open(`${result.uri}`,'application/pdf'));
-          })
-        }else{
-          resolve(pdf.open());
-        }
+          {
+            table: this.getTablePrincipal(),
+            layout: {
+              fillColor: function (rowIndex, node, columnIndex) {
+                return rowIndex === 0 || rowIndex === 2 || rowIndex === 9
+                  ? '#CCCCCC'
+                  : null;
+              },
+            },
+          },
+          {
+            text: 'GOLES',
+            alignment: 'center',
+            bold: true,
+            margin: [0, 15, 0, 15],
+          },
+          {
+            style: 'tableInfo',
+            table: this.getTableGoles(),
+          },
+        ],
+        styles: {
+          header: {
+            fontSize: 20,
+            bold: true,
+            alignment: 'center',
+            margin: [0, 0, 0, 5],
+          },
+          subheader: {
+            fontSize: 18,
+            bold: true,
+            alignment: 'center',
+            margin: [0, 0, 0, 15],
+          },
+          headertable: {
+            fontSize: 15,
+            bold: true,
+          },
+          nombreEquipo: {
+            fontSize: 16,
+            bold: true,
+            alignment: 'center',
+            margin: [0, 5, 0, 15],
+          },
+          tableInfo: {
+            margin: [0, 0, 0, 15],
+          },
+          gol: {
+            fontSize: 15,
+            bold: true,
+          },
+        },
+      };
+      const pdf = pdfMake.createPdf(this.contentpdf);
+      if (this.plt.is('cordova')) {
+        pdf.getBuffer(async (buffer) => {
+          let name = `${new Date()}.pdf`;
+          const utf8 = new Uint8Array(buffer);
+          const binaryArray = utf8.buffer;
+          const blob = new Blob([binaryArray], { type: 'application/pdf' });
 
-      } catch (error) {
-        reject(error);
+          const result = await this.file.writeFile(
+            this.file.dataDirectory,
+            name,
+            blob,
+            { replace: true }
+          );
+
+          this.fileOpener.open(
+            this.file.dataDirectory + name,
+            'application/pdf'
+          );
+        });
+      } else {
+        pdf.open();
       }
-    });
+    } catch (error) {}
   }
 
   private getTablePrincipal() {
@@ -255,7 +267,7 @@ export class ActaService {
     };
     const contadorTitu =
       this.partido.titularesLocales.length >=
-        this.partido.titularesVisitantes.length
+      this.partido.titularesVisitantes.length
         ? this.partido.titularesLocales.length
         : this.partido.titularesVisitantes.length;
     for (let i = 0; i < contadorTitu; i++) {
@@ -306,7 +318,7 @@ export class ActaService {
       ]);
       const contadorSup =
         this.partido.suplentesLocales.length >=
-          this.partido.suplentesVisitantes.length
+        this.partido.suplentesVisitantes.length
           ? this.partido.suplentesLocales.length
           : this.partido.suplentesVisitantes.length;
 
@@ -570,7 +582,4 @@ export class ActaService {
     });
     return contador;
   }
-
-
-
 }

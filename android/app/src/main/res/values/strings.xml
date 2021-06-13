@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">FrontendFutApp</string>
-    <string name="title_activity_main">FrontendFutApp</string>
+    <string name="app_name">FutApp</string>
+    <string name="title_activity_main">FutApp</string>
     <string name="package_name">com.example.futapp</string>
     <string name="custom_url_scheme">com.example.futapp</string>
 </resources>

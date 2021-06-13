@@ -1,5 +1,76 @@
-<ion-item-sliding id="item100" *ngIf="vistaPartidos">
-  <ion-item [disabled]="deshabilitado" #item>
+<ion-list #lista>
+  <ion-item-sliding id="item100" *ngIf="vistaPartidos">
+    <ion-item [disabled]="deshabilitado" #item>
+      <ion-thumbnail slot="start">
+        <img [src]="miembro.foto" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>
+          <b>{{ miembro.nombre_completo | apellidoNombre }}</b>
+        </h2>
+        <h3
+          *ngIf="
+          miembro.rol === 'ENTRENADOR' ||
+          miembro.rol === 'DELEGADO' ||
+          miembro.rol === 'ENCARGADO_MATERIAL' ||
+          miembro.rol === 'PREPARADOR_FISICO'
+        "
+        >
+          {{ miembro.rol }}
+        </h3>
+      </ion-label>
+      <ion-grid>
+        <ion-row>
+          <ion-col *ngIf="miembro.rol=== 'JUGADOR'">
+            <img src="assets/images/camiseta-de-futbol.png" class="icono" />
+          </ion-col>
+          <ion-col
+            class="ion-align-self-center"
+            *ngIf="miembro.rol=== 'JUGADOR'"
+          >
+            <ion-label *ngIf="!miembro.dorsal"> --- </ion-label>
+            <ion-label *ngIf="miembro.dorsal"> {{miembro.dorsal}} </ion-label>
+          </ion-col>
+          <ion-col *ngIf="miembro.capitan">
+            <img class="icono" src="assets/images/capitan-jugador.png" />
+          </ion-col>
+          <ion-col *ngIf="miembro.portero">
+            <img
+              class="icono"
+              src="assets/images/portero-jugador.png"
+              class="icono"
+            />
+          </ion-col>
+          <ion-col *ngIf="verTarjetaAma">
+            <img src="assets/images/tarjeta-amarilla.png" class="icono" />
+          </ion-col>
+          <ion-col *ngIf="verTarjeta2Ama">
+            <img class="icono" src="assets/images/doble-amarilla.png" />
+          </ion-col>
+          <ion-col *ngIf="verTarjetaRoja">
+            <img class="icono" src="assets/images/tarjeta-roja.png" />
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+
+    <ion-item-options side="end">
+      <ion-item-option
+        color="secondary"
+        (click)="openChangeInfo()"
+      >
+        <ion-icon slot="icon-only" name="information-circle-outline"></ion-icon>
+      </ion-item-option>
+      <ion-item-option
+        (click)="openAddDataMiembro()"
+        [disabled]="miembro.titular=== true || miembro.suplente === true || miembro.asiste===true ? false : true"
+      >
+        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+      </ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
+
+  <ion-item *ngIf="!vistaPartidos">
     <ion-thumbnail slot="start">
       <img [src]="miembro.foto" />
     </ion-thumbnail>
@@ -7,73 +78,24 @@
       <h2>
         <b>{{ miembro.nombre_completo | apellidoNombre }}</b>
       </h2>
-      <h3 *ngIf="
-          miembro.rol === 'ENTRENADOR' ||
-          miembro.rol === 'DELEGADO' ||
-          miembro.rol === 'ENCARGADO_MATERIAL' ||
-          miembro.rol === 'PREPARADOR_FISICO'
-        ">
-        {{ miembro.rol }}
-      </h3>
-    </ion-label>
-    <ion-grid>
-      <ion-row>
-        <ion-col *ngIf="miembro.rol=== 'JUGADOR'">
-          <img src="assets/images/camiseta-de-futbol.png" class="icono" />
-
-        </ion-col>
-        <ion-col class="ion-align-self-center" *ngIf="miembro.rol=== 'JUGADOR'">
-          <ion-label *ngIf="!miembro.dorsal"> --- </ion-label>
-          <ion-label *ngIf="miembro.dorsal"> {{miembro.dorsal}} </ion-label>
-        </ion-col>
-        <ion-col *ngIf="miembro.capitan">
-          <img class="icono" src="assets/images/capitan-jugador.png" />
-        </ion-col>
-        <ion-col *ngIf="miembro.portero">
-          <img class="icono" src="assets/images/portero-jugador.png" class="icono" />
-        </ion-col>
-        <ion-col *ngIf="verTarjetaAma">
-          <img src="assets/images/tarjeta-amarilla.png" class="icono" />
-        </ion-col>
-        <ion-col *ngIf="verTarjeta2Ama">
-          <img class="icono" src="assets/images/doble-amarilla.png" />
-        </ion-col>
-        <ion-col *ngIf="verTarjetaRoja">
-          <img class="icono" src="assets/images/tarjeta-roja.png" />
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-item>
-
-  <ion-item-options side="end">
-    <ion-item-option color="secondary" (click)="openChangeInfo()" [disabled]="!resultado || resultado===''">
-      <ion-icon slot="icon-only" name="information-circle-outline"></ion-icon>
-    </ion-item-option>
-    <ion-item-option (click)="openAddDataMiembro()"
-      [disabled]="miembro.titular=== true || miembro.suplente === true || miembro.asiste===true ? false : true">
-      <ion-icon slot="icon-only" name="create-outline"></ion-icon>
-    </ion-item-option>
-  </ion-item-options>
-</ion-item-sliding>
-
-<ion-item *ngIf="!vistaPartidos">
-  <ion-thumbnail slot="start">
-    <img [src]="miembro.foto" />
-  </ion-thumbnail>
-  <ion-label>
-    <h2>
-      <b>{{ miembro.nombre_completo | apellidoNombre }}</b>
-    </h2>
-    <h3 *ngIf="
+      <h3
+        *ngIf="
         miembro.rol === 'ENTRENADOR' ||
         miembro.rol === 'DELEGADO' ||
         miembro.rol === 'ENCARGADO_MATERIAL' ||
         miembro.rol === 'PREPARADOR_FISICO'
-      ">
-      {{ miembro.rol }}
-    </h3>
-  </ion-label>
-  <ion-button slot="end" color="danger" (click)="deleteMiembro()" *ngIf="userLogueado.rol ==='ADMIN'">
-    <ion-icon name="trash"></ion-icon>
-  </ion-button>
-</ion-item>
+      "
+      >
+        {{ miembro.rol }}
+      </h3>
+    </ion-label>
+    <ion-button
+      slot="end"
+      color="danger"
+      (click)="deleteMiembro()"
+      *ngIf="userLogueado.rol ==='ADMIN'"
+    >
+      <ion-icon name="trash"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-list>
